@@ -1,3 +1,7 @@
 {
-	"name": "jsp"
+	"name": "jsp",
+	"packageManager": "pnpm@10.22.0",
+	"devDependencies": {
+		"turbo": "^2.6.3"
+	}
 }
