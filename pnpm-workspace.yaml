@@ -1,5 +1,6 @@
 packages:
   - apps/*
   - packages/**
+  - tests/*
 
 minimumReleaseAge: 1440 # 1 day
