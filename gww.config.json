@@ -1,6 +1,7 @@
 {
-  "mainBranch": "main",
-  "worktreesDir": "../",
-  "pathPrefix": "JSp-",
-  "postCreate": "pnpm i"
+	"mainBranch": "main",
+	"worktreesDir": "../",
+	"pathPrefix": "JSp-",
+	"configs": ["./tests"],
+	"postCreate": "pnpm i"
 }
