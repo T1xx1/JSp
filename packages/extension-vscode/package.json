@@ -14,6 +14,7 @@
 		"npm": "^11.7.0"
 	},
 	"repository": "https://github.com/t1xx1/jsp/packages/extension-vscode",
+	"icon": "./assets/icon.png",
 	"categories": [
 		"Programming Languages"
 	],
@@ -27,7 +28,11 @@
 				],
 				"extensions": [
 					".jsp"
-				]
+				],
+				"icon": {
+					"light": "./assets/miniature.png",
+					"dark": "./assets/miniature.png"
+				}
 			}
 		],
 		"grammars": [
