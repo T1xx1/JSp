@@ -21,7 +21,7 @@ export const compile = (jspCode: string): string => {
 	});
 
 	if (!jsCode || !jsCode.code) {
-		throw new Error('JSp error 1: Null babel transformation');
+		throw new Error('JS+ error 1: Null babel transformation');
 	}
 
 	return jsCode.code;

@@ -24,7 +24,7 @@ if (configPath) {
 	try {
 		config = JSON.parse(fs.readFileSync(configPath, 'utf8')) as Config;
 	} catch (error) {
-		console.error('JSp error: failed to parse config');
+		console.error('JS+ error: failed to parse config');
 		console.error(error);
 
 		process.exit();
@@ -32,7 +32,7 @@ if (configPath) {
 }
 
 if (!config) {
-	console.error('JSp error: missing config');
+	console.error('JS+ error: missing config');
 
 	process.exit();
 }

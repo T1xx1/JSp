@@ -1,8 +1,8 @@
 {
 	"name": "extension-vscode",
 	"version": "0.0.0",
-	"displayName": "JSp",
-	"description": "JSp for VSCode",
+	"displayName": "JS+",
+	"description": "JS+ for VSCode",
 	"engines": {
 		"vscode": "^1.107.0"
 	},
@@ -21,8 +21,10 @@
 	"contributes": {
 		"languages": [
 			{
-				"id": "jsp",
+				"id": "JS+",
 				"aliases": [
+					"JS+",
+					"js+",
 					"JSp",
 					"jsp"
 				],
@@ -37,7 +39,7 @@
 		],
 		"grammars": [
 			{
-				"language": "jsp",
+				"language": "JS+",
 				"scopeName": "source.jsp",
 				"path": "./syntaxes/jsp.tmLanguage.json"
 			},

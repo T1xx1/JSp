@@ -1,1 +1,1 @@
-# JSp for VSCode
+# JS+ for VSCode
