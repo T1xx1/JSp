@@ -38,6 +38,9 @@ importers:
       '@babel/plugin-transform-typescript':
         specifier: ^7.28.5
         version: 7.28.5(@babel/core@7.28.5)
+      '@jsp/plugin-negative-array-subscript':
+        specifier: workspace:*
+        version: link:../plugin-negative-array-subscript
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
@@ -47,6 +50,22 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+
+  packages/plugin-negative-array-subscript:
+    dependencies:
+      '@babel/core':
+        specifier: ^7.28.5
+        version: 7.28.5
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  tests/vanilla:
+    devDependencies:
+      jsp:
+        specifier: workspace:*
+        version: link:../../packages/jsp
 
 packages:
 
