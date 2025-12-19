@@ -1,4 +1,4 @@
-import fs, { writeFileSync } from 'node:fs';
+import fs from 'node:fs';
 import process from 'node:process';
 
 import { compile } from '../compiler.js';
