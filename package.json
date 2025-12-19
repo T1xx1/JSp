@@ -7,6 +7,8 @@
 	"scripts": {
 		"dev": "turbo dev --filter=jsp...",
 		"build": "turbo build --filter=jsp...",
+		"extension-vscode:dev": "turbo vscode:dev --filter=extension-vscode...",
+		"extension-vscode:build": "turbo vscode:build --filter=extension-vscode...",
 		"test": "turbo dev --filter=vanilla..."
 	},
 	"devDependencies": {

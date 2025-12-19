@@ -1,0 +1,56 @@
+{
+	"name": "extension-vscode",
+	"version": "0.0.0",
+	"displayName": "JSp",
+	"description": "JSp for VSCode",
+	"engines": {
+		"vscode": "^1.107.0"
+	},
+	"scripts": {
+		"build": "pnpm exec vsce package"
+	},
+	"devDependencies": {
+		"@vscode/vsce": "^3.7.1",
+		"npm": "^11.7.0"
+	},
+	"repository": "https://github.com/t1xx1/jsp/packages/extension-vscode",
+	"icon": "./assets/icon.png",
+	"categories": [
+		"Programming Languages"
+	],
+	"contributes": {
+		"languages": [
+			{
+				"id": "jsp",
+				"aliases": [
+					"JSp",
+					"jsp"
+				],
+				"extensions": [
+					".jsp"
+				],
+				"icon": {
+					"light": "./assets/miniature.png",
+					"dark": "./assets/miniature.png"
+				}
+			}
+		],
+		"grammars": [
+			{
+				"language": "jsp",
+				"scopeName": "source.jsp",
+				"path": "./syntaxes/jsp.tmLanguage.json"
+			},
+			{
+				"scopeName": "markdown.codeblock.jsp",
+				"path": "./syntaxes/jsp.codeblock.md.json",
+				"injectTo": [
+					"text.html.markdown"
+				],
+				"embeddedLanguages": {
+					"meta.embedded.block.jsp": "jsp"
+				}
+			}
+		]
+	}
+}
