@@ -1,7 +1,8 @@
 {
 	"mainBranch": "main",
 	"worktreesDir": "../",
-	"pathPrefix": "JSp-",
+	"worktreesPrefix": "JSp-",
 	"configs": ["./tests"],
-	"postCreate": "pnpm i"
+	"postCreate": "pnpm i",
+	"autoCheckout": "always"
 }
