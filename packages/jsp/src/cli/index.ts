@@ -13,11 +13,11 @@ const args = process.argv.slice(2);
 let config = null;
 let configPath = null;
 
-if (fs.existsSync(joinCwd('./config/jsp.json'))) {
-	configPath = joinCwd('./config/jsp.json');
+if (fs.existsSync(joinCwd('config/jsp.json'))) {
+	configPath = joinCwd('config/jsp.json');
 }
-if (fs.existsSync(joinCwd('./jsp.config.json'))) {
-	configPath = joinCwd('./jsp.config.json');
+if (fs.existsSync(joinCwd('jsp.config.json'))) {
+	configPath = joinCwd('jsp.config.json');
 }
 
 if (configPath) {
