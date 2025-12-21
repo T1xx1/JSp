@@ -1,0 +1,21 @@
+{
+	"include": ["./src/**/*.ts"],
+	"compilerOptions": {
+		"skipLibCheck": true,
+		/* env */
+		"module": "ESNext",
+		"moduleDetection": "force",
+		"moduleResolution": "bundler",
+		/* linter */
+		"verbatimModuleSyntax": true,
+		"noImplicitAny": true,
+		/* type checking */
+		"strict": true,
+		/* compiler */
+		"target": "ESNext",
+		"sourceMap": true,
+		"declaration": true,
+		"declarationMap": true,
+		"outDir": "./dist"
+	}
+}
