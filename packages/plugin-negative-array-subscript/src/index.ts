@@ -4,9 +4,9 @@ export default function ({ types: t }: any) {
 		visitor: {
 			MemberExpression(path: any) {
 				if (
-					path.node.property.type !== 'UnaryExpression' ||
+					!t.isUnaryExpression(path.node.object) ||
 					path.node.property.operator !== '-' ||
-					path.node.property.argument.type !== 'NumericLiteral'
+					!t.isNumericLiteral(path.node.property.argument)
 				) {
 					return;
 				}
