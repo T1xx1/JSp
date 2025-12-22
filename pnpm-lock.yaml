@@ -51,6 +51,19 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/plugin-chained-comparisons:
+    dependencies:
+      '@babel/core':
+        specifier: ^7.28.5
+        version: 7.28.5
+    devDependencies:
+      tester:
+        specifier: workspace:*
+        version: link:../tester
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   packages/plugin-negative-array-subscript:
     dependencies:
       '@babel/core':
