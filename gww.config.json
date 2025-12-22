@@ -3,6 +3,6 @@
 	"worktreesDir": "../",
 	"worktreesPrefix": "JSp-",
 	"configs": ["./tests"],
-	"postCreate": "pnpm i",
+	"postCreate": "pnpm i && pnpm exec turbo build",
 	"autoCheckout": "always"
 }
