@@ -1,7 +1,7 @@
 import { execSync } from 'node:child_process';
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { chdir, cwd } from 'node:process';
+import { chdir, cwd, exit } from 'node:process';
 import { transformSync } from '@babel/core';
 
 const dir = dirname(dirname(import.meta.url.split('///')[1]));
@@ -26,7 +26,13 @@ const transpile = (code: string): string => {
 	return outCode.code;
 };
 
-for (const test of readdirSync(moduleTests)) {
+const tests = readdirSync(moduleTests);
+
+if (tests.length === 0) {
+	exit();
+}
+
+for (const test of tests) {
 	if (test.includes('.test.js')) {
 		continue;
 	}
