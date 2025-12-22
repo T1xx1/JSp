@@ -38,6 +38,9 @@ importers:
       '@babel/plugin-transform-typescript':
         specifier: ^7.28.5
         version: 7.28.5(@babel/core@7.28.5)
+      '@jsp/plugin-chained-comparisons':
+        specifier: workspace:*
+        version: link:../plugin-chained-comparisons
       '@jsp/plugin-negative-array-subscript':
         specifier: workspace:*
         version: link:../plugin-negative-array-subscript
@@ -65,6 +68,19 @@ importers:
         version: 5.9.3
 
   packages/plugin-negative-array-subscript:
+    dependencies:
+      '@babel/core':
+        specifier: ^7.28.5
+        version: 7.28.5
+    devDependencies:
+      tester:
+        specifier: workspace:*
+        version: link:../tester
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/plugin-template:
     dependencies:
       '@babel/core':
         specifier: ^7.28.5
