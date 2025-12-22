@@ -9,7 +9,7 @@
 		"build": "turbo build --filter=jsp...",
 		"extension-vscode:dev": "turbo vscode:dev --filter=extension-vscode...",
 		"extension-vscode:build": "turbo vscode:build --filter=extension-vscode...",
-		"test": "turbo build --filter=vanilla..."
+		"test": "turbo test"
 	},
 	"devDependencies": {
 		"turbo": "^2.7.1"
