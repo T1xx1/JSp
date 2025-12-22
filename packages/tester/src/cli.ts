@@ -27,7 +27,7 @@ const transpile = (code: string): string => {
 };
 
 for (const test of readdirSync(moduleTests)) {
-	if (!test.includes('.test.js')) {
+	if (test.includes('.test.js')) {
 		continue;
 	}
 
