@@ -1,4 +1,5 @@
+.turbo
 .vscode/**
 .vscode-test/**
 .gitignore
-vsc-extension-quickstart.md
+turbo.json
