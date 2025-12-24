@@ -10,11 +10,18 @@ export default function ({ types: t }: any) {
 				}
 
 				if (t.isBinaryExpression(path.node.left) && comparisons.includes(path.node.left.operator)) {
+					const leftSide = path.node.left;
+
+					const tempId = path.scope.generateUidIdentifier('cache');
+					path.scope.push({ id: tempId });
+
+					leftSide.right = t.assignmentExpression('=', tempId, leftSide.right);
+
 					path.replaceWith(
 						t.logicalExpression(
 							'&&',
-							path.node.left,
-							t.binaryExpression(path.node.operator, path.node.left.right, path.node.right)
+							leftSide,
+							t.binaryExpression(path.node.operator, tempId, path.node.right)
 						)
 					);
 				}
