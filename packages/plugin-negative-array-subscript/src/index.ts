@@ -3,11 +3,7 @@ export default function ({ types: t }: any) {
 		name: '@jsp/plugin-negative-array-subscript',
 		visitor: {
 			MemberExpression(path: any) {
-				if (
-					!t.isUnaryExpression(path.node.object) ||
-					path.node.property.operator !== '-' ||
-					!t.isNumericLiteral(path.node.property.argument)
-				) {
+				if (!t.isUnaryExpression(path.node.property) || path.node.property.operator !== '-') {
 					return;
 				}
 
