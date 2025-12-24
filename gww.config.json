@@ -2,7 +2,7 @@
 	"mainBranch": "main",
 	"worktreesDir": "../",
 	"worktreesPrefix": "JSp-",
-	"configs": ["./tests"],
+	"configs": ["./sanbox"],
 	"postCreate": "pnpm i && pnpm exec turbo build",
 	"autoCheckout": "always"
 }
