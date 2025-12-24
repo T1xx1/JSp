@@ -9,10 +9,10 @@ export const compile = (jspCode: string): string => {
 		plugins: [
 			'@babel/plugin-transform-typescript',
 			'@babel/plugin-proposal-export-default-from',
-			'@babel/plugin-proposal-throw-expressions',
-			'module:@jsp/plugin-chained-comparisons',
 			'module:@jsp/plugin-negative-array-subscript',
+			'@babel/plugin-proposal-throw-expressions',
 			'@babel/plugin-proposal-do-expressions',
+			'module:@jsp/plugin-chained-comparisons',
 			[
 				'@babel/plugin-proposal-pipeline-operator',
 				{
