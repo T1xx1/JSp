@@ -10,7 +10,12 @@ export const compile = (jspCode: string): string => {
 			'@babel/plugin-transform-typescript',
 			'@babel/plugin-proposal-export-default-from',
 			'module:@jsp/plugin-negative-array-subscript',
-			'@babel/plugin-proposal-discard-binding',
+			[
+				'@babel/plugin-proposal-discard-binding',
+				{
+					syntaxType: 'void',
+				},
+			],
 			'@babel/plugin-proposal-throw-expressions',
 			'@babel/plugin-proposal-async-do-expressions',
 			'@babel/plugin-proposal-do-expressions',
