@@ -12,6 +12,7 @@ export const compile = (jspCode: string): string => {
 			'module:@jsp/plugin-negative-array-subscript',
 			'@babel/plugin-proposal-discard-binding',
 			'@babel/plugin-proposal-throw-expressions',
+			'@babel/plugin-proposal-async-do-expressions',
 			'@babel/plugin-proposal-do-expressions',
 			'module:@jsp/plugin-chained-comparisons',
 			[

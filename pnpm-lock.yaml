@@ -26,6 +26,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5
+      '@babel/plugin-proposal-async-do-expressions':
+        specifier: ^7.27.1
+        version: 7.27.1(@babel/core@7.28.5)
       '@babel/plugin-proposal-discard-binding':
         specifier: ^7.28.0
         version: 7.28.0(@babel/core@7.28.5)
@@ -259,6 +262,12 @@ packages:
     resolution: {integrity: sha512-KKBU1VGYR7ORr3At5HAtUQ+TV3SzRCXmA/8OdDZiLDBIZxVyzXuztPjfLd3BV1PRAQGCMWWSHYhL0F8d5uHBDQ==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+
+  '@babel/plugin-proposal-async-do-expressions@7.27.1':
+    resolution: {integrity: sha512-Oc8CvH82Sw2eJOhSqVNQlgsvXsSDhOd7rDqzwt5HhzZtHYrZ9IJ/Wttl9gKQu3murfRYA6KGtiDq6yrl3RHahw==}
+    engines: {node: '>=6.9.0'}
+    peerDependencies:
+      '@babel/core': ^7.13.0
 
   '@babel/plugin-proposal-discard-binding@7.28.0':
     resolution: {integrity: sha512-ymL/1aMPQUcCvSfsXyF1O5hoRU+cI2R1YCRc7JyNIO+z2h800N16lorD98//A854OgrcniesM0y81q9tlAV9qw==}
@@ -2297,6 +2306,14 @@ snapshots:
   '@babel/parser@7.28.5':
     dependencies:
       '@babel/types': 7.28.5
+
+  '@babel/plugin-proposal-async-do-expressions@7.27.1(@babel/core@7.28.5)':
+    dependencies:
+      '@babel/core': 7.28.5
+      '@babel/helper-plugin-utils': 7.27.1
+      '@babel/traverse': 7.28.5
+    transitivePeerDependencies:
+      - supports-color
 
   '@babel/plugin-proposal-discard-binding@7.28.0(@babel/core@7.28.5)':
     dependencies:
