@@ -20,6 +20,7 @@
 		"@babel/plugin-proposal-do-expressions": "^7.28.3",
 		"@babel/plugin-proposal-export-default-from": "^7.27.1",
 		"@babel/plugin-proposal-pipeline-operator": "^7.27.1",
+		"@babel/plugin-proposal-throw-expressions": "^7.27.1",
 		"@babel/plugin-transform-typescript": "^7.28.5",
 		"@jsp/plugin-chained-comparisons": "workspace:*",
 		"@jsp/plugin-negative-array-subscript": "workspace:*",

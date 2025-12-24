@@ -35,6 +35,9 @@ importers:
       '@babel/plugin-proposal-pipeline-operator':
         specifier: ^7.27.1
         version: 7.27.1(@babel/core@7.28.5)
+      '@babel/plugin-proposal-throw-expressions':
+        specifier: ^7.27.1
+        version: 7.27.1(@babel/core@7.28.5)
       '@babel/plugin-transform-typescript':
         specifier: ^7.28.5
         version: 7.28.5(@babel/core@7.28.5)
@@ -268,6 +271,12 @@ packages:
 
   '@babel/plugin-proposal-pipeline-operator@7.27.1':
     resolution: {integrity: sha512-3q36hiN0qG4KI+rDVJW3HVIQWLnX09E+QkraVJYWG4QPqOgiZaeyIFOfTyzWE2ZDVo9ZO0LZeyvBM8T+nhPlZA==}
+    engines: {node: '>=6.9.0'}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+
+  '@babel/plugin-proposal-throw-expressions@7.27.1':
+    resolution: {integrity: sha512-pnGZCFdGiN3vHk54wWIvLJV3MXviRjCkSWhPtCkra6AW3AP3AcrRByT5jOnuk6nwu9VYT/B7ujdaLiBnkmc0hw==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -2295,6 +2304,11 @@ snapshots:
       '@babel/core': 7.28.5
       '@babel/helper-plugin-utils': 7.27.1
       '@babel/plugin-syntax-pipeline-operator': 7.27.1(@babel/core@7.28.5)
+
+  '@babel/plugin-proposal-throw-expressions@7.27.1(@babel/core@7.28.5)':
+    dependencies:
+      '@babel/core': 7.28.5
+      '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/plugin-syntax-pipeline-operator@7.27.1(@babel/core@7.28.5)':
     dependencies:
