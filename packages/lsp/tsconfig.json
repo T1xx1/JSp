@@ -1,21 +1,15 @@
 {
+	"include": ["./src"],
+	"exclude": ["./node_modules"],
 	"compilerOptions": {
+		"skipLibCheck": true,
 		"module": "commonjs",
 		"target": "ES2024",
-		"lib": [
-			"ES2024"
-		],
+		"lib": ["ES2024"],
 		"outDir": "out",
 		"rootDir": "src",
 		"sourceMap": true
 	},
-	"include": [
-		"src"
-	],
-	"exclude": [
-		"node_modules",
-		".vscode-test"
-	],
 	"references": [
 		{
 			"path": "./client"

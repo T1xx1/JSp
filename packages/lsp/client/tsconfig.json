@@ -1,20 +1,18 @@
 {
+	"include": ["./src"],
+	"exclude": ["./node_modules"],
 	"compilerOptions": {
+		"skipLibCheck": true,
+		/* env */
 		"module": "commonjs",
+		"moduleResolution": "node",
+		/* type checker */
+		"strict": true,
+		/* compiler */
 		"target": "ES2024",
-		"lib": [
-			"ES2024"
-		],
-		"outDir": "out",
-		"rootDir": "src",
 		"sourceMap": true,
-		"strict": true
-	},
-	"include": [
-		"src"
-	],
-	"exclude": [
-		"node_modules",
-		".vscode-test"
-	]
+		"lib": ["ES2024"],
+		"rootDir": "./src",
+		"outDir": "./out"
+	}
 }
