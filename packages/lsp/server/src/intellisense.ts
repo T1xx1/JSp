@@ -1,39 +1,66 @@
 import { CompletionItem, CompletionItemKind } from 'vscode-languageserver';
 
-type Item = Omit<CompletionItem, 'data' | 'detail' | 'documentation'> &
-	Partial<Pick<CompletionItem, 'detail' | 'documentation'>>;
+import { tslsp } from './tslsp';
+import { path } from './utils';
 
-const intellisense = new Map<CompletionItem['data'], Item>([
-	[
-		240,
-		{
-			kind: CompletionItemKind.Operator,
-			label: '|>',
-			detail: 'Pipeline operator',
+const intellisense: CompletionItem[] = [
+	{
+		kind: CompletionItemKind.Operator,
+		label: '|>',
+		detail: 'Pipeline operator',
+		data: {
+			id: '240',
 		},
-	],
-]);
-const intellisenseOptimized = [...intellisense.entries()].map(([k, v]) => {
-	return {
-		data: k,
-		kind: v.kind,
-		label: v.label,
-	};
-});
+	},
+];
 
-export const getIntellisense = (): CompletionItem[] => {
-	return intellisenseOptimized;
+export const getIntellisense = (uri: string, offset: number): CompletionItem[] => {
+	const tsCompletisions = tslsp.getCompletionsAtPosition(path(uri), offset, undefined);
+
+	return [
+		...(!tsCompletisions
+			? []
+			: tsCompletisions.entries.map((completition) => {
+					let kind: CompletionItemKind;
+
+					switch (completition.kind) {
+						case 'const': {
+							kind = CompletionItemKind.Constant;
+						}
+						case 'keyword': {
+							kind = CompletionItemKind.Keyword;
+						}
+						case 'var': {
+							kind = CompletionItemKind.Variable;
+						}
+						case 'module': {
+							kind = CompletionItemKind.Module;
+						}
+						default: {
+							kind = CompletionItemKind.Text;
+						}
+					}
+
+					return {
+						kind: kind,
+						label: completition.name,
+						labelDetails: completition.labelDetails,
+						data: {
+							id: `typescript-${completition.name}`,
+						},
+					};
+			  })),
+		...intellisense.map((completition) => {
+			return {
+				...completition,
+				data: {
+					id: completition.data.id,
+				},
+			};
+		}),
+	];
 };
 
 export const getIntellisenseItemInfo = (item: CompletionItem): CompletionItem => {
-	const i = intellisense.get(item.data)!;
-
-	if (!i.detail) {
-		item.detail = i.label;
-	}
-	if (!i.documentation) {
-		item.documentation = i.label;
-	}
-
 	return item;
 };

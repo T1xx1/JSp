@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import {
 	createConnection,
 	TextDocuments,
@@ -7,20 +8,43 @@ import {
 	TextDocumentSyncKind,
 	DocumentDiagnosticReportKind,
 	type DocumentDiagnosticReport,
-	type InitializeResult,
 } from 'vscode-languageserver/node';
-
 import { TextDocument } from 'vscode-languageserver-textdocument';
+
 import { getIntellisense, getIntellisenseItemInfo } from './intellisense';
 import { getDiagnostics } from './diagnostics';
 
 const connection = createConnection(ProposedFeatures.all);
 
-const documents = new TextDocuments(TextDocument);
+const editor = new TextDocuments(TextDocument);
+
+const files = new Map<
+	string,
+	{
+		version: number;
+		content: string;
+	}
+>();
+
+export const setFile = (document: TextDocument) => {
+	files.set(fileURLToPath(document.uri).replaceAll('\\', '/').toLowerCase(), {
+		version: document.version,
+		content: document.getText(),
+	});
+};
+export const hasFile = (filename: string) => {
+	return files.has(filename);
+};
+export const getFile = (filename: string) => {
+	return files.get(filename);
+};
+export const getFiles = () => {
+	return files;
+};
 
 /* Initialization */
 connection.onInitialize(() => {
-	const result: InitializeResult = {
+	return {
 		capabilities: {
 			textDocumentSync: TextDocumentSyncKind.Incremental,
 			completionProvider: {
@@ -32,40 +56,50 @@ connection.onInitialize(() => {
 			},
 		},
 	};
-
-	return result;
 });
 
 /* Diagnostics */
-connection.languages.diagnostics.on(async (params) => {
-	const document = documents.get(params.textDocument.uri);
-	if (document !== undefined) {
-		return {
-			kind: DocumentDiagnosticReportKind.Full,
-			items: await getDiagnostics(document),
-		} satisfies DocumentDiagnosticReport;
-	} else {
-		// We don't know the document. We can either try to read it from disk
-		// or we don't report problems for it.
+connection.languages.diagnostics.on(async (params): Promise<DocumentDiagnosticReport> => {
+	const document = editor.get(params.textDocument.uri);
+
+	if (!document) {
 		return {
 			kind: DocumentDiagnosticReportKind.Full,
 			items: [],
-		} satisfies DocumentDiagnosticReport;
+		};
 	}
+
+	setFile(document);
+
+	return {
+		kind: DocumentDiagnosticReportKind.Full,
+		items: await getDiagnostics(document),
+	};
 });
 
-documents.onDidChangeContent(async (change) => {
-	await getDiagnostics(change.document);
+editor.onDidChangeContent(async ({ document }) => {
+	setFile(document);
+
+	await getDiagnostics(document);
 });
 
 /* Intellisense */
-connection.onCompletion((_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
-	return getIntellisense();
+connection.onCompletion((textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
+	const document = editor.get(textDocumentPosition.textDocument.uri);
+
+	if (!document) {
+		return [];
+	}
+
+	return getIntellisense(
+		textDocumentPosition.textDocument.uri,
+		document.offsetAt(textDocumentPosition.position)
+	);
 });
 connection.onCompletionResolve((item: CompletionItem): CompletionItem => {
 	return getIntellisenseItemInfo(item);
 });
 
 /* Listeners */
-documents.listen(connection);
+editor.listen(connection);
 connection.listen();

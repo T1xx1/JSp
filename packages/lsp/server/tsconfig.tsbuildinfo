@@ -1,1 +1,1 @@
-{"root":["./src/diagnostics.ts","./src/intellisense.ts","./src/server.ts"],"version":"5.9.3"}
+{"root":["./src/diagnostics.ts","./src/intellisense.ts","./src/server.ts","./src/tslsp.ts","./src/utils.ts"],"version":"5.9.3"}

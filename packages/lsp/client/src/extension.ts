@@ -31,7 +31,7 @@ export function activate(context: ExtensionContext) {
 
 	client = new LanguageClient(
 		'JS+ LSP',
-		'JS+ language server protocol',
+		'JS+ language server',
 		serverOptions,
 		clientOptions
 	);
