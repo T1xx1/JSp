@@ -9,6 +9,7 @@ export const compile = (jspCode: string): string => {
 		plugins: [
 			'@babel/plugin-transform-typescript',
 			'@babel/plugin-proposal-export-default-from',
+			'module:@jsp/plugin-typeof-operator',
 			'module:@jsp/plugin-negative-array-subscript',
 			[
 				'@babel/plugin-proposal-discard-binding',

@@ -1,0 +1,23 @@
+{
+	"name": "@jsp/plugin-typeof-operator",
+	"type": "module",
+	"version": "0.0.0",
+	"scripts": {
+		"dev": "tsc -w",
+		"build": "tsc",
+		"test": "tester"
+	},
+	"exports": {
+		".": {
+			"default": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"peerDependencies": {
+		"@babel/core": "^7.28.5"
+	},
+	"devDependencies": {
+		"tester": "workspace:*",
+		"typescript": "^5.9.3"
+	}
+}
