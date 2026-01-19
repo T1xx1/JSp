@@ -8,7 +8,6 @@ export const compile = (jspCode: string): string => {
 	const jsCode = transformSync(jspCode, {
 		plugins: [
 			'@babel/plugin-transform-typescript',
-			'@babel/plugin-proposal-export-default-from',
 			'module:@jsp/plugin-typeof-operator',
 			'module:@jsp/plugin-negative-array-subscript',
 			[
@@ -28,6 +27,7 @@ export const compile = (jspCode: string): string => {
 					topicToken: '%',
 				},
 			],
+			'@babel/plugin-proposal-export-default-from',
 		],
 	});
 
