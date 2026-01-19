@@ -10,9 +10,13 @@
 		"jspc": "./bin/jspc.js"
 	},
 	"exports": {
-		".": {
-			"default": "./dist/index.js",
-			"types": "./dist/index.d.ts"
+		"compiler": {
+			"default": "./dist/compiler/index.js",
+			"types": "./dist/compiler/index.d.ts"
+		},
+		"config": {
+			"default": "./dist/config/index.js",
+			"types": "./dist/config/index.d.ts"
 		}
 	},
 	"devDependencies": {
