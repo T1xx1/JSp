@@ -1,6 +1,6 @@
 {
 	"name": "extension-vscode",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"displayName": "JS+",
 	"description": "JS+ for VSCode",
 	"icon": "./src/assets/icon.png",
