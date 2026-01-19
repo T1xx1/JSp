@@ -1,10 +1,10 @@
 import fs from 'node:fs';
 import process from 'node:process';
 
-import { compile } from '../compiler.js';
+import { compile } from '../compiler/index.js';
 import { joinCwd } from './lib.js';
 
-import type { Config } from '../config.js';
+import type { Config } from '../config/index.js';
 import path from 'node:path';
 
 const args = process.argv.slice(2);
@@ -49,7 +49,7 @@ const compileDir = (filenames: string[]) => {
 		/* file */
 		const outFile = joinCwd(
 			config.outDir,
-			inFile.split('\\').slice(1).join('\\').replace('.jsp', '.js')
+			inFile.split('\\').slice(1).join('\\').replace('.jsp', '.js'),
 		);
 
 		fs.mkdirSync(path.dirname(outFile), { recursive: true });
