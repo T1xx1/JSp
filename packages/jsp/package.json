@@ -10,6 +10,10 @@
 		"jspc": "./bin/jspc.js"
 	},
 	"exports": {
+		"default": {
+			"default": "./dist/polyfills/index.js",
+			"types": "./dist/polyfills/index.d.ts"
+		},
 		"compiler": {
 			"default": "./dist/compiler/index.js",
 			"types": "./dist/compiler/index.d.ts"
