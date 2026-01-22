@@ -8,7 +8,7 @@ export const compile = (jspCode: string): string => {
 	const jsCode = transformSync(jspCode, {
 		plugins: [
 			'@babel/plugin-transform-typescript',
-			'module:@jsp/plugin-typeof-operator',
+			'module:@jsp/plugin-typeof-null-operator',
 			'module:@jsp/plugin-negative-array-subscript',
 			[
 				'@babel/plugin-proposal-discard-binding',

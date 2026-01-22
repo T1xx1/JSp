@@ -1,5 +1,5 @@
 {
-	"name": "@jsp/plugin-typeof-operator",
+	"name": "@jsp/plugin-typeof-null-operator",
 	"type": "module",
 	"version": "0.1.0",
 	"scripts": {

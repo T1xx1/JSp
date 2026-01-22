@@ -53,9 +53,9 @@ importers:
       '@jsp/plugin-negative-array-subscript':
         specifier: workspace:*
         version: link:../plugin-negative-array-subscript
-      '@jsp/plugin-typeof-operator':
+      '@jsp/plugin-typeof-null-operator':
         specifier: workspace:*
-        version: link:../plugin-typeof-operator
+        version: link:../plugin-typeof-null-operator
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
@@ -142,7 +142,7 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/plugin-typeof-operator:
+  packages/plugin-typeof-null-operator:
     dependencies:
       '@babel/core':
         specifier: ^7.28.5
