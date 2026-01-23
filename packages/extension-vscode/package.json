@@ -8,7 +8,7 @@
 		"vscode": "^1.107.0"
 	},
 	"scripts": {
-		"build": "pnpm exec vsce package -o ./dist"
+		"build": "pnpm exec vsce package"
 	},
 	"devDependencies": {
 		"@vscode/vsce": "^3.7.1",
