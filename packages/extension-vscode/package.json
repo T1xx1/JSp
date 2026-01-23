@@ -31,6 +31,7 @@
 				"extensions": [
 					".jsp"
 				],
+				"configuration": "./src/syntaxes/language-configuration.json",
 				"icon": {
 					"light": "./src/assets/miniature.png",
 					"dark": "./src/assets/miniature.png"
