@@ -1,6 +1,6 @@
-import path from 'node:path';
-import process from 'node:process';
+import { join } from 'node:path';
+import { cwd } from 'node:process';
 
 export const joinCwd = (...paths: string[]) => {
-	return path.join(process.cwd(), ...paths);
+	return join(cwd(), ...paths);
 };
