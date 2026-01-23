@@ -7,7 +7,7 @@
 		"build": "tsc"
 	},
 	"bin": {
-		"jspc": "./bin/jspc.js"
+		"jsp": "./bin/jsp.js"
 	},
 	"exports": {
 		"default": {
