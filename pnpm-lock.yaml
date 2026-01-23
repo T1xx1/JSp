@@ -157,19 +157,19 @@ importers:
 
   packages/tester:
     dependencies:
+      '@babel/core':
+        specifier: ^7.28.5
+        version: 7.28.5
+    devDependencies:
+      '@babel/plugin-transform-typescript':
+        specifier: ^7.28.5
+        version: 7.28.5(@babel/core@7.28.5)
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
       '@types/node':
         specifier: ^25.0.3
         version: 25.0.3
-    devDependencies:
-      '@babel/core':
-        specifier: ^7.28.5
-        version: 7.28.5
-      '@babel/plugin-transform-typescript':
-        specifier: ^7.28.5
-        version: 7.28.5(@babel/core@7.28.5)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
