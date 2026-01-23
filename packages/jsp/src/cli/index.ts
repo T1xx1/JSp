@@ -1,9 +1,7 @@
 import fs from 'node:fs';
-import path from 'node:path';
 import process from 'node:process';
 
-
-import { compile } from '../compiler/index.js';
+import { compileDir } from '../compiler/index.js';
 import { mergeConfig, type CompleteConfig, type Config } from '../config/index.js';
 import { tryCatchSync } from '../polyfills/trycatch.js';
 import { joinCwd } from '../utils/lib.js';
@@ -49,24 +47,4 @@ if (!config) {
 
 /* main */
 
-const compileDir = (filenames: string[]) => {
-	for (const filename of filenames) {
-		if (fs.statSync(filename).isDirectory()) {
-			compileDir(fs.readdirSync(filename).map((f) => path.join(filename, f)));
-
-			continue;
-		}
-
-		/* file */
-		const emit = joinCwd(
-			config.compiler.emitDir,
-			filename.split('\\').slice(1).join('\\').replace('.jsp', '.js'),
-		);
-
-		fs.mkdirSync(path.dirname(emit), { recursive: true });
-
-		fs.writeFileSync(emit, compile(fs.readFileSync(filename, 'utf8')), 'utf8');
-	}
-};
-
-compileDir(config.include);
+compileDir(config);
