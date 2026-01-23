@@ -1,17 +1,18 @@
 import fs from 'node:fs';
+import path from 'node:path';
 import process from 'node:process';
 
-import { compile } from '../compiler/index.js';
 import { joinCwd } from './lib.js';
 
-import type { Config } from '../config/index.js';
-import path from 'node:path';
+import { compile } from '../compiler/index.js';
+import { mergeConfig, type CompleteConfig, type Config } from '../config/index.js';
+import { tryCatchSync } from '../polyfills/trycatch.js';
 
 const args = process.argv.slice(2);
 
 /* config */
-let config = null;
-let configPath = null;
+let config: null | CompleteConfig = null;
+let configPath: null | string = null;
 
 if (fs.existsSync(joinCwd('config/jsp.json'))) {
 	configPath = joinCwd('config/jsp.json');
@@ -27,41 +28,45 @@ if (fs.existsSync(joinCwd('jsp.config.ts'))) {
 }
 
 if (configPath) {
-	try {
-		config = JSON.parse(fs.readFileSync(configPath, 'utf8')) as Config;
-	} catch (error) {
+	const { data, error } = tryCatchSync(() => {
+		return JSON.parse(fs.readFileSync(configPath, 'utf8')) as Config;
+	});
+
+	if (error || !data) {
 		console.error('JS+ error: failed to parse config');
 		console.error(error);
 
 		process.exit();
 	}
+
+	config = mergeConfig(data);
 }
 
+/* not defined config */
 if (!config) {
-	console.error('JS+ error: missing config');
-
-	process.exit();
+	config = mergeConfig({});
 }
 
 /* main */
+
 const compileDir = (filenames: string[]) => {
-	for (const inFile of filenames) {
-		if (fs.statSync(inFile).isDirectory()) {
-			compileDir(fs.readdirSync(inFile).map((f) => path.join(inFile, f)));
+	for (const filename of filenames) {
+		if (fs.statSync(filename).isDirectory()) {
+			compileDir(fs.readdirSync(filename).map((f) => path.join(filename, f)));
 
 			continue;
 		}
 
 		/* file */
-		const outFile = joinCwd(
-			config.outDir,
-			inFile.split('\\').slice(1).join('\\').replace('.jsp', '.js'),
+		const emit = joinCwd(
+			config.compiler.emitDir,
+			filename.split('\\').slice(1).join('\\').replace('.jsp', '.js'),
 		);
 
-		fs.mkdirSync(path.dirname(outFile), { recursive: true });
+		fs.mkdirSync(path.dirname(emit), { recursive: true });
 
-		fs.writeFileSync(outFile, compile(fs.readFileSync(inFile, 'utf8')), 'utf8');
+		fs.writeFileSync(emit, compile(fs.readFileSync(filename, 'utf8')), 'utf8');
 	}
 };
 
-compileDir([config.inDir]);
+compileDir(config.include);
