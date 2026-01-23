@@ -5,8 +5,10 @@
 	},
 	"packageManager": "pnpm@10.26.1",
 	"scripts": {
-		"dev": "turbo dev --filter=jsp...",
-		"build": "turbo build --filter=jsp...",
+		"dev": "turbo dev",
+		"build": "turbo build",
+		"jsp:dev": "turbo dev --filter=jsp... --filter=!tester",
+		"jsp:build": "turbo build --filter=jsp... --filter=!tester",
 		"extension-vscode:dev": "turbo vscode:dev --filter=extension-vscode...",
 		"extension-vscode:build": "turbo vscode:build --filter=extension-vscode...",
 		"test": "turbo test"
