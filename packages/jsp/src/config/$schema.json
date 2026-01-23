@@ -1,0 +1,39 @@
+{
+	"$schema": "http://json-schema.org/draft/2020-12/schema",
+	"title": "JS+ configuration",
+	"type": "object",
+	"required": ["$schema"],
+	"additionalProperties": false,
+	"properties": {
+		"include": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"description": "List of glob patterns that match JS+ files to be parsed. Defaults to ['./**']"
+		},
+		"exclude": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"description": "List of glob patterns to exclude for the include property"
+		},
+		"compiler": {
+			"type": "object",
+			"description": "JS+ compiler options",
+			"additionalProperties": false,
+			"properties": {
+				"emitLang": {
+					"type": "string",
+					"enum": ["JavaScript", "TypeScript"],
+					"description": "Language to compile JS+ into. Defaults to 'JavaScript'"
+				},
+				"emitDir": {
+					"type": "string",
+					"description": "Output directory. Defaults to './dist'"
+				}
+			}
+		}
+	}
+}
