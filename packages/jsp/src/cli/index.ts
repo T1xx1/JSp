@@ -2,11 +2,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 
-import { joinCwd } from './lib.js';
 
 import { compile } from '../compiler/index.js';
 import { mergeConfig, type CompleteConfig, type Config } from '../config/index.js';
 import { tryCatchSync } from '../polyfills/trycatch.js';
+import { joinCwd } from '../utils/lib.js';
 
 const args = process.argv.slice(2);
 
