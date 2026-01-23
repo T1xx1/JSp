@@ -1,0 +1,39 @@
+import { transformSync } from '@babel/core';
+
+export const compile = (jspCode: string): string => {
+	if (jspCode === '') {
+		return '';
+	}
+
+	const jsCode = transformSync(jspCode, {
+		plugins: [
+			'@babel/plugin-transform-typescript',
+			'module:@jsp/plugin-typeof-null-operator',
+			'module:@jsp/plugin-negative-array-subscript',
+			[
+				'@babel/plugin-proposal-discard-binding',
+				{
+					syntaxType: 'void',
+				},
+			],
+			'@babel/plugin-proposal-throw-expressions',
+			'@babel/plugin-proposal-async-do-expressions',
+			'@babel/plugin-proposal-do-expressions',
+			'module:@jsp/plugin-chained-comparisons',
+			[
+				'@babel/plugin-proposal-pipeline-operator',
+				{
+					proposal: 'hack',
+					topicToken: '%',
+				},
+			],
+			'@babel/plugin-proposal-export-default-from',
+		],
+	});
+
+	if (!jsCode || !jsCode.code) {
+		throw new Error('JS+ error: null babel transformation');
+	}
+
+	return jsCode.code;
+};
