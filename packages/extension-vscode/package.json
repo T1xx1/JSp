@@ -46,7 +46,7 @@
 			},
 			{
 				"scopeName": "markdown.codeblock.jsp",
-				"path": "./src/syntaxes/jsp.codeblock.md.json",
+				"path": "./src/syntaxes/jsp.codeblock.json",
 				"injectTo": [
 					"text.html.markdown"
 				],
