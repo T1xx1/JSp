@@ -7,11 +7,10 @@ export default function ({ types: t }: any) {
 					return;
 				}
 
-				path.replaceWith(
-					t.callExpression(
-						t.memberExpression(t.identifier(path.node.object.name), t.identifier('at')),
-						[t.unaryExpression('-', t.numericLiteral(path.node.property.argument.value), true)]
-					)
+				path.node.property = t.binaryExpression(
+					'-',
+					t.memberExpression(t.cloneNode(path.node.object), t.identifier('length')),
+					t.cloneNode(path.node.property.argument),
 				);
 			},
 		},
