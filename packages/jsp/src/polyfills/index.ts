@@ -1,1 +1,1 @@
-import './trycatch.js';
+export * from './trycatch.js';
