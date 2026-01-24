@@ -4,7 +4,7 @@ import { dirname, join } from 'node:path';
 import { chdir, cwd, exit } from 'node:process';
 import { transformSync } from '@babel/core';
 
-const dir = dirname(dirname(import.meta.url.split('///')[1]));
+const dir = dirname(dirname(import.meta.url.split('///')[1]!));
 
 const moduleDir = cwd();
 const module = await import('file:///' + join(moduleDir, 'src/index.ts'));

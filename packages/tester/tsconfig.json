@@ -1,16 +1,27 @@
 {
 	"include": ["./src/**/*.ts"],
 	"compilerOptions": {
+		/* parser */
 		"skipLibCheck": true,
-		/* env */
-		"module": "ESNext",
+		"alwaysStrict": true /* ECMAScript */,
+		"strict": true /* TypeScript */,
+		"module": "NodeNext",
 		"moduleDetection": "force",
-		"moduleResolution": "bundler",
-		/* linter */
-		"verbatimModuleSyntax": true,
-		"noImplicitAny": true,
+		"resolveJsonModule": true /* JSON */,
 		/* type checking */
-		"strict": true,
+		"exactOptionalPropertyTypes": true,
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"noUncheckedIndexedAccess": true,
+		"noUncheckedSideEffectImports": true,
+		/* linter */
+		"allowUnreachableCode": false,
+		"allowUnusedLabels": false,
+		"noImplicitOverride": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"verbatimModuleSyntax": true,
 		/* compiler */
 		"target": "ESNext",
 		"sourceMap": true,
