@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 
 import { tryCatchSync } from '../polyfills/trycatch.js';
-import { joinCwd } from '../utils/lib.js';
+import { joinCwd, log } from '../utils/index.js';
 
 export type Config = {
 	include?: string[];
