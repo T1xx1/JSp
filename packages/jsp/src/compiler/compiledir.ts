@@ -12,10 +12,10 @@ export const compileDir = (config: CompleteConfig) => {
 	}).filter((f) => f.endsWith('.jsp'));
 
 	for (const filename of filenames) {
-		const emitPath = joinCwd(config.compiler.emitDir, filename.replace('.jsp', '.js'));
+		const emitPath = joinCwd(config.compiler.emitDir, filename.replace('.jsp', config.compiler.emitLang === 'TypeScript' ? '.ts' : '.js'));
 
 		mkdirSync(dirname(emitPath), { recursive: true });
 
-		writeFileSync(emitPath, compile(readFileSync(filename, 'utf8')), 'utf8');
+		writeFileSync(emitPath, compile(readFileSync(filename, 'utf8'), config), 'utf8');
 	}
 };

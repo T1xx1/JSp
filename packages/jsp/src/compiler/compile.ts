@@ -1,13 +1,15 @@
 import { transformSync } from '@babel/core';
 
-export const compile = (jspCode: string): string => {
+import type { CompleteConfig } from '../config/index.js';
+
+export const compile = (jspCode: string, config: CompleteConfig): string => {
 	if (jspCode === '') {
 		return '';
 	}
 
 	const jsCode = transformSync(jspCode, {
 		plugins: [
-			'@babel/plugin-transform-typescript',
+			config.compiler.emitLang === 'TypeScript' ? '@babel/plugin-syntax-typescript' : '@babel/plugin-transform-typescript',
 			'module:@jsp/plugin-typeof-null-operator',
 			'module:@jsp/plugin-negative-array-subscript',
 			[
