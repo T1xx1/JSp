@@ -5,6 +5,9 @@
 	"required": ["$schema"],
 	"additionalProperties": false,
 	"properties": {
+		"$schema": {
+			"type": "string"
+		},
 		"include": {
 			"type": "array",
 			"items": {

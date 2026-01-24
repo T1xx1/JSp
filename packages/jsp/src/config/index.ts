@@ -49,7 +49,7 @@ export const getConfig = (): null | Config => {
 
 export const getInitConfig = () => {
 	return {
-		$schema: 'https://github.com/t1xx1/jsp/blob/main/packages/jsp/src/config/$schema.json',
+		$schema: 'https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/src/config/%24schema.json',
 	};
 };
 
@@ -60,7 +60,7 @@ export const completeConfig: CompleteConfig = {
 	include: ['./**'],
 	exclude: [],
 	compiler: {
-		emitLang: 'JavaScript',
+		emitLang: 'TypeScript',
 		emitDir: './dist',
 	},
 };
