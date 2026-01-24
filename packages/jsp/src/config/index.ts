@@ -34,10 +34,7 @@ export const getConfig = (): null | Config => {
 		});
 
 		if (error || !data) {
-			console.error('JS+ error: failed to parse config');
-			console.error(error);
-
-			process.exit();
+			throw log.exit('JS+ error: failed to parse config', error);
 		}
 
 		return data;
