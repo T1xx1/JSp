@@ -1,4 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs';
+import { exit } from 'node:process';
 
 import { tryCatchSync } from '../polyfills/index.js';
 import { joinCwd, log } from '../utils/index.js';
@@ -34,7 +35,9 @@ export const getConfig = (): null | Config => {
 		});
 
 		if (error || !data) {
-			throw log.exit('JS+ error: failed to parse config', error);
+			log.error('JS+ error: failed to parse config', error);
+
+			exit();
 		}
 
 		return data;
