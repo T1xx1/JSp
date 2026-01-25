@@ -1,8 +1,11 @@
-export default function ({ types: t }: any) {
+import { types, type NodePath } from '@babel/core';
+import type { UnaryExpression } from '@babel/types';
+
+export default function ({ types: t }: { types: typeof types }) {
 	return {
 		name: '@jsp/plugin-typeof-null-operator',
 		visitor: {
-			UnaryExpression(path: any) {
+			UnaryExpression(path: NodePath<UnaryExpression>) {
 				if (path.node.operator !== 'typeof' || !t.isNullLiteral(path.node.argument)) {
 					return;
 				}

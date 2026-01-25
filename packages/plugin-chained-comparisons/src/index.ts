@@ -1,8 +1,11 @@
-export default function ({ types: t }: any) {
+import { types, type NodePath } from '@babel/core';
+import type { BinaryExpression } from '@babel/types';
+
+export default function ({ types: t }: { types: typeof types }) {
 	return {
 		name: '@jsp/plugin-chained-comparisons',
 		visitor: {
-			BinaryExpression(path: any) {
+			BinaryExpression(path: NodePath<BinaryExpression>) {
 				const comparisons = ['>', '>=', '<', '<='];
 
 				if (!comparisons.includes(path.node.operator)) {
@@ -21,8 +24,8 @@ export default function ({ types: t }: any) {
 						t.logicalExpression(
 							'&&',
 							leftSide,
-							t.binaryExpression(path.node.operator, tempId, path.node.right)
-						)
+							t.binaryExpression(path.node.operator, tempId, path.node.right),
+						),
 					);
 				}
 			},

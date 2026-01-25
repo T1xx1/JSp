@@ -1,8 +1,11 @@
-export default function ({ types: t }: any) {
+import { types, type NodePath } from '@babel/core';
+import type { MemberExpression } from '@babel/types';
+
+export default function ({ types: t }: { types: typeof types }) {
 	return {
 		name: '@jsp/plugin-negative-array-subscript',
 		visitor: {
-			MemberExpression(path: any) {
+			MemberExpression(path: NodePath<MemberExpression>) {
 				if (
 					!path.node.computed ||
 					!t.isUnaryExpression(path.node.property) ||
