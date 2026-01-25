@@ -49,6 +49,7 @@ for (const testFilename of testFilenames) {
 
 chdir(testerRoot);
 
-const log = execSync(`pnpm exec vitest --dir ${emitDir}`);
-
-console.log(log.toString());
+execSync(`pnpm exec vitest --dir ${emitDir}`, {
+	stdio: 'inherit',
+	encoding: 'utf8',
+});

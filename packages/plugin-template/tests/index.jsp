@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'tester';
 
-describe('plugin-template', () => {
+describe('baseline', () => {
 	it('should...', () => {
 
 	})
