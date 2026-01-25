@@ -1,1 +1,1 @@
-export { expect, test } from 'vitest';
+export * from 'vitest';

@@ -169,6 +169,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
     devDependencies:
       '@babel/plugin-transform-typescript':
         specifier: ^7.28.5
@@ -179,9 +182,6 @@ importers:
       '@types/node':
         specifier: ^25.0.3
         version: 25.0.3
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
       vitest:
         specifier: ^4.0.16
         version: 4.0.16(@types/node@25.0.3)
