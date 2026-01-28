@@ -1,15 +1,25 @@
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { exit } from 'node:process';
+
 import { transformSync } from '@babel/core';
 
 import type { CompleteConfig } from '../config/index.js';
+import { log } from '../utils/log.js';
+import { joinCwd } from '../utils/lib.js';
+import { dirname } from 'node:path';
 
-export const compile = (jspCode: string, config: CompleteConfig): string => {
+export const compile = (filename: string, config: CompleteConfig) => {
+	const jspCode = readFileSync(filename, 'utf8');
+
 	if (jspCode === '') {
-		return '';
+		log.warn('MKYI29512F', `${filename} is empty`);
+
+		return;
 	}
 
-	const jsCode = transformSync(jspCode, {
+	const out = transformSync(jspCode, {
 		plugins: [
-			/* parse TypeScript */
+			/* parse/transform TypeScript */
 			config.compiler.emitLang === 'TypeScript'
 				? '@babel/plugin-syntax-typescript'
 				: '@babel/plugin-transform-typescript',
@@ -19,7 +29,7 @@ export const compile = (jspCode: string, config: CompleteConfig): string => {
 			'module:@jsp/plugin-transform-negative-array-subscript',
 			'module:@jsp/plugin-transform-chained-comparisons',
 
-			/* sorted by scope */
+			/* transform TC39 sorted by scope */
 			'@babel/plugin-proposal-throw-expressions',
 			'@babel/plugin-proposal-do-expressions',
 			'@babel/plugin-proposal-async-do-expressions',
@@ -40,9 +50,18 @@ export const compile = (jspCode: string, config: CompleteConfig): string => {
 		],
 	});
 
-	if (!jsCode || !jsCode.code) {
-		throw new Error('JS+ error: null babel transformation');
+	if (!out || !out.code) {
+		log.error('MKYHKYDERU', 'Null Babel transformation');
+
+		exit();
 	}
 
-	return jsCode.code;
+	const emitPath = joinCwd(
+		config.compiler.emitDir,
+		filename.replace('.jsp', config.compiler.emitLang === 'TypeScript' ? '.ts' : '.js'),
+	);
+
+	mkdirSync(dirname(emitPath), { recursive: true });
+
+	writeFileSync(emitPath, out.code, 'utf8');
 };

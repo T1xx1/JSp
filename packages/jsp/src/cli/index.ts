@@ -4,9 +4,11 @@ import { cwd, exit } from 'node:process';
 
 import { Command } from 'commander';
 
-import { compileDir } from '../compiler/index.js';
+import { compile } from '../compiler/index.js';
 import { getConfig, getInitConfig, mergeConfig } from '../config/index.js';
 import { log } from '../utils/index.js';
+
+import { getInputs } from './inputs.js';
 
 const cli = new Command();
 
@@ -39,7 +41,11 @@ cli
 	.action(() => {
 		const config = mergeConfig(getConfig() ?? {});
 
-		compileDir(config);
+		const inputs = getInputs(config);
+
+		for (const input of inputs) {
+			compile(input, config);
+		}
 
 		log.success('JS+ compiled successfully');
 	});

@@ -1,0 +1,19 @@
+import { globSync } from 'node:fs';
+import { exit } from 'node:process';
+
+import type { CompleteConfig } from '../config/index.js';
+import { log } from '../utils/log.js';
+
+export const getInputs = (config: CompleteConfig) => {
+	const inputs = globSync(config.include, {
+		exclude: ['node_modules'],
+	}).filter((f) => f.endsWith('.jsp'));
+
+	if (inputs.length === 0) {
+		log.error('MKYEZ40S6C', 'No JS+ inputs found with current `include` configuration');
+
+		exit();
+	}
+
+	return inputs;
+};
