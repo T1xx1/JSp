@@ -4,13 +4,15 @@ export const log = {
 	success: (message: string) => {
 		console.log(chalk.green(message));
 	},
-	warn: (message: string) => {
-		console.log(chalk.yellow(message));
+	warn: (duid: string, message: string) => {
+		console.log(chalk.yellow(`Warning (${duid}): ${message}`));
 	},
-	error: (message: string, error: Error) => {
-		console.log(chalk.red(message));
+	error: (duid: string, message: string, error?: Error) => {
+		console.log(chalk.red(`Error (${duid}): ${message}`));
 
-		console.error(error);
+		if (error) {
+			console.error(error);
+		}
 	},
 	info: (message: string) => {
 		console.log(chalk.gray(message));
