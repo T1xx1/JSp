@@ -1,4 +1,4 @@
-# Negative array subscript plugin
+# Negative array subscript transform plugin
 
 ```js+
 const array = [0, 1, 2, 3];

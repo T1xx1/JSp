@@ -1,4 +1,4 @@
-# Typeof null operator plugin
+# Typeof null operator transform plugin
 
 ```js+
 typeof null; // 'null'

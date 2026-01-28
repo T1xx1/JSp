@@ -1,5 +1,5 @@
 {
-	"name": "@jsp/plugin-negative-array-subscript",
+	"name": "@jsp/plugin-transform-negative-array-subscript",
 	"type": "module",
 	"version": "0.1.0",
 	"scripts": {

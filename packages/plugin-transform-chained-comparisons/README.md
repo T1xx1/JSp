@@ -1,4 +1,4 @@
-# Chained comparisons plugin
+# Chained comparisons transform plugin
 
 ```js+
 const a = 1;

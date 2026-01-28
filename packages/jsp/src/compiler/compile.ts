@@ -15,9 +15,9 @@ export const compile = (jspCode: string, config: CompleteConfig): string => {
 				: '@babel/plugin-transform-typescript',
 
 			/* transform custom syntax */
-			'module:@jsp/plugin-typeof-null-operator',
-			'module:@jsp/plugin-negative-array-subscript',
-			'module:@jsp/plugin-chained-comparisons',
+			'module:@jsp/plugin-transform-typeof-null-operator',
+			'module:@jsp/plugin-transform-negative-array-subscript',
+			'module:@jsp/plugin-transform-chained-comparisons',
 
 			/* sorted by scope */
 			'@babel/plugin-proposal-throw-expressions',

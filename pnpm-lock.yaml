@@ -50,15 +50,15 @@ importers:
       '@babel/plugin-transform-typescript':
         specifier: ^7.28.5
         version: 7.28.5(@babel/core@7.28.5)
-      '@jsp/plugin-chained-comparisons':
+      '@jsp/plugin-transform-chained-comparisons':
         specifier: workspace:*
-        version: link:../plugin-chained-comparisons
-      '@jsp/plugin-negative-array-subscript':
+        version: link:../plugin-transform-chained-comparisons
+      '@jsp/plugin-transform-negative-array-subscript':
         specifier: workspace:*
-        version: link:../plugin-negative-array-subscript
-      '@jsp/plugin-typeof-null-operator':
+        version: link:../plugin-transform-negative-array-subscript
+      '@jsp/plugin-transform-typeof-null-operator':
         specifier: workspace:*
-        version: link:../plugin-typeof-null-operator
+        version: link:../plugin-transform-typeof-null-operator
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
@@ -112,44 +112,6 @@ importers:
         specifier: ^1.0.11
         version: 1.0.12
 
-  packages/plugin-chained-comparisons:
-    dependencies:
-      '@babel/core':
-        specifier: ^7.28.5
-        version: 7.28.5
-      '@babel/types':
-        specifier: ^7.28.6
-        version: 7.28.6
-      '@types/babel__core':
-        specifier: ^7.20.5
-        version: 7.20.5
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-    devDependencies:
-      tester:
-        specifier: workspace:*
-        version: link:../tester
-
-  packages/plugin-negative-array-subscript:
-    dependencies:
-      '@babel/core':
-        specifier: ^7.28.5
-        version: 7.28.5
-      '@babel/types':
-        specifier: ^7.28.6
-        version: 7.28.6
-      '@types/babel__core':
-        specifier: ^7.20.5
-        version: 7.20.5
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-    devDependencies:
-      tester:
-        specifier: workspace:*
-        version: link:../tester
-
   packages/plugin-template:
     dependencies:
       '@babel/core':
@@ -169,7 +131,45 @@ importers:
         specifier: workspace:*
         version: link:../tester
 
-  packages/plugin-typeof-null-operator:
+  packages/plugin-transform-chained-comparisons:
+    dependencies:
+      '@babel/core':
+        specifier: ^7.28.5
+        version: 7.28.5
+      '@babel/types':
+        specifier: ^7.28.6
+        version: 7.28.6
+      '@types/babel__core':
+        specifier: ^7.20.5
+        version: 7.20.5
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+    devDependencies:
+      tester:
+        specifier: workspace:*
+        version: link:../tester
+
+  packages/plugin-transform-negative-array-subscript:
+    dependencies:
+      '@babel/core':
+        specifier: ^7.28.5
+        version: 7.28.5
+      '@babel/types':
+        specifier: ^7.28.6
+        version: 7.28.6
+      '@types/babel__core':
+        specifier: ^7.20.5
+        version: 7.20.5
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+    devDependencies:
+      tester:
+        specifier: workspace:*
+        version: link:../tester
+
+  packages/plugin-transform-typeof-null-operator:
     dependencies:
       '@babel/core':
         specifier: ^7.28.5
@@ -413,10 +413,6 @@ packages:
 
   '@babel/traverse@7.28.5':
     resolution: {integrity: sha512-TCCj4t55U90khlYkVV/0TfkJkAkUg3jZFA3Neb7unZT8CPok7iiRfaX0F+WnqWqt7OxhOn0uBKXCw4lbL8W0aQ==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/types@7.28.5':
-    resolution: {integrity: sha512-qQ5m48eI/MFLQ5PxQj4PFaprjyCTLI37ElWMmNs0K8Lk3dVeOdNpB3ks8jc7yM5CDmVC73eMVk/trk3fgmrUpA==}
     engines: {node: '>=6.9.0'}
 
   '@babel/types@7.28.6':
@@ -2424,7 +2420,7 @@ snapshots:
       '@babel/parser': 7.28.5
       '@babel/template': 7.27.2
       '@babel/traverse': 7.28.5
-      '@babel/types': 7.28.5
+      '@babel/types': 7.28.6
       '@jridgewell/remapping': 2.3.5
       convert-source-map: 2.0.0
       debug: 4.4.3
@@ -2604,11 +2600,6 @@ snapshots:
       debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
-
-  '@babel/types@7.28.5':
-    dependencies:
-      '@babel/helper-string-parser': 7.27.1
-      '@babel/helper-validator-identifier': 7.28.5
 
   '@babel/types@7.28.6':
     dependencies:

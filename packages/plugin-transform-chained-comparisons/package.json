@@ -1,5 +1,5 @@
 {
-	"name": "@jsp/plugin-chained-comparisons",
+	"name": "@jsp/plugin-transform-chained-comparisons",
 	"type": "module",
 	"version": "0.1.0",
 	"scripts": {

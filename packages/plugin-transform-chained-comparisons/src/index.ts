@@ -3,7 +3,7 @@ import type { BinaryExpression } from '@babel/types';
 
 export default function ({ types: t }: { types: typeof types }) {
 	return {
-		name: '@jsp/plugin-chained-comparisons',
+		name: '@jsp/plugin-transform-chained-comparisons',
 		visitor: {
 			BinaryExpression(path: NodePath<BinaryExpression>) {
 				const comparisons = ['>', '>=', '<', '<='];
