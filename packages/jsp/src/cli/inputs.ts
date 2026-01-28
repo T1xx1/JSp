@@ -6,7 +6,7 @@ import { log } from '../utils/log.js';
 
 export const getInputs = (config: CompleteConfig) => {
 	const inputs = globSync(config.include, {
-		exclude: ['node_modules'],
+		exclude: ['node_modules', config.compiler.emitDir],
 	}).filter((f) => f.endsWith('.jsp'));
 
 	if (inputs.length === 0) {
