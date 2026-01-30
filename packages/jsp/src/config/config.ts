@@ -49,8 +49,7 @@ export const getConfig = (): null | Config => {
 
 export const getInitConfig = () => {
 	return {
-		$schema:
-			'https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/src/config/%24schema.json',
+		$schema: 'https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/config.json',
 	};
 };
 
