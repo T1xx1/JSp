@@ -2,8 +2,9 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { cwd, exit } from 'node:process';
 
+import chalk from 'chalk';
+
 import { tryCatchSync } from '../polyfills/index.js';
-import { log } from '../utils/index.js';
 
 export type Config = {
 	include?: string[];
@@ -36,7 +37,7 @@ export const getConfig = (): null | Config => {
 		});
 
 		if (error || !data) {
-			log.error('MKYENOXQNK', 'JS+ error: failed to parse config', error);
+			console.log(chalk.red('Cannot parse JS+ config'));
 
 			exit();
 		}

@@ -2,16 +2,17 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { cwd, exit } from 'node:process';
 
 import { transformSync } from '@babel/core';
+import chalk from 'chalk';
 
 import type { CompleteConfig } from '../config/index.js';
-import { log } from '../utils/log.js';
+import { panic } from '../utils/index.js';
 import { dirname, join } from 'node:path';
 
 export const compile = (filename: string, config: CompleteConfig) => {
 	const jspCode = readFileSync(filename, 'utf8');
 
 	if (jspCode === '') {
-		log.warn('MKYI29512F', `${filename} is empty`);
+		console.log(chalk.gray(`${filename} is empty`));
 
 		return;
 	}
@@ -50,7 +51,7 @@ export const compile = (filename: string, config: CompleteConfig) => {
 	});
 
 	if (!out || !out.code) {
-		log.error('MKYHKYDERU', 'Null Babel transformation');
+		panic('MKYHKYDERU', 'Null Babel transformation');
 
 		exit();
 	}

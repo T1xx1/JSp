@@ -2,11 +2,11 @@ import { existsSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { cwd, exit } from 'node:process';
 
+import chalk from 'chalk';
 import { Command } from 'commander';
 
 import { compile } from '../compiler/index.js';
 import { getConfig, getInitConfig, mergeConfig } from '../config/index.js';
-import { log } from '../utils/index.js';
 
 import { getInputs } from './inputs.js';
 
@@ -19,7 +19,7 @@ cli
 	.description('init JS+ config')
 	.action(() => {
 		if (getConfig() !== null) {
-			log.info('JS+ config is already initialized');
+			console.log(chalk.gray('JS+ config is already initialized'));
 
 			exit();
 		}
@@ -47,7 +47,7 @@ cli
 			compile(input, config);
 		}
 
-		log.success('JS+ compiled successfully');
+		console.log(chalk.green('JS+ compiled successfully'));
 	});
 
 cli.parse();
