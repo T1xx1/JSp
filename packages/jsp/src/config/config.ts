@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { cwd, exit } from 'node:process';
 
@@ -76,4 +76,22 @@ export const mergeConfig = (config: Config): CompleteConfig => {
 			emitDir: config.compiler?.emitDir ?? completeConfig.compiler.emitDir,
 		},
 	};
+};
+
+export const initConfig = () => {
+	if (getConfig() !== null) {
+		console.log(chalk.gray('JS+ config is already initialized'));
+
+		exit();
+	}
+
+	let configPath: string;
+
+	if (existsSync(join(cwd(), '.config'))) {
+		configPath = join(cwd(), '.config/jsp.json');
+	} else {
+		configPath = join(cwd(), 'jsp.config.json');
+	}
+
+	writeFileSync(configPath, JSON.stringify(getInitConfig(), null, '\t'), 'utf8');
 };
