@@ -5,10 +5,8 @@ import { cwd, exit } from 'node:process';
 import chalk from 'chalk';
 import { Command } from 'commander';
 
-import { compile } from '../compiler/index.js';
+import { compile, getInputs } from '../compiler/index.js';
 import { getConfig, getInitConfig, mergeConfig } from '../config/index.js';
-
-import { getInputs } from './inputs.js';
 
 const cli = new Command();
 
