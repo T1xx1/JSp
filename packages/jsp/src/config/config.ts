@@ -1,8 +1,9 @@
 import { existsSync, readFileSync } from 'node:fs';
-import { exit } from 'node:process';
+import { join } from 'node:path';
+import { cwd, exit } from 'node:process';
 
 import { tryCatchSync } from '../polyfills/index.js';
-import { joinCwd, log } from '../utils/index.js';
+import { log } from '../utils/index.js';
 
 export type Config = {
 	include?: string[];
@@ -16,17 +17,17 @@ export type Config = {
 export const getConfig = (): null | Config => {
 	let configPath: null | string = null;
 
-	if (existsSync(joinCwd('config/jsp.json'))) {
-		configPath = joinCwd('config/jsp.json');
+	if (existsSync(join(cwd(), 'config/jsp.json'))) {
+		configPath = join(cwd(), 'config/jsp.json');
 	}
-	if (existsSync(joinCwd('config/jsp.ts'))) {
-		configPath = joinCwd('config/jsp.ts');
+	if (existsSync(join(cwd(), 'config/jsp.ts'))) {
+		configPath = join(cwd(), 'config/jsp.ts');
 	}
-	if (existsSync(joinCwd('jsp.config.json'))) {
-		configPath = joinCwd('jsp.config.json');
+	if (existsSync(join(cwd(), 'jsp.config.json'))) {
+		configPath = join(cwd(), 'jsp.config.json');
 	}
-	if (existsSync(joinCwd('jsp.config.ts'))) {
-		configPath = joinCwd('jsp.config.ts');
+	if (existsSync(join(cwd(), 'jsp.config.ts'))) {
+		configPath = join(cwd(), 'jsp.config.ts');
 	}
 
 	if (configPath) {

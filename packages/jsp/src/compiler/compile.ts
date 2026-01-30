@@ -1,12 +1,11 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { exit } from 'node:process';
+import { cwd, exit } from 'node:process';
 
 import { transformSync } from '@babel/core';
 
 import type { CompleteConfig } from '../config/index.js';
 import { log } from '../utils/log.js';
-import { joinCwd } from '../utils/lib.js';
-import { dirname } from 'node:path';
+import { dirname, join } from 'node:path';
 
 export const compile = (filename: string, config: CompleteConfig) => {
 	const jspCode = readFileSync(filename, 'utf8');
@@ -56,7 +55,8 @@ export const compile = (filename: string, config: CompleteConfig) => {
 		exit();
 	}
 
-	const emitPath = joinCwd(
+	const emitPath = join(
+		cwd(),
 		config.compiler.emitDir,
 		filename.replace('.jsp', config.compiler.emitLang === 'TypeScript' ? '.ts' : '.js'),
 	);
