@@ -52,7 +52,9 @@ export const parseTs = (filename: string, tsCode: string): Diagnostic[] => {
 	const tsProgram = createProgram([tsFilename(filename)], tsconfig.compilerOptions, host);
 
 	return getPreEmitDiagnostics(tsProgram).map((diagnostic) => {
-		const { line, character } = source.getLineAndCharacterOfPosition(diagnostic.start ?? 0);
+		const { line, character } = (diagnostic.file ?? source).getLineAndCharacterOfPosition(
+			diagnostic.start ?? 0,
+		);
 
 		return {
 			type: 'SemanticError' as const,
