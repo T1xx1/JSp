@@ -1,56 +1,87 @@
 import { exit } from 'node:process';
 
-import { transformSync, type BabelFileResult } from '@babel/core';
+import { transformSync, type BabelFileResult, type ParseResult } from '@babel/core';
 
-import type { CompleteConfig } from '../config/index.js';
+import { type CompleteConfig } from '../config/index.js';
+import { tryCatchSync } from '../polyfills/index.js';
 import { panic } from '../utils/index.js';
+
+export type ParseErrors = Exclude<ParseResult['errors'], null>;
+export type TransformationResult = BabelFileResult & {
+	syntaxError: false;
+	ast: ParseResult & {
+		errors: ParseErrors;
+	};
+	code: string;
+};
+export type SyntaxError = {
+	syntaxError: true;
+	ast: {
+		errors: ParseErrors;
+	};
+};
 
 export const transform = (
 	jspCode: string,
 	config: CompleteConfig,
-): BabelFileResult & {
-	code: string;
-} => {
-	const out = transformSync(jspCode, {
-		ast: true,
-		plugins: [
-			/* parse/transform TypeScript */
-			config.compiler.emitLang === 'TypeScript'
-				? '@babel/plugin-syntax-typescript'
-				: '@babel/plugin-transform-typescript',
+): TransformationResult | SyntaxError => {
+	const { data: ts, error: syntaxError } = tryCatchSync<
+		null | TransformationResult,
+		null | ParseErrors[number]
+	>(() => {
+		return transformSync(jspCode, {
+			ast: true,
+			parserOpts: {
+				errorRecovery: true,
+				sourceType: 'module',
+				strictMode: true,
+			},
+			plugins: [
+				/* parse TypeScript */
+				'@babel/plugin-syntax-typescript',
 
-			/* transform custom syntax */
-			'module:@jsp/plugin-transform-typeof-null-operator',
-			'module:@jsp/plugin-transform-negative-array-subscript',
-			'module:@jsp/plugin-transform-chained-comparisons',
+				/* transform custom syntax */
+				'module:@jsp/plugin-transform-typeof-null-operator',
+				'module:@jsp/plugin-transform-negative-array-subscript',
+				'module:@jsp/plugin-transform-chained-comparisons',
 
-			/* transform TC39 sorted by scope */
-			'@babel/plugin-proposal-throw-expressions',
-			'@babel/plugin-proposal-do-expressions',
-			'@babel/plugin-proposal-async-do-expressions',
-			[
-				'@babel/plugin-proposal-discard-binding',
-				{
-					syntaxType: 'void',
-				},
+				/* transform TC39 sorted by scope */
+				'@babel/plugin-proposal-throw-expressions',
+				'@babel/plugin-proposal-do-expressions',
+				'@babel/plugin-proposal-async-do-expressions',
+				[
+					'@babel/plugin-proposal-discard-binding',
+					{
+						syntaxType: 'void',
+					},
+				],
+				[
+					'@babel/plugin-proposal-pipeline-operator',
+					{
+						proposal: 'hack',
+						topicToken: '%',
+					},
+				],
+				'@babel/plugin-proposal-export-default-from',
 			],
-			[
-				'@babel/plugin-proposal-pipeline-operator',
-				{
-					proposal: 'hack',
-					topicToken: '%',
-				},
-			],
-			'@babel/plugin-proposal-export-default-from',
-		],
+		}) as TransformationResult;
 	});
 
-	if (!out || !out.ast || !out.code) {
-		panic('MKYHKYDERU', 'Null Babel transformation');
+	if (syntaxError) {
+		return {
+			syntaxError: true,
+			ast: {
+				errors: [syntaxError],
+			},
+		};
+	}
 
+	if (!ts || !ts.ast || !ts.code) {
+		panic('MKYHKYDERU', 'Null Babel transformation');
 		exit();
 	}
 
-	/* @ts-expect-error */
-	return out;
+	ts.syntaxError = false;
+
+	return ts;
 };
