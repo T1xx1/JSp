@@ -6,9 +6,7 @@ import {
 	type CompilerOptions,
 } from 'typescript';
 
-export const tsconfig: {
-	compilerOptions: CompilerOptions;
-} = {
+export const tsconfig = {
 	compilerOptions: {
 		/* parser */
 		skipLibCheck: true,
@@ -40,4 +38,6 @@ export const tsconfig: {
 		declarationMap: true,
 		outDir: './dist',
 	},
+} satisfies {
+	compilerOptions: CompilerOptions;
 };
