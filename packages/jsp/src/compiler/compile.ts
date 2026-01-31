@@ -1,17 +1,69 @@
-import type { CompleteConfig } from '../config/index.js';
+import { transpile } from 'typescript';
 
-import { emit } from './emit.js';
-import { readInput } from './inputs.js';
+import { tsconfig, type CompleteConfig } from '../config/index.js';
+
+import { parseTs, type Diagnostic } from './parse.js';
 import { transform } from './transform.js';
 
-export const compile = (filename: string, config: CompleteConfig) => {
-	const jspCode = readInput(filename);
+export const compile = (
+	filename: string,
+	jspCode: string,
+	config: CompleteConfig,
+): {
+	code: null | string;
+	diagnostics: Diagnostic[];
+} => {
+	const ts = transform(jspCode, config);
 
-	if (jspCode === null) {
-		return;
+	if (ts.syntaxError) {
+		return {
+			code: null,
+			diagnostics: ts.ast.errors.map((error) => {
+				return {
+					type: 'SyntaxError',
+					message: error.message,
+					loc: {
+						line: error.loc.line,
+						character: error.loc.column,
+						length: 1,
+					},
+				};
+			}),
+		};
 	}
 
-	const out = transform(jspCode, config);
+	/* TypeScript */
+	const tsDiagnostics = parseTs(filename, ts.code);
 
-	emit(filename, out.code, config);
+	return {
+		code:
+			config.compiler.emitLang === 'TypeScript'
+				? ts.code
+				: transpile(ts.code, tsconfig.compilerOptions),
+		diagnostics: [
+			...ts.ast.errors
+				/* filter TypeScript errors */
+				.filter((error) => {
+					const tsDiagnostics = ['DeclarationMissingInitializer'];
+
+					if (tsDiagnostics.includes(error.reasonCode)) {
+						return false;
+					}
+
+					return true;
+				})
+				.map((error) => {
+					return {
+						type: 'Error' as const,
+						message: error.message,
+						loc: {
+							line: error.loc.line,
+							character: error.loc.column,
+							length: 1,
+						},
+					};
+				}),
+			...tsDiagnostics,
+		],
+	};
 };
