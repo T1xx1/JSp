@@ -52,7 +52,6 @@ export const parseTs = (filename: string, tsCode: string): Diagnostic[] => {
 	const tsProgram = createProgram([tsFilename(filename)], tsconfig.compilerOptions, host);
 
 	return getPreEmitDiagnostics(tsProgram).map((diagnostic) => {
-		console.log(diagnostic);
 		const { line, character } = source.getLineAndCharacterOfPosition(diagnostic.start ?? 0);
 
 		return {
