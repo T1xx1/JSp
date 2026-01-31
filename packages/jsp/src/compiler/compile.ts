@@ -44,9 +44,9 @@ export const compile = (
 			...ts.ast.errors
 				/* filter TypeScript errors */
 				.filter((error) => {
-					const tsDiagnostics = ['DeclarationMissingInitializer'];
+					const ignoreReasonCodes = ['DeclarationMissingInitializer'];
 
-					if (tsDiagnostics.includes(error.reasonCode)) {
+					if (ignoreReasonCodes.includes(error.reasonCode)) {
 						return false;
 					}
 

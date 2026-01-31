@@ -27,7 +27,7 @@ export const tsFilename = (filename: string): string => {
 };
 
 export const parseTs = (filename: string, tsCode: string): Diagnostic[] => {
-	const source = createSourceFile(tsFilename(filename), tsCode, 0);
+	const source = createSourceFile(tsFilename(filename), tsCode, tsconfig.compilerOptions.target);
 
 	const host = createCompilerHost(tsconfig.compilerOptions);
 	const getSourceFile = host.getSourceFile;
@@ -40,7 +40,10 @@ export const parseTs = (filename: string, tsCode: string): Diagnostic[] => {
 		/* normalize filename */
 		const normalizedFilename = join(
 			cwd(),
-			...filename.split('/').slice(filename.split('/').indexOf('node_modules')),
+			...filename
+				.replaceAll('\\', '/')
+				.split('/')
+				.slice(filename.split('/').indexOf('node_modules')),
 		);
 
 		return getSourceFile(normalizedFilename, languageVersion);
@@ -49,8 +52,9 @@ export const parseTs = (filename: string, tsCode: string): Diagnostic[] => {
 	const tsProgram = createProgram([tsFilename(filename)], tsconfig.compilerOptions, host);
 
 	return getPreEmitDiagnostics(tsProgram).map((diagnostic) => {
-		console.log(diagnostic);
-		const { line, character } = source.getLineAndCharacterOfPosition(diagnostic.start ?? 0);
+		const { line, character } = (diagnostic.file ?? source).getLineAndCharacterOfPosition(
+			diagnostic.start ?? 0,
+		);
 
 		return {
 			type: 'SemanticError' as const,

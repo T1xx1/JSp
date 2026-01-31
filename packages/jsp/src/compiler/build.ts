@@ -18,7 +18,7 @@ export const build = () => {
 		const jspCode = readInput(filename);
 
 		if (jspCode === null) {
-			return;
+			continue;
 		}
 
 		const out = compile(filename, jspCode, config);
@@ -32,7 +32,7 @@ export const build = () => {
 		}
 
 		if (out.code === null) {
-			return;
+			continue;
 		}
 
 		emit(filename, out.code, config);
