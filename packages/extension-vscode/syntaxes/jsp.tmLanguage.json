@@ -1,6 +1,7 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"name": "JS+",
+	"scopeName": "source.jsp",
 	"patterns": [
 		{
 			"include": "#keywords"
@@ -11,10 +12,12 @@
 	],
 	"repository": {
 		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.jsp",
-				"match": "\\b(if|while|for|return)\\b"
-			}]
+			"patterns": [
+				{
+					"name": "keyword.control.jsp",
+					"match": "\\b(if|while|for|return)\\b"
+				}
+			]
 		},
 		"strings": {
 			"name": "string.quoted.double.jsp",
@@ -27,6 +30,5 @@
 				}
 			]
 		}
-	},
-	"scopeName": "source.jsp"
+	}
 }

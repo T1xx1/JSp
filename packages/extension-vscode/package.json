@@ -1,25 +1,34 @@
 {
-  "name": "extension-vscode",
-  "displayName": "extension-vscode",
-  "description": "",
-  "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.108.1"
-  },
-  "categories": [
-    "Programming Languages"
-  ],
-  "contributes": {
-    "languages": [{
-      "id": "jsp",
-      "aliases": ["JS+", "jsp"],
-      "extensions": [".jsp"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "jsp",
-      "scopeName": "source.jsp",
-      "path": "./syntaxes/jsp.tmLanguage.json"
-    }]
-  }
+	"name": "extension-vscode",
+	"displayName": "JS+",
+	"description": "JS+ for VSCode",
+	"version": "0.1.0",
+	"engines": {
+		"vscode": "^1.108.1"
+	},
+	"categories": [
+		"Programming Languages"
+	],
+	"contributes": {
+		"languages": [
+			{
+				"id": "jsp",
+				"aliases": [
+					"JS+",
+					"jsp"
+				],
+				"extensions": [
+					".jsp"
+				],
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "jsp",
+				"scopeName": "source.jsp",
+				"path": "./syntaxes/jsp.tmLanguage.json"
+			}
+		]
+	}
 }
