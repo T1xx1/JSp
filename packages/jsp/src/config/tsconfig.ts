@@ -20,6 +20,7 @@ export const tsconfig: {
 		resolveJsonModule: true /* JSON */,
 		/* type checking */
 		exactOptionalPropertyTypes: true,
+		lib: ['lib.dom.d.ts', 'lib.esnext.d.ts'],
 		noImplicitAny: true,
 		noImplicitThis: true,
 		noUncheckedIndexedAccess: true,
