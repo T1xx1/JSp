@@ -1,11 +1,14 @@
 {
 	"name": "extension-vscode",
-	"displayName": "JS+",
-	"description": "JS+ for VSCode",
 	"version": "0.1.0",
+	"displayName": "JS+",
+	"icon": "./assets/icon.png",
+	"description": "JS+ for VSCode",
+	"publisher": "JS+",
 	"engines": {
 		"vscode": "^1.108.1"
 	},
+	"repository": "https://github.com/t1xx1/jsp/packages/extension-vscode",
 	"categories": [
 		"Programming Languages"
 	],
@@ -15,11 +18,17 @@
 				"id": "jsp",
 				"aliases": [
 					"JS+",
+					"js+",
+					"JSp",
 					"jsp"
 				],
 				"extensions": [
 					".jsp"
 				],
+				"icon": {
+					"dark": "./assets/miniature.svg",
+					"light": "./assets/miniature.svg"
+				},
 				"configuration": "./language-configuration.json"
 			}
 		],
@@ -28,7 +37,49 @@
 				"language": "jsp",
 				"scopeName": "source.jsp",
 				"path": "./syntaxes/jsp.tmLanguage.json"
+			},
+			{
+				"injectTo": [
+					"text.html.markdown"
+				],
+				"scopeName": "markdown.codeblock.jsp",
+				"path": "./syntaxes/jsp.codeblock.json",
+				"embeddedLanguages": {
+					"meta.embedded.block.jsp": "jsp"
+				}
 			}
-		]
+		],
+		"configurationDefaults": {
+			"material-icon-theme.languages.customClones": [
+				{
+					"name": "JS+",
+					"base": "javascript",
+					"color": "#31C433",
+					"ids": [
+						"jsp"
+					]
+				}
+			],
+			"material-icon-theme.files.customClones": [
+				{
+					"name": "JS+ config",
+					"base": "tsconfig",
+					"color": "#31C433",
+					"fileNames": [
+						".config/jsp.json",
+						"jsp.config.json"
+					]
+				}
+			],
+			"[jsp]": {
+				"editor.detectIndentation": false,
+				"editor.insertSpaces": false,
+				"editor.formatOnSave": true,
+				"editor.fontLigatures": true,
+				"prettier.printWidth": 100,
+				"prettier.singleQuote": true,
+				"prettier.useTabs": true
+			}
+		}
 	}
 }

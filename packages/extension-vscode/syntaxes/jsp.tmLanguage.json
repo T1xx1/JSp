@@ -7,7 +7,7 @@
 			"include": "#keywords"
 		},
 		{
-			"include": "#strings"
+			"include": "source.ts"
 		}
 	],
 	"repository": {
@@ -15,18 +15,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.jsp",
-					"match": "\\b(if|while|for|return)\\b"
-				}
-			]
-		},
-		"strings": {
-			"name": "string.quoted.double.jsp",
-			"begin": "\"",
-			"end": "\"",
-			"patterns": [
-				{
-					"name": "constant.character.escape.jsp",
-					"match": "\\\\."
+					"match": "\\b(match|trycatch)\\b"
 				}
 			]
 		}
