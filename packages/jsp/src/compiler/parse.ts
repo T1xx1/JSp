@@ -27,7 +27,7 @@ export const tsFilename = (filename: string): string => {
 };
 
 export const parseTs = (filename: string, tsCode: string): Diagnostic[] => {
-	const source = createSourceFile(tsFilename(filename), tsCode, 0);
+	const source = createSourceFile(tsFilename(filename), tsCode, tsconfig.compilerOptions.target);
 
 	const host = createCompilerHost(tsconfig.compilerOptions);
 	const getSourceFile = host.getSourceFile;
