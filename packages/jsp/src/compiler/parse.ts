@@ -40,7 +40,10 @@ export const parseTs = (filename: string, tsCode: string): Diagnostic[] => {
 		/* normalize filename */
 		const normalizedFilename = join(
 			cwd(),
-			...filename.split('/').slice(filename.split('/').indexOf('node_modules')),
+			...filename
+				.replaceAll('\\', '/')
+				.split('/')
+				.slice(filename.split('/').indexOf('node_modules')),
 		);
 
 		return getSourceFile(normalizedFilename, languageVersion);
