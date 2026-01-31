@@ -4,9 +4,17 @@
 	"displayName": "JS+",
 	"icon": "./assets/icon.png",
 	"description": "JS+ for VSCode",
-	"publisher": "JS+",
+	"publisher": "JSp",
 	"engines": {
 		"vscode": "^1.108.1"
+	},
+	"scripts": {
+		"package": "vsce package"
+	},
+	"devDependencies": {
+		"@vscode/vsce": "^3.7.1",
+		"npm": "^11.8.0",
+		"typescript": "^5.9.3"
 	},
 	"repository": "https://github.com/t1xx1/jsp/packages/extension-vscode",
 	"categories": [
