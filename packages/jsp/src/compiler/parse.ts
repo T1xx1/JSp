@@ -16,9 +16,10 @@ export type Diagnostic = {
 	type: 'Error' | 'SemanticError' | 'SyntaxError';
 	message: string;
 	loc: {
-		line: number;
-		character: number;
-		length: number;
+		startLine: number;
+		startCharacter: number;
+		endLine: number;
+		endCharacter: number;
 	};
 };
 
@@ -52,17 +53,21 @@ export const parseTs = (filename: string, tsCode: string): Diagnostic[] => {
 	const tsProgram = createProgram([tsFilename(filename)], tsconfig.compilerOptions, host);
 
 	return getPreEmitDiagnostics(tsProgram).map((diagnostic) => {
-		const { line, character } = (diagnostic.file ?? source).getLineAndCharacterOfPosition(
-			diagnostic.start ?? 0,
-		);
+		const { line: startLine, character: startCharacter } = (
+			diagnostic.file ?? source
+		).getLineAndCharacterOfPosition(diagnostic.start ?? 0);
+		const { line: endLine, character: endCharacter } = (
+			diagnostic.file ?? source
+		).getLineAndCharacterOfPosition((diagnostic.start ?? 0) + (diagnostic.length ?? 0));
 
 		return {
 			type: 'SemanticError' as const,
 			message: flattenDiagnosticMessageText(diagnostic.messageText, sys.newLine),
 			loc: {
-				line: line + 1,
-				character: character,
-				length: diagnostic.length!,
+				startLine: startLine,
+				startCharacter: startCharacter,
+				endLine: endLine,
+				endCharacter: endCharacter,
 			},
 		};
 	});
