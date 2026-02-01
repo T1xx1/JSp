@@ -3,9 +3,9 @@
 	"type": "module",
 	"version": "0.1.0",
 	"displayName": "JS+",
-	"icon": "./assets/icon.png",
 	"description": "JS+ for VSCode",
-	"publisher": "JSp",
+	"icon": "./assets/icon.png",
+	"publisher": "jsplang",
 	"engines": {
 		"vscode": "^1.108.1"
 	},
