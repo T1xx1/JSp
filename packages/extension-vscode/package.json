@@ -21,7 +21,15 @@
 		"npm": "^11.8.0",
 		"typescript": "^5.9.3"
 	},
-	"repository": "https://github.com/t1xx1/jsp/packages/extension-vscode",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/t1xx1/jsp",
+		"directory": "packages/extension-vscode"
+	},
+	"main": "./out/extension.js",
+	"activationEvents": [
+		"onStartupFinished"
+	],
 	"categories": [
 		"Programming Languages"
 	],
