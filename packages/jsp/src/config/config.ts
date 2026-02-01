@@ -14,47 +14,68 @@ export type Config = {
 		emitDir?: string;
 	};
 };
+export const initialConfig = {
+	$schema: 'https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/config.json',
+};
 
-export const getConfig = (): null | Config => {
-	let configPath: null | string = null;
-
+/**
+ * Checks if a JS+ config exists in the current working directory.
+ * @returns `false` or the config path
+ */
+export const existsConfig = (): false | string => {
 	if (existsSync(join(cwd(), 'config/jsp.json'))) {
-		configPath = join(cwd(), 'config/jsp.json');
+		return join(cwd(), 'config/jsp.json');
 	}
 	if (existsSync(join(cwd(), 'config/jsp.ts'))) {
-		configPath = join(cwd(), 'config/jsp.ts');
+		return join(cwd(), 'config/jsp.ts');
 	}
 	if (existsSync(join(cwd(), 'jsp.config.json'))) {
-		configPath = join(cwd(), 'jsp.config.json');
+		return join(cwd(), 'jsp.config.json');
 	}
 	if (existsSync(join(cwd(), 'jsp.config.ts'))) {
-		configPath = join(cwd(), 'jsp.config.ts');
+		return join(cwd(), 'jsp.config.ts');
 	}
 
-	if (configPath) {
-		const { data, error } = tryCatchSync(() => {
-			return JSON.parse(readFileSync(configPath, 'utf8')) as Config;
-		});
+	return false;
+};
+export const getConfig = (): Config => {
+	let configPath = existsConfig();
 
-		if (error || !data) {
-			console.log(chalk.red('Cannot parse JS+ config'));
-
-			exit();
-		}
-
-		return data;
+	if (configPath === false) {
+		return {};
 	}
 
-	/* undefined config */
-	return null;
+	const { data, error } = tryCatchSync(() => {
+		return JSON.parse(readFileSync(configPath, 'utf8')) as Config;
+	});
+
+	if (error || !data) {
+		console.log(chalk.red('Cannot parse JS+ config'));
+
+		exit();
+	}
+
+	return data;
+};
+export const initConfig = () => {
+	if (existsConfig() !== false) {
+		console.log(chalk.gray('JS+ config is already initialized'));
+
+		exit();
+	}
+
+	let configPath: string;
+
+	if (existsSync(join(cwd(), '.config'))) {
+		configPath = join(cwd(), '.config/jsp.json');
+	} else {
+		configPath = join(cwd(), 'jsp.config.json');
+	}
+
+	writeFileSync(configPath, JSON.stringify(initialConfig, null, '\t'), 'utf8');
 };
 
-export const getInitConfig = () => {
-	return {
-		$schema: 'https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/config.json',
-	};
-};
-
+/* complete config */
 export type CompleteConfig = Required<Config> & {
 	compiler: Required<Config['compiler']>;
 };
@@ -77,21 +98,6 @@ export const mergeConfig = (config: Config): CompleteConfig => {
 		},
 	};
 };
-
-export const initConfig = () => {
-	if (getConfig() !== null) {
-		console.log(chalk.gray('JS+ config is already initialized'));
-
-		exit();
-	}
-
-	let configPath: string;
-
-	if (existsSync(join(cwd(), '.config'))) {
-		configPath = join(cwd(), '.config/jsp.json');
-	} else {
-		configPath = join(cwd(), 'jsp.config.json');
-	}
-
-	writeFileSync(configPath, JSON.stringify(getInitConfig(), null, '\t'), 'utf8');
+export const getCompleteConfig = (): CompleteConfig => {
+	return mergeConfig(getConfig());
 };

@@ -28,7 +28,6 @@
 		"@babel/plugin-proposal-pipeline-operator": "^7.27.1",
 		"@babel/plugin-proposal-throw-expressions": "^7.27.1",
 		"@babel/plugin-syntax-typescript": "^7.28.6",
-		"@babel/plugin-transform-typescript": "^7.28.5",
 		"@jsp/plugin-transform-chained-comparisons": "workspace:*",
 		"@jsp/plugin-transform-negative-array-subscript": "workspace:*",
 		"@jsp/plugin-transform-typeof-null-operator": "workspace:*",

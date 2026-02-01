@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 
-import { getConfig, mergeConfig } from '../config/index.js';
+import { getCompleteConfig } from '../config/index.js';
 
 import { compile } from './compile.js';
 import { emit } from './emit.js';
@@ -8,7 +8,7 @@ import { getInputs, readInput } from './inputs.js';
 import { type Diagnostic } from './parse.js';
 
 export const build = () => {
-	const config = mergeConfig(getConfig() ?? {});
+	const config = getCompleteConfig();
 
 	const filenames = getInputs(config);
 

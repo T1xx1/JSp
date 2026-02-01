@@ -50,9 +50,6 @@ importers:
       '@babel/plugin-syntax-typescript':
         specifier: ^7.28.6
         version: 7.28.6(@babel/core@7.28.5)
-      '@babel/plugin-transform-typescript':
-        specifier: ^7.28.5
-        version: 7.28.5(@babel/core@7.28.5)
       '@jsp/plugin-transform-chained-comparisons':
         specifier: workspace:*
         version: link:../plugin-transform-chained-comparisons
