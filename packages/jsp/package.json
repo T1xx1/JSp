@@ -11,12 +11,12 @@
 	},
 	"exports": {
 		"./compiler": {
-			"default": "./dist/compiler/index.js",
-			"types": "./dist/compiler/index.d.ts"
+			"types": "./dist/compiler/index.d.ts",
+			"default": "./dist/compiler/index.js"
 		},
 		"./config": {
-			"default": "./dist/config/index.js",
-			"types": "./dist/config/index.d.ts"
+			"types": "./dist/config/index.d.ts",
+			"default": "./dist/config/index.js"
 		}
 	},
 	"dependencies": {
