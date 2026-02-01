@@ -26,9 +26,6 @@
 		/* compiler */
 		"target": "ES2024",
 		"lib": ["ES2024"],
-		"sourceMap": true,
-		"declaration": true,
-		"declarationMap": true,
-		"outDir": "./out"
+		"outDir": "./dist"
 	}
 }

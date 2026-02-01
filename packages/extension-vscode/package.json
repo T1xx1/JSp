@@ -11,12 +11,14 @@
 	},
 	"scripts": {
 		"dev": "tsc -w",
-		"build": "tsc",
-		"package": "vsce package"
+		"build": "npm run bundle && npm run package",
+		"bundle": "node esbuild.js --production",
+		"package": "vsce package --no-dependencies"
 	},
 	"devDependencies": {
 		"@types/vscode": "^1.108.1",
 		"@vscode/vsce": "^3.7.1",
+		"esbuild": "^0.27.2",
 		"jsp": "workspace:*",
 		"npm": "^11.8.0",
 		"typescript": "^5.9.3"
@@ -26,7 +28,16 @@
 		"url": "https://github.com/t1xx1/jsp",
 		"directory": "packages/extension-vscode"
 	},
-	"main": "./out/extension.js",
+	"main": "./dist/extension.js",
+	"files": [
+		"assets",
+		"dist",
+		"syntaxes",
+		"language-configuration.json",
+		"LICENSE",
+		"package.json",
+		"README.md"
+	],
 	"activationEvents": [
 		"onStartupFinished"
 	],
