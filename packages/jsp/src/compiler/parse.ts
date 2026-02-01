@@ -38,16 +38,7 @@ export const parseTs = (filename: string, tsCode: string): Diagnostic[] => {
 			return source;
 		}
 
-		/* normalize filename */
-		const normalizedFilename = join(
-			cwd(),
-			...filename
-				.replaceAll('\\', '/')
-				.split('/')
-				.slice(filename.split('/').indexOf('node_modules')),
-		);
-
-		return getSourceFile(normalizedFilename, languageVersion);
+		return getSourceFile(filename, languageVersion);
 	};
 
 	const tsProgram = createProgram([tsFilename(filename)], tsconfig.compilerOptions, host);
