@@ -59,6 +59,8 @@ export const transform = (
 				sourceType: 'module',
 				strictMode: true,
 			},
+			compact: false,
+			retainLines: true,
 			plugins: [
 				/* parse TypeScript */
 				pluginSyntaxTypeScript,
