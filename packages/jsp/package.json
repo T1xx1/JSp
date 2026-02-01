@@ -10,11 +10,11 @@
 		"jsp": "./bin/jsp.js"
 	},
 	"exports": {
-		"compiler": {
+		"./compiler": {
 			"default": "./dist/compiler/index.js",
 			"types": "./dist/compiler/index.d.ts"
 		},
-		"config": {
+		"./config": {
 			"default": "./dist/config/index.js",
 			"types": "./dist/config/index.d.ts"
 		}
