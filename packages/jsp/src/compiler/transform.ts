@@ -6,18 +6,23 @@ import { type CompleteConfig } from '../config/index.js';
 import { tryCatchSync } from '../polyfills/index.js';
 import { panic } from '../utils/index.js';
 
-export type ParseErrors = Exclude<ParseResult['errors'], null>;
+type P = Exclude<ParseResult['errors'], null>[number];
+
+export type ParseError = P & {
+	code: P['code'] & 'BABEL_PARSE_ERROR';
+};
+
 export type TransformationResult = BabelFileResult & {
 	syntaxError: false;
 	ast: ParseResult & {
-		errors: ParseErrors;
+		errors: ParseError[];
 	};
 	code: string;
 };
 export type SyntaxError = {
 	syntaxError: true;
 	ast: {
-		errors: ParseErrors;
+		errors: ParseError[];
 	};
 };
 
@@ -25,9 +30,9 @@ export const transform = (
 	jspCode: string,
 	config: CompleteConfig,
 ): TransformationResult | SyntaxError => {
-	const { data: ts, error: syntaxError } = tryCatchSync<
+	const { data: ts, error: panicError } = tryCatchSync<
 		null | TransformationResult,
-		null | ParseErrors[number]
+		null | ParseError
 	>(() => {
 		return transformSync(jspCode, {
 			ast: true,
@@ -67,13 +72,18 @@ export const transform = (
 		}) as TransformationResult;
 	});
 
-	if (syntaxError) {
-		return {
-			syntaxError: true,
-			ast: {
-				errors: [syntaxError],
-			},
-		};
+	if (panicError) {
+		if (panicError.code === 'BABEL_PARSE_ERROR' && panicError.reasonCode === 'UnexpectedToken') {
+			return {
+				syntaxError: true,
+				ast: {
+					errors: [panicError],
+				},
+			};
+		}
+
+		panic('ML42CWWWLS', panicError.message);
+		exit();
 	}
 
 	if (!ts || !ts.ast || !ts.code) {
