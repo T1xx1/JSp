@@ -12,7 +12,9 @@
 		"package": "vsce package"
 	},
 	"devDependencies": {
+		"@types/vscode": "^1.108.1",
 		"@vscode/vsce": "^3.7.1",
+		"jsp": "workspace:*",
 		"npm": "^11.8.0",
 		"typescript": "^5.9.3"
 	},
