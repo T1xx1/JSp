@@ -55,6 +55,7 @@ export const getInitConfig = () => {
 	};
 };
 
+/* complete config */
 export type CompleteConfig = Required<Config> & {
 	compiler: Required<Config['compiler']>;
 };
@@ -76,6 +77,9 @@ export const mergeConfig = (config: Config): CompleteConfig => {
 			emitDir: config.compiler?.emitDir ?? completeConfig.compiler.emitDir,
 		},
 	};
+};
+export const getCompleteConfig = (): CompleteConfig => {
+	return mergeConfig(getConfig() ?? {});
 };
 
 export const initConfig = () => {
