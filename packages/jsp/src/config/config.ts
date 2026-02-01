@@ -14,6 +14,9 @@ export type Config = {
 		emitDir?: string;
 	};
 };
+export const initialConfig = {
+	$schema: 'https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/config.json',
+};
 
 /**
  * Checks if a JS+ config exists in the current working directory.
@@ -54,11 +57,22 @@ export const getConfig = (): Config => {
 
 	return data;
 };
+export const initConfig = () => {
+	if (existsConfig() !== false) {
+		console.log(chalk.gray('JS+ config is already initialized'));
 
-export const getInitConfig = () => {
-	return {
-		$schema: 'https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/config.json',
-	};
+		exit();
+	}
+
+	let configPath: string;
+
+	if (existsSync(join(cwd(), '.config'))) {
+		configPath = join(cwd(), '.config/jsp.json');
+	} else {
+		configPath = join(cwd(), 'jsp.config.json');
+	}
+
+	writeFileSync(configPath, JSON.stringify(initialConfig, null, '\t'), 'utf8');
 };
 
 /* complete config */
@@ -86,22 +100,4 @@ export const mergeConfig = (config: Config): CompleteConfig => {
 };
 export const getCompleteConfig = (): CompleteConfig => {
 	return mergeConfig(getConfig());
-};
-
-export const initConfig = () => {
-	if (existsConfig() !== false) {
-		console.log(chalk.gray('JS+ config is already initialized'));
-
-		exit();
-	}
-
-	let configPath: string;
-
-	if (existsSync(join(cwd(), '.config'))) {
-		configPath = join(cwd(), '.config/jsp.json');
-	} else {
-		configPath = join(cwd(), 'jsp.config.json');
-	}
-
-	writeFileSync(configPath, JSON.stringify(getInitConfig(), null, '\t'), 'utf8');
 };
