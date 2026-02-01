@@ -2,6 +2,24 @@ import { exit } from 'node:process';
 
 import { transformSync, type BabelFileResult, type ParseResult } from '@babel/core';
 
+/* @ts-expect-error */
+import pluginProposalAsyncDoExpressions from '@babel/plugin-proposal-async-do-expressions';
+/* @ts-expect-error */
+import pluginProposalDiscardBinding from '@babel/plugin-proposal-discard-binding';
+/* @ts-expect-error */
+import pluginProposalDoExpressions from '@babel/plugin-proposal-do-expressions';
+/* @ts-expect-error */
+import pluginProposalExportDefaultFrom from '@babel/plugin-proposal-export-default-from';
+/* @ts-expect-error */
+import pluginProposalPipelineOperator from '@babel/plugin-proposal-pipeline-operator';
+/* @ts-expect-error */
+import pluginProposalThrowExpressions from '@babel/plugin-proposal-throw-expressions';
+/* @ts-expect-error */
+import pluginSyntaxTypeScript from '@babel/plugin-syntax-typescript';
+import pluginTransformChainedComparisons from '@jsp/plugin-transform-chained-comparisons';
+import pluginTransformNegativeArraySubscript from '@jsp/plugin-transform-negative-array-subscript';
+import pluginTransformTypeofNullOperator from '@jsp/plugin-transform-typeof-null-operator';
+
 import { type CompleteConfig } from '../config/index.js';
 import { tryCatchSync } from '../polyfills/index.js';
 import { panic } from '../utils/index.js';
@@ -43,31 +61,31 @@ export const transform = (
 			},
 			plugins: [
 				/* parse TypeScript */
-				'@babel/plugin-syntax-typescript',
+				pluginSyntaxTypeScript,
 
 				/* transform custom syntax */
-				'module:@jsp/plugin-transform-typeof-null-operator',
-				'module:@jsp/plugin-transform-negative-array-subscript',
-				'module:@jsp/plugin-transform-chained-comparisons',
+				pluginTransformChainedComparisons,
+				pluginTransformNegativeArraySubscript,
+				pluginTransformTypeofNullOperator,
 
 				/* transform TC39 sorted by scope */
-				'@babel/plugin-proposal-throw-expressions',
-				'@babel/plugin-proposal-do-expressions',
-				'@babel/plugin-proposal-async-do-expressions',
+				pluginProposalThrowExpressions,
+				pluginProposalDoExpressions,
+				pluginProposalAsyncDoExpressions,
 				[
-					'@babel/plugin-proposal-discard-binding',
+					pluginProposalDiscardBinding,
 					{
 						syntaxType: 'void',
 					},
 				],
 				[
-					'@babel/plugin-proposal-pipeline-operator',
+					pluginProposalPipelineOperator,
 					{
 						proposal: 'hack',
 						topicToken: '%',
 					},
 				],
-				'@babel/plugin-proposal-export-default-from',
+				pluginProposalExportDefaultFrom,
 			],
 		}) as TransformationResult;
 	});

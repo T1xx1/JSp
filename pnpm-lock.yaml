@@ -31,7 +31,7 @@ importers:
         version: 5.9.3
 
   packages/jsp:
-    devDependencies:
+    dependencies:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5
@@ -65,18 +65,19 @@ importers:
       '@jsp/plugin-transform-typeof-null-operator':
         specifier: workspace:*
         version: link:../plugin-transform-typeof-null-operator
-      '@types/babel__core':
-        specifier: ^7.20.5
-        version: 7.20.5
-      '@types/node':
-        specifier: ^25.0.3
-        version: 25.0.3
       chalk:
         specifier: ^5.6.2
         version: 5.6.2
       commander:
         specifier: ^14.0.2
         version: 14.0.2
+    devDependencies:
+      '@types/babel__core':
+        specifier: ^7.20.5
+        version: 7.20.5
+      '@types/node':
+        specifier: ^25.0.3
+        version: 25.0.3
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
