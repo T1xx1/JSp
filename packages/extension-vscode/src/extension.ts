@@ -4,7 +4,6 @@ import { analyze } from './diagnostics.js';
 
 export function activate(ctx: vscode.ExtensionContext): void {
 	/* diagnostics */
-	/* diagnostics */
 	const diagnosticsCollection = vscode.languages.createDiagnosticCollection('jsp');
 	ctx.subscriptions.push(diagnosticsCollection);
 
