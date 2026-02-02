@@ -17,8 +17,6 @@ async function main() {
 		platform: 'node',
 		outfile: './dist/extension.js',
 		external: ['vscode', '@babel/preset-typescript'],
-		logLevel: 'warning',
-		plugins: [],
 	});
 }
 
