@@ -6,5 +6,5 @@ header {
 
 /* index.mdx */
 .hero > img {
-	@apply w-[15rem];
+	@apply w-[9rem] md:w-[15rem];
 }
