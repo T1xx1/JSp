@@ -1,6 +1,7 @@
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
+import starlightLinksValidator from 'starlight-links-validator';
 
 // https://astro.build/config
 export default defineConfig({
@@ -47,6 +48,7 @@ export default defineConfig({
 				},
 			],
 			customCss: ['./src/styles/index.css'],
+			plugins: [starlightLinksValidator()],
 		}),
 	],
 });
