@@ -4,6 +4,9 @@
 	"scopeName": "source.jsp",
 	"patterns": [
 		{
+			"include": "#keywords"
+		},
+		{
 			"include": "source.ts"
 		}
 	],
@@ -11,8 +14,8 @@
 		"keywords": {
 			"patterns": [
 				{
-					"name": "keyword.operator.pipeline.jsp",
-					"match": "\\|>"
+					"name": "keyword.control.jsp",
+					"match": "\\b(match|trycatch)\\b"
 				}
 			]
 		}

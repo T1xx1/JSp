@@ -1,0 +1,51 @@
+{
+	"comments": {
+		"lineComment": "//",
+		"blockComment": ["/*", "*/"]
+	},
+	"brackets": [
+		["{", "}"],
+		["[", "]"],
+		["(", ")"]
+	],
+	// symbols that are auto closed when typing
+	"autoClosingPairs": [
+		["{", "}"],
+		["[", "]"],
+		["(", ")"],
+		{
+			"open": "'",
+			"close": "'",
+			"notIn": ["string", "comment"]
+		},
+		{
+			"open": "\"",
+			"close": "\"",
+			"notIn": ["string", "comment"]
+		},
+		{
+			"open": "`",
+			"close": "`",
+			"notIn": ["string", "comment"]
+		}
+	],
+	"surroundingPairs": [
+		["{", "}"],
+		["[", "]"],
+		["(", ")"],
+		["\"", "\""],
+		["'", "'"],
+		["`", "`"]
+	],
+	"folding": {
+		"markers": {
+			"start": "^\\s*//\\s*#?region\\b",
+			"end": "^\\s*//\\s*#?endregion\\b"
+		}
+	},
+	"wordPattern": "(-?\\d*\\.\\d\\w*)|([^\\`\\~\\!\\@\\#\\%\\^\\&\\*\\(\\)\\-\\=\\+\\[\\{\\]\\}\\\\\\|\\;\\:\\'\\\"\\,\\.\\<\\>\\/\\?\\s]+)",
+	"indentationRules": {
+		"increaseIndentPattern": "^((?!\\/\\/).)*(\\{[^}\"'`]*|\\([^)\"'`]*|\\[[^\\]\"'`]*)$",
+		"decreaseIndentPattern": "^((?!.*?\\/\\*).*\\*/)?\\s*[\\)\\}\\]].*$"
+	}
+}

@@ -46,19 +46,25 @@ export const build = () => {
 };
 
 const printDiagnostic = (filename: string, jspCode: string, diagnostic: Diagnostic) => {
-	const line = jspCode.split('\n')[diagnostic.loc.line - 1]!;
+	const line = jspCode.split('\n')[diagnostic.loc.startLine]!;
+
+	const range = {
+		startLine: diagnostic.loc.startLine + 1,
+		startCharacter: diagnostic.loc.startCharacter + 1,
+		length: diagnostic.loc.endCharacter - diagnostic.loc.startCharacter,
+	};
 
 	console.log(
-		`${chalk.red(`${diagnostic.type}:`)} ${chalk.blue(filename)}:${chalk.yellow(diagnostic.loc.line)}:${chalk.yellow(diagnostic.loc.character + 1)} • ${
+		`${chalk.red(`${diagnostic.type}:`)} ${chalk.blue(filename)}:${chalk.yellow(range.startLine)}:${chalk.yellow(range.startCharacter)} • ${
 			diagnostic.message
 				.replace('unknown: ', '')
 				.replace(/ \(\d+:\d+\)/, '')
 				.split('\n')[0]
 		}`,
 	);
-	console.log(`${chalk.bgWhite(diagnostic.loc.line)} ${line}`);
+	console.log(`${chalk.bgWhite(range.startLine)} ${line}`);
 	console.log(
-		`${chalk.bgWhite(' '.repeat(diagnostic.loc.line.toString().length))} ${' '.repeat(diagnostic.loc.character)}${chalk.red('~'.repeat(diagnostic.loc.length))}`,
+		`${chalk.bgWhite(' '.repeat(range.startLine.toString().length))} ${' '.repeat(range.startCharacter - 1)}${chalk.red('~'.repeat(range.length))}`,
 	);
 	console.log();
 };

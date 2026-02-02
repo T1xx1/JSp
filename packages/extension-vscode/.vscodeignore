@@ -1,5 +1,0 @@
-.turbo
-.vscode/**
-.vscode-test/**
-.gitignore
-turbo.json

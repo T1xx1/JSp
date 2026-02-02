@@ -1,27 +1,52 @@
 {
 	"name": "extension-vscode",
+	"type": "module",
 	"version": "0.1.0",
 	"displayName": "JS+",
 	"description": "JS+ for VSCode",
-	"icon": "./src/assets/icon.png",
+	"icon": "./assets/icon.png",
+	"publisher": "jsplang",
 	"engines": {
-		"vscode": "^1.107.0"
+		"vscode": "^1.108.1"
 	},
 	"scripts": {
-		"build": "pnpm exec vsce package"
+		"dev": "tsc -w",
+		"build": "pnpm bundle && pnpm package",
+		"bundle": "node esbuild.js --production",
+		"package": "vsce package --no-dependencies"
 	},
 	"devDependencies": {
+		"@types/vscode": "^1.108.1",
 		"@vscode/vsce": "^3.7.1",
-		"npm": "^11.7.0"
+		"esbuild": "^0.27.2",
+		"jsp": "workspace:*",
+		"typescript": "^5.9.3"
 	},
-	"repository": "https://github.com/t1xx1/jsp/packages/extension-vscode",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/t1xx1/jsp",
+		"directory": "packages/extension-vscode"
+	},
+	"main": "./dist/extension.js",
+	"files": [
+		"assets",
+		"dist",
+		"syntaxes",
+		"language-configuration.json",
+		"LICENSE",
+		"package.json",
+		"README.md"
+	],
+	"activationEvents": [
+		"onStartupFinished"
+	],
 	"categories": [
 		"Programming Languages"
 	],
 	"contributes": {
 		"languages": [
 			{
-				"id": "JS+",
+				"id": "jsp",
 				"aliases": [
 					"JS+",
 					"js+",
@@ -31,29 +56,61 @@
 				"extensions": [
 					".jsp"
 				],
-				"configuration": "./src/syntaxes/language-configuration.json",
 				"icon": {
-					"light": "./src/assets/miniature.png",
-					"dark": "./src/assets/miniature.png"
-				}
+					"dark": "./assets/miniature.svg",
+					"light": "./assets/miniature.svg"
+				},
+				"configuration": "./language-configuration.json"
 			}
 		],
 		"grammars": [
 			{
-				"language": "JS+",
+				"language": "jsp",
 				"scopeName": "source.jsp",
-				"path": "./src/syntaxes/jsp.tmLanguage.json"
+				"path": "./syntaxes/jsp.tmLanguage.json"
 			},
 			{
-				"scopeName": "markdown.codeblock.jsp",
-				"path": "./src/syntaxes/jsp.codeblock.json",
 				"injectTo": [
 					"text.html.markdown"
 				],
+				"scopeName": "markdown.codeblock.jsp",
+				"path": "./syntaxes/jsp.codeblock.json",
 				"embeddedLanguages": {
 					"meta.embedded.block.jsp": "jsp"
 				}
 			}
-		]
+		],
+		"configurationDefaults": {
+			"material-icon-theme.languages.customClones": [
+				{
+					"name": "JS+",
+					"base": "javascript",
+					"color": "#31C433",
+					"ids": [
+						"jsp"
+					]
+				}
+			],
+			"material-icon-theme.files.customClones": [
+				{
+					"name": "JS+ config",
+					"base": "tsconfig",
+					"color": "#31C433",
+					"fileNames": [
+						".config/jsp.json",
+						"jsp.config.json"
+					]
+				}
+			],
+			"[jsp]": {
+				"editor.detectIndentation": false,
+				"editor.insertSpaces": false,
+				"editor.formatOnSave": true,
+				"editor.fontLigatures": true,
+				"prettier.printWidth": 100,
+				"prettier.singleQuote": true,
+				"prettier.useTabs": true
+			}
+		}
 	}
 }

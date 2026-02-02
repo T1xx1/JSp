@@ -23,9 +23,11 @@ export const compile = (
 					type: 'SyntaxError',
 					message: error.message,
 					loc: {
-						line: error.loc.line,
-						character: error.loc.column,
-						length: 1,
+						/* Babel line errors start at 1 */
+						startLine: error.loc.line - 1,
+						startCharacter: error.loc.column,
+						endLine: error.loc.line - 1,
+						endCharacter: error.loc.column + 1,
 					},
 				};
 			}),
@@ -57,9 +59,11 @@ export const compile = (
 						type: 'Error' as const,
 						message: error.message,
 						loc: {
-							line: error.loc.line,
-							character: error.loc.column,
-							length: 1,
+							/* Babel line errors start at 1 */
+							startLine: error.loc.line - 1,
+							startCharacter: error.loc.column,
+							endLine: error.loc.line - 1,
+							endCharacter: error.loc.column + 1,
 						},
 					};
 				}),
