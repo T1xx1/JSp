@@ -7,7 +7,7 @@ const production = process.argv.includes('--production');
 async function main() {
 	rmSync('./dist', { recursive: true, force: true });
 
-	const ctx = await esbuild.context({
+	const ctx = await esbuild.build({
 		entryPoints: ['./src/extension.ts'],
 		bundle: true,
 		format: 'esm',
@@ -16,13 +16,10 @@ async function main() {
 		sourcesContent: false,
 		platform: 'node',
 		outfile: './dist/extension.js',
-		external: ['vscode', '@babel/preset-typescript', '@types+node'],
+		external: ['vscode', '@babel/preset-typescript'],
 		logLevel: 'warning',
 		plugins: [],
 	});
-
-	await ctx.rebuild();
-	await ctx.dispose();
 }
 
 main().catch((e) => {
