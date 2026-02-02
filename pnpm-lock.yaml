@@ -32,6 +32,9 @@ importers:
       starlight-links-validator:
         specifier: ^0.19.2
         version: 0.19.2(@astrojs/starlight@0.37.5(astro@5.17.1(@azure/identity@4.13.0)(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.54.0)(typescript@5.9.3)))(astro@5.17.1(@azure/identity@4.13.0)(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.54.0)(typescript@5.9.3))
+      starlight-sidebar-topics:
+        specifier: ^0.6.2
+        version: 0.6.2(@astrojs/starlight@0.37.5(astro@5.17.1(@azure/identity@4.13.0)(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.54.0)(typescript@5.9.3)))
       tailwindcss:
         specifier: ^4.1.18
         version: 4.1.18
@@ -3205,6 +3208,12 @@ packages:
     peerDependencies:
       '@astrojs/starlight': '>=0.32.0'
       astro: '>=5.1.5'
+
+  starlight-sidebar-topics@0.6.2:
+    resolution: {integrity: sha512-SNCTUZS/hcVor0ZcaXbaSVU37+V+qtvzNirkvnOg3Mqu/awuGpthkH5+uKpiZqWxLffp6TrOlsv5E5QsxrndNg==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@astrojs/starlight': '>=0.32.0'
 
   std-env@3.10.0:
     resolution: {integrity: sha512-5GS12FdOZNliM5mAOxFRg7Ir0pWz8MdpYm6AY6VPkGpbA7ZzmbzNcBJQ0GPvvyWgcY7QAhCgf9Uy89I03faLkg==}
@@ -7466,6 +7475,11 @@ snapshots:
       unist-util-visit: 5.1.0
     transitivePeerDependencies:
       - supports-color
+
+  starlight-sidebar-topics@0.6.2(@astrojs/starlight@0.37.5(astro@5.17.1(@azure/identity@4.13.0)(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.54.0)(typescript@5.9.3))):
+    dependencies:
+      '@astrojs/starlight': 0.37.5(astro@5.17.1(@azure/identity@4.13.0)(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.54.0)(typescript@5.9.3))
+      picomatch: 4.0.3
 
   std-env@3.10.0: {}
 

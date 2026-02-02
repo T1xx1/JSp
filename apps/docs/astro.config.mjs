@@ -2,6 +2,7 @@ import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 import starlightLinksValidator from 'starlight-links-validator';
+import starlightSidebarTopics from 'starlight-sidebar-topics';
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,7 +19,6 @@ export default defineConfig({
 			},
 			description: 'Use TC39 proposals today',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/t1xx1/jsp' }],
-			sidebar: [],
 			editLink: {
 				baseUrl: 'https://github.com/t1xx1/jsp/edit/main/',
 			},
@@ -48,7 +48,7 @@ export default defineConfig({
 				},
 			],
 			customCss: ['./src/styles/index.css'],
-			plugins: [starlightLinksValidator()],
+			plugins: [starlightLinksValidator(), starlightSidebarTopics([])],
 		}),
 	],
 });
