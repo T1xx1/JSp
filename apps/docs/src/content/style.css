@@ -3,3 +3,8 @@ header {
 		@apply gap-2 transition-all hover:-translate-y-1;
 	}
 }
+
+/* index.mdx */
+.hero > img {
+	@apply w-[15rem];
+}
