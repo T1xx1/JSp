@@ -7,21 +7,43 @@ export default defineConfig({
 	vite: {
 		plugins: [tailwindcss()],
 	},
+	site: 'https://jsplang.vercel.app',
 	integrations: [
 		starlight({
-			title: 'My Docs',
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
-			sidebar: [
+			title: '',
+			favicon: '/favicon.svg',
+			logo: {
+				src: './src/assets/logo.png',
+			},
+			description: 'Use TC39 proposals today',
+			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/t1xx1/jsp' }],
+			sidebar: [],
+			editLink: {
+				baseUrl: 'https://github.com/t1xx1/jsp/edit/main/',
+			},
+			customCss: ['./src/styles/index.css'],
+			head: [
 				{
-					label: 'Guides',
-					items: [
-						// Each item here is one entry in the navigation menu.
-						{ label: 'Example Guide', slug: 'guides/example' },
-					],
+					tag: 'link',
+					attrs: {
+						rel: 'preconnect',
+						href: 'https://fonts.googleapis.com',
+					},
 				},
 				{
-					label: 'Reference',
-					autogenerate: { directory: 'reference' },
+					tag: 'link',
+					attrs: {
+						rel: 'preconnect',
+						href: 'https://fonts.gstatic.com',
+						crossorigin: true,
+					},
+				},
+				{
+					tag: 'link',
+					attrs: {
+						rel: 'stylesheet',
+						href: 'https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap',
+					},
 				},
 			],
 			customCss: ['./src/styles/index.css'],

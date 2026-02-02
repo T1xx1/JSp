@@ -1,16 +1,13 @@
 {
-	"name": "",
+	"name": "@jsplang/docs",
 	"type": "module",
-	"version": "0.0.1",
 	"scripts": {
 		"dev": "astro dev",
-		"start": "astro dev",
-		"build": "astro build",
-		"preview": "astro preview",
-		"astro": "astro"
+		"build": "astro build"
 	},
-	"dependencies": {
+	"devDependencies": {
 		"@astrojs/starlight": "^0.37.5",
+		"@astrojs/starlight-tailwind": "^4.0.2",
 		"@tailwindcss/vite": "^4.1.18",
 		"astro": "^5.6.1",
 		"sharp": "^0.34.2",
