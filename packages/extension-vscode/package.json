@@ -11,7 +11,7 @@
 	},
 	"scripts": {
 		"dev": "tsc -w",
-		"build": "npm run bundle && npm run package",
+		"build": "pnpm bundle && pnpm package",
 		"bundle": "node esbuild.js --production",
 		"package": "vsce package --no-dependencies"
 	},
@@ -20,7 +20,6 @@
 		"@vscode/vsce": "^3.7.1",
 		"esbuild": "^0.27.2",
 		"jsp": "workspace:*",
-		"npm": "^11.8.0",
 		"typescript": "^5.9.3"
 	},
 	"repository": {
