@@ -1,10 +1,24 @@
-header {
-	a.site-title {
-		@apply gap-2 transition-all hover:-translate-y-1;
-	}
+/* layout */
+
+/* site title animation */
+header a.site-title {
+	@apply gap-2 transition-all hover:-translate-y-1;
 }
 
-/* index.mdx */
+/* homepage */
+
+/* reduce logo dimension */
 .hero > img {
 	@apply w-[9rem] md:w-[15rem];
+}
+
+/* all pages */
+
+/* reduce right sidebar width */
+.main-pane {
+	@apply w-full;
+
+	> main .sl-container:not(:has(.hero)) {
+		@apply ml-2 max-w-full;
+	}
 }
