@@ -48,7 +48,31 @@ export default defineConfig({
 				},
 			],
 			customCss: ['./src/styles/index.css'],
-			plugins: [starlightLinksValidator(), starlightSidebarTopics([])],
+			plugins: [
+				starlightLinksValidator(),
+				starlightSidebarTopics([
+					{
+						label: 'Overview',
+						icon: 'home',
+						link: '/overview',
+						items: ['overview'],
+					},
+					{
+						label: 'Syntax',
+						icon: 'rocket',
+						link: '/syntax',
+						items: [
+							'syntax',
+							{
+								label: 'Syntax',
+								autogenerate: {
+									directory: 'syntax',
+								},
+							},
+						],
+					},
+				]),
+			],
 		}),
 	],
 });

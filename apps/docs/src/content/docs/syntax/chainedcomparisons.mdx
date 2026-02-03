@@ -1,0 +1,87 @@
+---
+title: Chained comparisons
+lastUpdated: 2026-02-02
+support:
+  js:
+    value: '?'
+  ts:
+    value: '?'
+  tc39:
+    value: false
+  babel:
+    value: false
+  civet:
+    value: true
+    link: https://civet.dev/reference#chained-comparisons
+  jsp:
+    value: true
+integration: custom
+---
+
+import Diff from './diff.astro';
+import Panel from './panel.astro';
+
+Chained comparisons let you concatenate multiple comparisons into single expression without the need of the `&&` gate.
+
+<Diff>
+	```ts
+	const one = 1;
+	const two = 2;
+	const three = 3;
+
+    if (one < two < three) {
+    	console.log('Two is between one and three');
+    }
+
+    ```
+
+    ```ts
+    const one = 1;
+    const two = 2;
+    const three = 3;
+
+    if (one < two && two < three) {
+    	console.log('Two is between one and three');
+    }
+    ```
+
+</Diff>
+
+## Support
+
+<Panel support={frontmatter.support} />
+
+#### JavaScript
+
+Technically, the chained comparison syntax can be parsed by JavaScript, but it wouldn't work as expected.
+
+```js
+const one = 1;
+const ten = 10;
+const three = 3;
+
+console.log(one < ten < three); // true
+```
+
+Since in a chained comparison expression all the operators have the same [precedence](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence), JavaScript will parse the expression from left to right. The comparison operators `>`,`<`,`>=` and `<=` are binary operators, so they evaluate the comparison only between two values at a time. JavaScript will parse the expression like this `(one < ten) < three`
+
+```js
+const one = 1;
+const two = 2;
+const three = 3;
+
+one < ten; // true
+true < three; // it's still true because true is coerced into 1 and 1 < 3 is true
+```
+
+But obviously 10 is not between 1 and 3.
+
+#### TypeScript
+
+TypeScript will throw a type error if you try to chain comparisons:
+
+```ts
+if (1 < 10 < 3) {
+	//~~~~~~~~~~ • Operator '<' cannot be applied to types 'boolean' and 'number'. ts(2365)
+}
+```

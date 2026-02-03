@@ -1,0 +1,63 @@
+---
+import { Image } from 'astro:assets';
+
+import javascript from '~/assets/javascript.svg';
+import jsp from '~/assets/jsp.svg';
+import typescript from '~/assets/typescript.svg';
+
+import Support from './support.astro';
+
+type Props = {
+	support: Record<
+		string,
+		| {
+				value: '?' | false;
+		  }
+		| {
+				value: true;
+				link?: string;
+		  }
+	>;
+};
+
+const { support } = Astro.props;
+---
+
+<table>
+	<tbody>
+		<tr>
+			<th>
+				<Image src={javascript} alt="JavaScript" class="size-7" />
+			</th>
+			<th>
+				<Image src={typescript} alt="TypeScript" class="size-7" />
+			</th>
+			<th>TC39</th>
+			<th>Babel</th>
+			<th>Civet</th>
+			<th>
+				<Image src={jsp} alt="JS+" class="size-7" />
+			</th>
+		</tr>
+		<tr>
+			<td>
+				<Support support={support.js} />
+			</td>
+			<td>
+				<Support support={support.ts} />
+			</td>
+			<td>
+				<Support support={support.tc39} />
+			</td>
+			<td>
+				<Support support={support.babel} />
+			</td>
+			<td>
+				<Support support={support.civet} />
+			</td>
+			<td>
+				<Support support={support.jsp} />
+			</td>
+		</tr>
+	</tbody>
+</table>
