@@ -5,11 +5,7 @@ import Semaphore from './semaphore.svelte';
 
 const customs = Object.values<Page>(import.meta.glob('./syntax/*.mdx', { eager: true })).filter(
 	(page) => {
-		if (page.frontmatter.support.jsp?.integration === 'Custom') {
-			return true;
-		}
-
-		return false;
+		return page.frontmatter.support.jsp?.integration === 'Custom';
 	},
 );
 ---
