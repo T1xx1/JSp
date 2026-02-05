@@ -35,7 +35,7 @@ Scrap useless values when destructuring.
     const [_, x, __, y, ___, z] = [0, 1, 2, 3, 4, 5];
 
     let obj2;
-    ({ z: void, ...obj2 } = { x: 1, y: 2, z: 3 });
+    ({ z: _, ...obj2 } = { x: 1, y: 2, z: 3 });
     console.log(obj2); // { x: 1, y: 2 }
     ```
 
