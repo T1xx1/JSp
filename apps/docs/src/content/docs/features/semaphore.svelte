@@ -20,7 +20,7 @@
 		{#if entity.value === true}
 			✅
 			{#if entity.stage !== undefined}
-				Stage {JSON.stringify(entity.stage)}
+				Stage {entity.stage}
 			{/if}
 			{#if variant === 'default'}
 				{#if entity.link}
