@@ -1,0 +1,100 @@
+---
+title: Negative array subscript
+lastUpdated: 2026-02-04
+support:
+  tc39:
+    value: false
+  babel:
+    value: false
+  civet:
+    value: false
+  jsp:
+    value: true
+    integration: Custom
+---
+
+import Diff from '../diff.astro';
+import Support from '../support.astro';
+
+Index arrays from the last element.
+
+<Support support={frontmatter.support} />
+
+:::caution
+This syntax affects JavaScript original behaviour.
+:::
+
+<Diff>
+	```ts
+	const arr = [0, 1, 2];
+
+    console.log(arr[-1]); // 2
+
+    arr[-2] = 3; // [0, 3, 2]
+    ```
+
+    ```ts
+    const arr = [0, 1, 2];
+
+    console.log(arr[arr.length - 1]); // 2
+
+    arr[arr.length - 2] = 3; // [0, 3, 2]
+    ```
+
+</Diff>
+
+:::danger[Important]
+JS+ will only be able to parse this syntax correctly if the negative subscript is explicitly stated since it only perform static analysis and not runtime checks.
+
+```ts
+const arr = [0, 1, 2];
+
+arr[-1]; // Parsed correctly
+
+const x = 1;
+arr[-x] = // Parsed correctly
+
+const x = -1;
+arr[x]; // Won't be parsed
+```
+
+:::
+
+#### Why not `.at(-x)` and `.with(-x, value)`?
+
+The `.at()` method can retrieve elements starting from the last element, but it doesn't allow negative subscripts writes.
+
+We really shouldn't have 2 different ways of indexing negative subscripts.
+
+## Support
+
+This syntax already exists in JavaScript
+
+#### JavaScript and TypeScript
+
+If you try to index negative subscripts you'll get a really strange behaviour.
+
+```js
+const arr = [0, 1, 2];
+
+console.log(arr[-1]); // undefined
+
+arr[-2] = 3; // [-2: 3, 0, 3, 2]
+```
+
+In JavaScript arrays are objects, and values inside square brackets are coerced into strings, different subscripts than numbers will evaluate the same as accessing an object with bracket notation.
+
+## Integration
+
+This syntax is integrated with a custom Babel plugin.
+
+> [Source](https://github.com/t1xx1/jsp/tree/main/packages/plugin-transform-negative-array-subscript)
+
+---
+
+#### Resources
+
+- https://github.com/tc39/proposal-array-last
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/with
+- https://github.com/hax/proposal-index-from-end

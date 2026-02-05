@@ -1,0 +1,49 @@
+---
+title: "'Cause ESNext is not enough"
+template: splash
+hero:
+  tagline: An opinioned TypeScript superset with TC39 proposals
+  image:
+    file: ../../assets/logo.png
+  actions:
+    - text: Get started
+      link: /overview
+      icon: right-arrow
+lastUpdated: 2026-02-02
+---
+
+import Diff from './features/diff.astro';
+
+#### [Pipelines](/features/syntax/pipelineoperator)
+
+<Diff>
+	```ts
+	Object.keys(envars)
+		.map(envar => `${envar}=${envars[envar]}`)
+		.join(' ')
+		|> `$ ${%}`
+		|> chalk.dim(%, 'node', args.join(' '))
+		|> console.log(%)
+    ```
+
+    ```ts
+    console.log(
+		chalk.dim(
+			`$ ${Object.keys(envars)
+    			.map(envar =>
+    				`${envar}=${envars[envar]}`)
+    			.join(' ')
+    		}`,
+    		'node',
+    		args.join(' ')
+    	)
+    );
+    ```
+
+</Diff>
+
+<br />
+
+<div class="flex justify-center">
+	##### [And much more cool stuff...](/features)
+</div>

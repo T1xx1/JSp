@@ -1,0 +1,36 @@
+---
+import type { Page } from './types';
+
+import Semaphore from './semaphore.svelte';
+
+type Props = {
+	support: Page['frontmatter']['support'];
+};
+
+const { support } = Astro.props;
+---
+
+<table>
+	<tbody>
+		<tr>
+			<th>TC39</th>
+			<th>Babel</th>
+			<th>Civet</th>
+			<th>JS+</th>
+		</tr>
+		<tr>
+			<td>
+				<Semaphore entity={support.tc39} />
+			</td>
+			<td>
+				<Semaphore entity={support.babel} />
+			</td>
+			<td>
+				<Semaphore entity={support.civet} />
+			</td>
+			<td>
+				<Semaphore entity={support.jsp} />
+			</td>
+		</tr>
+	</tbody>
+</table>

@@ -1,0 +1,83 @@
+---
+title: Config reference
+lastUpdated: 2026-02-04
+---
+
+import { FileTree } from '@astrojs/starlight/components';
+
+[`include`](#include) [`exclude`](#exclude) [`compiler`](#compiler)
+
+## Top level properties
+
+#### `include`
+
+Array of glob patterns to include in your program
+
+Default: `['./**']`
+
+```json
+{
+	"include": [
+		"./src/**",
+		"./tests/**"
+	]
+}
+```
+
+<FileTree>
+
+- scripts       ❌
+  - format.jsp  ❌
+  - lint.jsp    ❌
+- src           ✅
+  - client      ✅
+    - index.jsp ✅
+	- utils.jsp ✅
+	- utils.ts  ❌
+  - server      ✅
+    - index.jsp ✅
+	- lsp.ts    ❌
+  - index.jsp   ✅
+- tests         ✅
+  - index.jsp   ✅
+  - utils.jsp   ✅
+
+</FileTree>
+
+:::note
+File extension can be omitted since JS+ cannot parse files that don't end with `.jsp`
+:::
+
+#### `exclude`
+
+Array of glob patterns to exclude when resolving [`include`](#include)
+
+Default: `[]`
+
+:::note
+File extension can be omitted since JS+ cannot parse files that don't end with `.jsp`
+:::
+
+:::note
+The `node_modules` and [emitDir](#emitdir) folders are excluded by default
+:::
+
+## `compiler`
+
+Configuration for the compilation process
+
+#### `emitLang`
+
+Language to emit JS+ into. Can be `JavaScript` or `TypeScript`
+
+Default: `TypeScript`
+
+#### `emitDir`
+
+Folder to compile JS+ files into
+
+Default: `./dist`
+
+:::note
+The emit directory is excluded from the program by default
+:::

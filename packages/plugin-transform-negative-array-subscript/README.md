@@ -1,6 +1,8 @@
 # Negative array subscript transform plugin
 
-```js+
+> [Docs](https://jsplang.vercel.app/features/syntax/negativearraysubscript)
+
+```jsp
 const array = [0, 1, 2, 3];
 
 console.log(array[-1]); // 3
@@ -8,7 +10,7 @@ console.log(array[-1]); // 3
 array[-1] = 4; // [0, 1, 2, 4]
 ```
 
-```js
+```ts
 const array = [0, 1, 2, 3];
 
 console.log(array[array.length - 1]); // 3

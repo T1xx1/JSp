@@ -1,0 +1,13 @@
+---
+const { id } = Astro.props;
+---
+
+<iframe
+	src=`https://youtube.com/embed/${id}`
+	title="YouTube video player"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowfullscreen
+	referrerpolicy="strict-origin-when-cross-origin"
+	class="rounded-xl w-full aspect-video"
+>
+</iframe>

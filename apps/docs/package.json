@@ -1,0 +1,21 @@
+{
+	"name": "@jsplang/docs",
+	"type": "module",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build"
+	},
+	"devDependencies": {
+		"@astrojs/starlight": "^0.37.5",
+		"@astrojs/starlight-tailwind": "^4.0.2",
+		"@astrojs/svelte": "^7.2.5",
+		"@tailwindcss/vite": "^4.1.18",
+		"astro": "^5.17.1",
+		"sharp": "^0.34.2",
+		"starlight-links-validator": "^0.19.2",
+		"starlight-sidebar-topics": "^0.6.2",
+		"svelte": "^5.49.1",
+		"tailwindcss": "^4.1.18",
+		"typescript": "^5.9.3"
+	}
+}

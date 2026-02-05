@@ -1,9 +1,11 @@
 # Typeof null operator transform plugin
 
-```js+
+> [Docs](https://jsplang.vercel.app/features/syntax/typeofnulloperator)
+
+```jsp
 typeof null; // 'null'
 ```
 
-```js
+```ts
 typeof null; // 'object'
 ```

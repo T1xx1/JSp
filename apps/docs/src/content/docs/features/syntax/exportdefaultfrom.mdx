@@ -1,0 +1,31 @@
+---
+title: Export default from
+lastUpdated: 2026-02-04
+support:
+  tc39:
+    value: true
+    stage: 1
+    link: https://github.com/tc39/proposal-export-default-from
+  babel:
+    value: true
+    link: https://babeljs.io/docs/babel-plugin-proposal-export-default-from
+  civet:
+    value: false
+  jsp:
+    value: true
+    integration: Babel
+---
+
+import Diff from '../diff.astro';
+import Support from '../support.astro';
+
+Re-export the default export from another module.
+
+
+<Support support={frontmatter.support} />
+
+View the [proposal repo](https://github.com/tc39/proposal-export-default-from) for a better and more detailed explanation.
+
+## Integration
+
+This syntax is integrated with Babel's [plugin-proposal-export-default-from](https://babeljs.io/docs/babel-plugin-proposal-export-default-from) plugin.
