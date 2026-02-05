@@ -2,10 +2,6 @@
 title: Chained comparisons
 lastUpdated: 2026-02-02
 support:
-  js:
-    value: '?'
-  ts:
-    value: '?'
   tc39:
     value: false
   babel:
@@ -15,13 +11,19 @@ support:
     link: https://civet.dev/reference#chained-comparisons
   jsp:
     value: true
-integration: custom
+    integration: Custom
 ---
 
-import Diff from './diff.astro';
-import Panel from './panel.astro';
+import Diff from '../diff.astro';
+import Support from '../support.astro';
 
 Chained comparisons let you concatenate multiple comparisons into single expression without the need of the `&&` gate.
+
+<Support support={frontmatter.support} />
+
+:::caution
+This syntax affects JavaScript original behaviour.
+:::
 
 <Diff>
 	```ts
@@ -47,9 +49,32 @@ Chained comparisons let you concatenate multiple comparisons into single express
 
 </Diff>
 
+With expressions
+
+<Diff>
+	```ts
+	const arr = [0, 1, 2, 3];
+
+    if (arr[0] < arr[1] < arr[2] < arr[3]) {
+    	console.log('1 is between 0 and 2');
+    	console.log('2 is between 1 and 3');
+    }
+    ```
+
+    ```ts
+    const arr = [0, 1, 2, 3];
+
+    if (arr[0] < arr[1] && arr[1] < arr[2] && arr[2] < arr[3]) {
+    	console.log('1 is between 0 and 2');
+    	console.log('2 is between 1 and 3');
+    }
+    ```
+
+</Diff>
+
 ## Support
 
-<Panel support={frontmatter.support} />
+This syntax already exists in JavaScript
 
 #### JavaScript
 
@@ -85,3 +110,9 @@ if (1 < 10 < 3) {
 	//~~~~~~~~~~ • Operator '<' cannot be applied to types 'boolean' and 'number'. ts(2365)
 }
 ```
+
+### Integration
+
+This syntax is integrated with a custom Babel plugin.
+
+> [Source](https://github.com/t1xx1/jsp/tree/main/packages/plugin-transform-chained-comparisons)

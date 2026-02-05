@@ -1,0 +1,56 @@
+---
+title: Async do expressions
+lastUpdated: 2026-02-04
+support:
+  tc39:
+    value: true
+    stage: 0
+    link: https://github.com/tc39/proposal-async-do-expressions
+  babel:
+    value: true
+    link: https://babeljs.io/docs/babel-plugin-proposal-async-do-expressions
+  civet:
+    value: true
+    link: https://civet.dev/reference#do-blocks
+  jsp:
+    value: true
+    integration: Babel
+---
+
+import Diff from '../diff.astro';
+import Support from '../support.astro';
+
+Async do expressions can can replace async IIFEs called in a synchronous scope.
+
+<Support support={frontmatter.support} />
+
+<Diff>
+	```ts
+	import { readFile } from 'node:fs';
+
+    async do {
+    	const file = await readFile('file.txt', 'utf8');
+
+    	console.log(file);
+    }
+    ```
+
+    ```ts
+    import { readFile } from 'node:fs';
+
+    (async () => {
+    	const file = await readFile('file.txt', 'utf8');
+
+    	console.log(file);
+    })();
+    ```
+
+</Diff>
+
+:::caution
+Async do expressions are different than [Do expressions](/syntax/doexpressions).
+:::
+
+## Integration
+
+This syntax is integrated with Babel's [plugin-proposal-async-do-expressions](https://babeljs.io/docs/babel-plugin-proposal-async-do-expressions) plugin.

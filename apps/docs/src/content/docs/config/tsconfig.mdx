@@ -1,0 +1,52 @@
+---
+title: TypeScript configuration
+lastUpdated: 2026-02-04
+---
+
+```ts
+import {
+	ModuleDetectionKind,
+	ModuleKind,
+	ModuleResolutionKind,
+	ScriptTarget,
+	type CompilerOptions,
+} from 'typescript';
+
+export const tsconfig = {
+	compilerOptions: {
+		/* parser */
+		skipLibCheck: true,
+		alwaysStrict: true /* ECMAScript */,
+		strict: true /* TypeScript */,
+		module: ModuleKind.ESNext,
+		moduleResolution: ModuleResolutionKind.Bundler,
+		moduleDetection: ModuleDetectionKind.Force,
+		resolveJsonModule: true /* JSON */,
+		/* type checking */
+		exactOptionalPropertyTypes: true,
+		lib: ['lib.dom.d.ts', 'lib.esnext.d.ts'],
+		noImplicitAny: true,
+		noImplicitThis: true,
+		noUncheckedIndexedAccess: true,
+		noUncheckedSideEffectImports: true,
+		/* linter */
+		allowUnreachableCode: false,
+		allowUnusedLabels: false,
+		noImplicitOverride: true,
+		noPropertyAccessFromIndexSignature: true,
+		noUnusedLocals: true,
+		noUnusedParameters: true,
+		verbatimModuleSyntax: true,
+		/* compiler */
+		target: ScriptTarget.ESNext,
+		sourceMap: true,
+		declaration: true,
+		declarationMap: true,
+		outDir: './dist',
+	},
+} satisfies {
+	compilerOptions: CompilerOptions;
+};
+```
+
+> [Source](https://github.com/T1xx1/JSp/blob/main/packages/jsp/src/config/tsconfig.ts)

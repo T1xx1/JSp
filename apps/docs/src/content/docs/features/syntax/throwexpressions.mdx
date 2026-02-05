@@ -1,0 +1,59 @@
+---
+title: Throw expressions
+lastUpdated: 2026-02-04
+support:
+  tc39:
+    value: true
+    stage: 2
+    link: https://github.com/tc39/proposal-throw-expressions
+  babel:
+    value: true
+    link: https://babeljs.io/docs/babel-plugin-proposal-throw-expressions
+  civet:
+    value: false
+  jsp:
+    value: true
+    integration: Babel
+---
+
+import Diff from '../diff.astro';
+import Support from '../support.astro';
+
+Throw errors in expressions.
+
+<Support support={frontmatter.support} />
+
+<Diff>
+	```ts
+	const double = (x = throw new Error('double expects a number')) => {
+		return x * 2;
+	}
+
+    double(); // Error: double expects a number
+    ```
+
+    ```ts
+    const double = (x: number) => {
+    	if (typeof x !== 'number') {
+    		throw new Error('double expects a number');
+    	}
+
+    	return x * 2;
+    }
+    ```
+
+</Diff>
+
+In JavaScript throw expressions could also be used to throw errors on missing parameters.
+
+```js
+const double = (x = throw new Error('double expects a number')) => {
+	return x * 2;
+};
+
+double(); // Error: double expects a number
+```
+
+## Integration
+
+This syntax is integrated with Babel's [plugin-proposal-throw-expressions](https://babeljs.io/docs/babel-plugin-proposal-throw-expressions) plugin.

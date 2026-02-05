@@ -1,9 +1,11 @@
 # Template plugin
 
-```js+
+> [Docs](https://jsplang.vercel.app/features/)
+
+```jsp
 
 ```
 
-```js
+```ts
 
 ```

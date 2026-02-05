@@ -1,0 +1,76 @@
+---
+title: Do expressions
+lastUpdated: 2026-02-04
+support:
+  tc39:
+    value: true
+    stage: 0
+    link: https://github.com/tc39/proposal-do-expressions
+  babel:
+    value: true
+    link: https://babeljs.io/docs/babel-plugin-proposal-do-expressions
+  civet:
+    value: true
+    link: https://civet.dev/reference#do-blocks
+  jsp:
+    value: true
+    integration: Babel
+---
+
+import Diff from '../diff.astro';
+import Support from '../support.astro';
+
+Assign values based on a condition with better readability than ternaries.
+
+<Support support={frontmatter.support} />
+
+<Diff>
+	```ts
+	const x = 100;
+	const y = 20;
+
+    const a = do {
+    	if (x > 10) {
+    		if (y > 20) {
+    			'big x, big y';
+    		} else {
+    			'big x, small y';
+    		}
+    	} else {
+    		if (y > 10) {
+    			'small x, big y';
+    		} else {
+    			'small x, small y';
+    		}
+    	}
+    };
+    ```
+
+    ```ts
+    const x = 100;
+    const y = 20;
+
+    const x = x > 10
+    		? y > 20
+    			? 'big x, big y'
+    			: 'big x, small y'
+    		: y > 10
+    			? 'small x, big y'
+    			: 'small x, small y';
+    ```
+
+</Diff>
+
+:::caution
+Do expressions are different than [Async do expressions](/syntax/asyncdoexpressions)
+:::
+
+## Integration
+
+This syntax is integrated with Babel's [plugin-proposal-do-expressions](https://babeljs.io/docs/babel-plugin-proposal-do-expressions) plugin.
+
+---
+
+#### Resources
+
+- https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/types%20%26%20grammar/ch5.md#statement-completion-values

@@ -1,0 +1,46 @@
+---
+title: Discard binding
+lastUpdated: 2026-02-04
+support:
+  tc39:
+    value: true
+    stage: 2
+    link: https://github.com/tc39/proposal-discard-binding
+  babel:
+    value: true
+    link: https://babeljs.io/docs/babel-plugin-proposal-discard-binding
+  civet:
+    value: false
+  jsp:
+    value: true
+    integration: Babel
+---
+
+import Diff from '../diff.astro';
+import Support from '../support.astro';
+
+<Support support={frontmatter.support} />
+
+Scrap useless values when destructuring.
+
+<Diff>
+	```ts
+	const [void, x, void, y, void, z] = [0, 1, 2, 3, 4, 5];
+
+    const { z: void, ...obj1 } = { x: 1, y: 2, z: 3 };
+    console.log(obj1); // { x: 1, y: 2 }
+    ```
+
+    ```ts
+    const [_, x, __, y, ___, z] = [0, 1, 2, 3, 4, 5];
+
+    let obj2;
+    ({ z: void, ...obj2 } = { x: 1, y: 2, z: 3 });
+    console.log(obj2); // { x: 1, y: 2 }
+    ```
+
+</Diff>
+
+## Integration
+
+This syntax is integrated with Babel's [plugin-proposal-discard-binding](https://babeljs.io/docs/babel-plugin-proposal-discard-binding) plugin.

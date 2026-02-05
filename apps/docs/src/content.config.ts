@@ -7,6 +7,7 @@ export const collections = {
 		loader: docsLoader(),
 		schema: docsSchema({
 			extend: z.object({
+				aliases: z.array(z.string()).optional(),
 				lastUpdated: z.date(),
 			}),
 		}),

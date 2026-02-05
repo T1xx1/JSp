@@ -1,0 +1,67 @@
+---
+title: Pipeline operator
+lastUpdated: 2026-02-04
+support:
+  tc39:
+    value: true
+    stage: 2
+    link: https://github.com/tc39/proposal-pipeline-operator
+  babel:
+    value: true
+    link: https://babeljs.io/docs/babel-plugin-proposal-pipeline-operator
+  civet:
+    value: true
+    link: https://civet.dev/reference#pipe-operator
+  jsp:
+    value: true
+    integration: Babel
+---
+
+import Yb from '~/components/yb.astro';
+
+import Diff from '../diff.astro';
+import Support from '../support.astro';
+
+Pipelines let you pass the result of an expression into another expression with multiple steps and without intermiate variables.
+
+<Support support={frontmatter.support} />
+
+<Diff>
+	```ts
+	Object.keys(envars)
+		.map(envar => `${envar}=${envars[envar]}`)
+		.join(' ')
+		|> `$ ${%}`
+		|> chalk.dim(%, 'node', args.join(' '))
+		|> console.log(%)
+    ```
+
+    ```ts
+    console.log(
+    	chalk.dim(
+    		`$ ${Object.keys(envars)
+    			.map(envar =>
+    				`${envar}=${envars[envar]}`)
+    			.join(' ')
+    		}`,
+    		'node',
+    		args.join(' ')
+    	)
+    );
+    ```
+
+</Diff>
+
+<div class="float-right">
+	[Source](https://github.com/facebook/react/blob/17.0.2/scripts/jest/jest-cli.js#L295)
+</div>
+
+## Integration
+
+This syntax is integrated with Babel's [plugin-proposal-pipeline-operator](https://babeljs.io/docs/babel-plugin-proposal-pipeline-operator) plugin.
+
+---
+
+#### Resources
+
+<Yb id="h1FvtIJ6ecE" />

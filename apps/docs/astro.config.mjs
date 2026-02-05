@@ -54,23 +54,48 @@ export default defineConfig({
 				starlightLinksValidator(),
 				starlightSidebarTopics([
 					{
-						label: 'Overview',
-						icon: 'home',
+						label: 'General',
+						icon: 'open-book',
 						link: '/overview',
-						items: ['overview'],
+						items: [
+							{
+								label: 'Hello, World!',
+								items: ['overview', 'philosophy'],
+							},
+							{
+								label: 'Getting started',
+								items: ['gettingstarted', 'integratejs', 'integratets'],
+							},
+							{
+								label: 'Config',
+								autogenerate: {
+									directory: 'config',
+								},
+							},
+							'changelog',
+							{
+								label: 'Other',
+								items: ['branding'],
+								collapsed: true,
+							},
+						],
 					},
 					{
-						label: 'Syntax',
+						label: 'Features',
 						icon: 'rocket',
-						link: '/syntax',
+						link: '/features',
 						items: [
-							'syntax',
+							{
+								label: 'Overview',
+								items: ['features', 'features/customplugins', 'features/proposals'],
+							},
 							{
 								label: 'Syntax',
 								autogenerate: {
-									directory: 'syntax',
+									directory: 'features/syntax',
 								},
 							},
+							'features/polyfills',
 						],
 					},
 				]),

@@ -1,6 +1,8 @@
 # Chained comparisons transform plugin
 
-```js+
+> [Docs](https://jsplang.vercel.app/features/syntax/chainedcomparisons)
+
+```jsp
 const a = 1;
 const b = 2;
 const c = 3;
@@ -9,7 +11,7 @@ console.log(a < b < c); // true
 console.log(a >= b <= c); // false
 ```
 
-```js
+```ts
 const a = 1;
 const b = 2;
 const c = 3;

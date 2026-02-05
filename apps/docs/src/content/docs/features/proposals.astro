@@ -1,0 +1,75 @@
+---
+import Semaphore from './semaphore.svelte';
+
+import { proposals } from './proposals';
+---
+
+<table>
+	<tbody>
+		<tr>
+			<th>Syntax</th>
+			<th>TC39</th>
+			<th>Babel</th>
+			<th>Civet</th>
+			<th>JS+</th>
+		</tr>
+		{
+			proposals
+				.map((p) => {
+					return {
+						frontmatter: p,
+					};
+				})
+				.sort((s: any, t: any) => {
+					const sTc39 = s.frontmatter.support.tc39?.value ?? false;
+					const tTc39 = t.frontmatter.support.tc39?.value ?? false;
+
+					if (sTc39 !== tTc39) {
+						return tTc39 - sTc39;
+					}
+
+					const sTc39Stage = s.frontmatter.support.tc39?.stage ?? 0;
+					const tTc39Stage = t.frontmatter.support.tc39?.stage ?? 0;
+
+					if (sTc39Stage !== tTc39Stage) {
+						return tTc39Stage - sTc39Stage;
+					}
+
+					const sBabel = s.frontmatter.support.babel?.value ?? false;
+					const tBabel = t.frontmatter.support.babel?.value ?? false;
+
+					if (sBabel !== tBabel) {
+						return tBabel - sBabel;
+					}
+
+					const sCivet = s.frontmatter.support.civet?.value ?? false;
+					const tCivet = t.frontmatter.support.civet?.value ?? false;
+
+					if (sCivet !== tCivet) {
+						return tCivet - sCivet;
+					}
+
+					return s.frontmatter.title.localeCompare(t.frontmatter.title);
+				})
+				.map((s: any) => {
+					return (
+						<tr>
+							<td>{s.frontmatter.title}</td>
+							<td>
+								<Semaphore entity={s.frontmatter.support.tc39} />
+							</td>
+							<td>
+								<Semaphore entity={s.frontmatter.support.babel} />
+							</td>
+							<td>
+								<Semaphore entity={s.frontmatter.support.civet} />
+							</td>
+							<td>
+								<Semaphore entity={s.frontmatter.support.jsp} />
+							</td>
+						</tr>
+					);
+				})
+		}
+	</tbody>
+</table>
