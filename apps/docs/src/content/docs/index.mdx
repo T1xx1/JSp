@@ -28,8 +28,8 @@ import Diff from './features/diff.astro';
 
     ```ts
     console.log(
-		chalk.dim(
-			`$ ${Object.keys(envars)
+    	chalk.dim(
+    		`$ ${Object.keys(envars)
     			.map(envar =>
     				`${envar}=${envars[envar]}`)
     			.join(' ')
@@ -44,6 +44,4 @@ import Diff from './features/diff.astro';
 
 <br />
 
-<div class="flex justify-center">
-	##### [And much more cool stuff...](/features)
-</div>
+<div class="flex justify-center">##### [And much more cool stuff...](/features)</div>
