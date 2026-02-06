@@ -1,19 +1,33 @@
 import { globSync, readFileSync } from 'node:fs';
-import { exit } from 'node:process';
+import { join, normalize } from 'node:path';
 
 import chalk from 'chalk';
 
 import type { CompleteConfig } from '../config/index.js';
+import { exit } from '../utils/index.js';
 
+/**
+ * Get JS+ inputs in the current working directory.
+ * @returns JS+ filenames
+ */
 export const getInputs = (config: CompleteConfig): string[] => {
-	const inputs = globSync(config.include, {
-		exclude: ['node_modules', config.compiler.emitDir],
-	}).filter((f) => f.endsWith('.jsp'));
+	const inputs = globSync(
+		config.include.map((filename) => {
+			return join(config.rootDir, normalize(filename));
+		}),
+		{
+			exclude: [
+				'node_modules',
+				normalize(config.compiler.emitDir),
+				...config.exclude.map((filename) => {
+					return join(config.rootDir, normalize(filename));
+				}),
+			],
+		},
+	).filter((f) => f.endsWith('.jsp'));
 
 	if (inputs.length === 0) {
-		console.log(chalk.red('No JS+ inputs defined in the current `include` configuration'));
-
-		exit();
+		throw exit('No JS+ inputs defined with current `include`/`exclude` configuration');
 	}
 
 	return inputs;

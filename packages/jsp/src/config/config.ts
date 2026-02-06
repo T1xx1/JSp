@@ -1,14 +1,13 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
-import { join } from 'node:path';
-import { cwd, exit } from 'node:process';
-
-import chalk from 'chalk';
+import { join, normalize } from 'node:path';
+import { cwd } from 'node:process';
 
 import { tryCatchSync } from '../polyfills/index.js';
-import { panic } from '../utils/panic.js';
+import { exit, panic } from '../utils/index.js';
 
 export type Config = {
+	rootDir?: string;
 	include?: string[];
 	exclude?: string[];
 	compiler?: {
@@ -58,9 +57,7 @@ export const getConfig = (): Config => {
 		});
 
 		if (error || !data) {
-			console.log(chalk.red('Cannot parse JS+ config'));
-
-			exit();
+			throw exit('Cannot parse JS+ config');
 		}
 
 		return data;
@@ -73,9 +70,7 @@ export const getConfig = (): Config => {
 		});
 
 		if (error || !data) {
-			console.log(chalk.red('Cannot require JS+ config'));
-
-			exit();
+			throw exit('Cannot require JS+ config');
 		}
 
 		return data;
@@ -85,9 +80,7 @@ export const getConfig = (): Config => {
 };
 export const initConfig = () => {
 	if (existsConfig() !== false) {
-		console.log(chalk.gray('JS+ config is already initialized'));
-
-		exit();
+		throw exit('JS+ config is already initialized');
 	}
 
 	let configPath: string;
@@ -106,6 +99,7 @@ export type CompleteConfig = Required<Config> & {
 	compiler: Required<Config['compiler']>;
 };
 export const completeConfig: CompleteConfig = {
+	rootDir: './src',
 	include: ['./**'],
 	exclude: [],
 	compiler: {
@@ -114,8 +108,13 @@ export const completeConfig: CompleteConfig = {
 	},
 };
 
+/**
+ * Merge missing JS+ config properties with the default JS+ config properties.
+ * @returns JS+ config with all properties
+ */
 export const mergeConfig = (config: Config): CompleteConfig => {
 	return {
+		rootDir: config.rootDir ?? completeConfig.rootDir,
 		include: config.include ?? completeConfig.include,
 		exclude: config.exclude ?? completeConfig.exclude,
 		compiler: {
@@ -124,6 +123,28 @@ export const mergeConfig = (config: Config): CompleteConfig => {
 		},
 	};
 };
+/**
+ * Parses JS+ config and throws on errors.
+ */
+export const parseConfig = (config: CompleteConfig): void => {
+	/* emitDir */
+	const emitDir = normalize(config.compiler.emitDir);
+
+	if (config.include.includes(emitDir)) {
+		throw exit('`compiler.emitDir` cannot be included in `include`');
+	}
+	if (emitDir === normalize(config.rootDir)) {
+		throw exit('`compiler.emitDir` cannot be the root directory');
+	}
+};
+/**
+ * Get the JS+ complete config in the current working directory.
+ * `@returns` The JS+ complete config with all properties populated
+ */
 export const getCompleteConfig = (): CompleteConfig => {
-	return mergeConfig(getConfig());
+	const completeConfig = mergeConfig(getConfig());
+
+	parseConfig(completeConfig);
+
+	return completeConfig;
 };

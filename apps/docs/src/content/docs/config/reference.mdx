@@ -5,9 +5,19 @@ lastUpdated: 2026-02-04
 
 import { FileTree } from '@astrojs/starlight/components';
 
-[`include`](#include) [`exclude`](#exclude) [`compiler`](#compiler)
+[`rootDir`](#rootdir) [`include`](#include) [`exclude`](#exclude) [`compiler`](#compiler)
 
 ## Top-level properties
+
+#### `rootDir`
+
+Root directory of your program
+
+Default: `./src`
+
+:::caution
+The root directory cannot be the [`emitDir`](#emitdir)
+:::
 
 #### `include`
 
@@ -45,7 +55,7 @@ Default: `['./**']`
 </FileTree>
 
 :::note
-File extension can be omitted since JS+ cannot parse files that don't end with `.jsp`
+File extensions can be omitted since JS+ cannot parse files that don't end with `.jsp`
 :::
 
 #### `exclude`
@@ -55,11 +65,11 @@ Array of glob patterns to exclude when resolving [`include`](#include)
 Default: `[]`
 
 :::note
-File extension can be omitted since JS+ cannot parse files that don't end with `.jsp`
+File extensions can be omitted since JS+ cannot parse files that don't end with `.jsp`
 :::
 
-:::note
-The `node_modules` and [emitDir](#emitdir) folders are excluded by default
+:::caution
+The `node_modules` and [`emitDir`](#emitdir) folders are excluded by default
 :::
 
 ## `compiler`
@@ -79,5 +89,5 @@ Folder to compile JS+ files into
 Default: `./dist`
 
 :::note
-The emit directory is excluded from the program by default
+The emit directory cannot be the [`rootDir`](#rootdir) nor included in [`include`](#include).
 :::
