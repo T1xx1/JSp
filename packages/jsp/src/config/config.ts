@@ -139,7 +139,7 @@ export const parseConfig = (config: CompleteConfig): void => {
 };
 /**
  * Get the JS+ complete config in the current working directory.
- * @returns `{}` or the JS+ complete config
+ * `@returns` The JS+ complete config with all properties populated
  */
 export const getCompleteConfig = (): CompleteConfig => {
 	const completeConfig = mergeConfig(getConfig());
