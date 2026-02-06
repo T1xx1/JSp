@@ -12,12 +12,14 @@ export default function ({ types: t }: { types: typeof types }) {
 					return;
 				}
 
-				if (t.isBinaryExpression(path.node.left) && comparisons.includes(path.node.left.operator)) {
+				const leftSide = path.node.left;
+
+				if (t.isBinaryExpression(leftSide) && comparisons.includes(leftSide.operator)) {
 					path.replaceWith(
 						t.logicalExpression(
 							'&&',
-							path.node.left,
-							t.binaryExpression(path.node.operator, path.node.left.right, path.node.right),
+							leftSide,
+							t.binaryExpression(path.node.operator, leftSide.right, path.node.right),
 						),
 					);
 				}
