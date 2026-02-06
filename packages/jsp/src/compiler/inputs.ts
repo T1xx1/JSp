@@ -16,7 +16,13 @@ export const getInputs = (config: CompleteConfig): string[] => {
 			return join(config.rootDir, normalize(filename));
 		}),
 		{
-			exclude: ['node_modules', join(config.rootDir, normalize(config.compiler.emitDir))],
+			exclude: [
+				'node_modules',
+				join(config.rootDir, normalize(config.compiler.emitDir)),
+				...config.exclude.map((filename) => {
+					return join(config.rootDir, normalize(filename));
+				}),
+			],
 		},
 	).filter((f) => f.endsWith('.jsp'));
 
