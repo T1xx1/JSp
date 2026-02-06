@@ -11,7 +11,7 @@ export const getInputs = (config: CompleteConfig): string[] => {
 	}).filter((f) => f.endsWith('.jsp'));
 
 	if (inputs.length === 0) {
-		console.log(chalk.red('No JS+ inputs found with current `include` configuration'));
+		console.log(chalk.red('No JS+ inputs defined in the current `include` configuration'));
 
 		exit();
 	}

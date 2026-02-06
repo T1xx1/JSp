@@ -8,21 +8,25 @@ You can configure some aspects of JS+.
 JS+ will automatically try to resolve a config in the `.config` folder or in the root folder of your project. You can use both `.json` or `.ts` extension.
 
 If multiple configs are found, JS+ will only consider the most relevant one, following this order:
+
 1. `.config/jsp.json`
 2. `.config/jsp.ts`
 3. `jsp.config.json`
 4. `jsp.config.ts`
 
-For `.json` configs you can use the following `$schema` for intellisens:
+For `.json` configs you can use the following `$schema` for IntelliSense:
+
 ```jsonc
 /* .config/jsp.json or jsp.config.json */
 {
-	"$schema": "https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/config.json"
+	"$schema": "https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/config.json",
 }
 ```
+
 > [Source](https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/config.json)
 
-For `.ts` configs you can import the `Config` type for typesafety:
+For `.ts` configs you can import the `Config` type for type safety:
+
 ```ts
 /* .config/jsp.ts or jsp.config.ts */
 import type { Config } from 'jsp/config';
@@ -31,7 +35,9 @@ export default {
 	/* ... */
 } satisfies Config;
 ```
+
 > [Source](https://github.com/T1xx1/JSp/blob/main/packages/jsp/src/config/config.ts)
 
 #### [Config reference](/config/reference)
+
 #### [Tsconfig](/config/tsconfig)

@@ -44,7 +44,7 @@ This syntax affects JavaScript original behaviour.
 </Diff>
 
 :::danger[Important]
-JS+ will only be able to parse this syntax correctly if the negative subscript is explicitly stated since it only perform static analysis and not runtime checks.
+JS+ will only be able to parse this syntax correctly if the negative subscript is explicitly stated since it only performs static analysis and not runtime checks.
 
 ```ts
 const arr = [0, 1, 2];
@@ -52,7 +52,7 @@ const arr = [0, 1, 2];
 arr[-1]; // Parsed correctly
 
 const x = 1;
-arr[-x] = // Parsed correctly
+arr[-x]; // Parsed correctly
 
 const x = -1;
 arr[x]; // Won't be parsed

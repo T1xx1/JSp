@@ -1,10 +1,12 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { join } from 'node:path';
 import { cwd, exit } from 'node:process';
 
 import chalk from 'chalk';
 
 import { tryCatchSync } from '../polyfills/index.js';
+import { panic } from '../utils/panic.js';
 
 export type Config = {
 	include?: string[];
@@ -38,6 +40,10 @@ export const existsConfig = (): false | string => {
 
 	return false;
 };
+/**
+ * Get the JS+ config in the current working directory.
+ * @returns `{}` or the JS+ config
+ */
 export const getConfig = (): Config => {
 	let configPath = existsConfig();
 
@@ -45,17 +51,37 @@ export const getConfig = (): Config => {
 		return {};
 	}
 
-	const { data, error } = tryCatchSync(() => {
-		return JSON.parse(readFileSync(configPath, 'utf8')) as Config;
-	});
+	/* `.json` config */
+	if (configPath.endsWith('.json')) {
+		const { data, error } = tryCatchSync(() => {
+			return JSON.parse(readFileSync(configPath, 'utf8')) as Config;
+		});
 
-	if (error || !data) {
-		console.log(chalk.red('Cannot parse JS+ config'));
+		if (error || !data) {
+			console.log(chalk.red('Cannot parse JS+ config'));
 
-		exit();
+			exit();
+		}
+
+		return data;
 	}
 
-	return data;
+	/* `.ts` config */
+	if (configPath.endsWith('.ts')) {
+		const { data, error } = tryCatchSync(() => {
+			return createRequire(import.meta.url)(configPath).default as Config;
+		});
+
+		if (error || !data) {
+			console.log(chalk.red('Cannot require JS+ config'));
+
+			exit();
+		}
+
+		return data;
+	}
+
+	throw panic('MLA2Z3XNHX', 'Hit invalid code');
 };
 export const initConfig = () => {
 	if (existsConfig() !== false) {

@@ -1,5 +1,3 @@
-import { exit } from 'node:process';
-
 import { transformSync, type BabelFileResult, type ParseResult } from '@babel/core';
 
 /* @ts-expect-error */
@@ -102,13 +100,11 @@ export const transform = (
 			};
 		}
 
-		panic('ML42CWWWLS', panicError.message);
-		exit();
+		throw panic('ML42CWWWLS', panicError.message);
 	}
 
 	if (!ts || !ts.ast || !ts.code) {
-		panic('MKYHKYDERU', 'Null Babel transformation');
-		exit();
+		throw panic('MKYHKYDERU', 'Null Babel transformation');
 	}
 
 	ts.syntaxError = false;

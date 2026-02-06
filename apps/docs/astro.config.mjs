@@ -24,7 +24,6 @@ export default defineConfig({
 			editLink: {
 				baseUrl: 'https://github.com/t1xx1/jsp/edit/main/',
 			},
-			customCss: ['./src/styles/index.css'],
 			head: [
 				{
 					tag: 'link',
@@ -64,7 +63,7 @@ export default defineConfig({
 							},
 							{
 								label: 'Getting started',
-								items: ['gettingstarted', 'integratejs', 'integratets'],
+								items: ['gettingstarted', 'integratejs', 'integratets', 'vscodeextension'],
 							},
 							{
 								label: 'Config',

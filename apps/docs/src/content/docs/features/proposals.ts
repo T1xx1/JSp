@@ -183,7 +183,7 @@ export const proposals: Proposal[] = [
 			},
 			civet: {
 				value: true,
-				link: '',
+				link: 'https://civet.dev/reference#triple-quoted-strings',
 			},
 			jsp: {
 				value: false,
