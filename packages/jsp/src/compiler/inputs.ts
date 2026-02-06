@@ -1,9 +1,9 @@
 import { globSync, readFileSync } from 'node:fs';
-import { exit } from 'node:process';
 
 import chalk from 'chalk';
 
 import type { CompleteConfig } from '../config/index.js';
+import { exit } from '../utils/index.js';
 
 export const getInputs = (config: CompleteConfig): string[] => {
 	const inputs = globSync(config.include, {
@@ -11,9 +11,7 @@ export const getInputs = (config: CompleteConfig): string[] => {
 	}).filter((f) => f.endsWith('.jsp'));
 
 	if (inputs.length === 0) {
-		console.log(chalk.red('No JS+ inputs defined in the current `include` configuration'));
-
-		exit();
+		throw exit('No JS+ inputs defined with current `include`/`exclude` configuration');
 	}
 
 	return inputs;

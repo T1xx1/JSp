@@ -1,12 +1,10 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { join } from 'node:path';
-import { cwd, exit } from 'node:process';
-
-import chalk from 'chalk';
+import { cwd } from 'node:process';
 
 import { tryCatchSync } from '../polyfills/index.js';
-import { panic } from '../utils/panic.js';
+import { exit, panic } from '../utils/index.js';
 
 export type Config = {
 	include?: string[];
@@ -58,9 +56,7 @@ export const getConfig = (): Config => {
 		});
 
 		if (error || !data) {
-			console.log(chalk.red('Cannot parse JS+ config'));
-
-			exit();
+			throw exit('Cannot parse JS+ config');
 		}
 
 		return data;
@@ -73,9 +69,7 @@ export const getConfig = (): Config => {
 		});
 
 		if (error || !data) {
-			console.log(chalk.red('Cannot require JS+ config'));
-
-			exit();
+			throw exit('Cannot require JS+ config');
 		}
 
 		return data;
@@ -85,9 +79,7 @@ export const getConfig = (): Config => {
 };
 export const initConfig = () => {
 	if (existsConfig() !== false) {
-		console.log(chalk.gray('JS+ config is already initialized'));
-
-		exit();
+		throw exit('JS+ config is already initialized');
 	}
 
 	let configPath: string;
