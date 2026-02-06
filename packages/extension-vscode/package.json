@@ -98,7 +98,9 @@
 					"color": "#31C433",
 					"fileNames": [
 						".config/jsp.json",
-						"jsp.config.json"
+						".config/jsp.ts",
+						"jsp.config.json",
+						"jsp.config.ts"
 					]
 				}
 			],
