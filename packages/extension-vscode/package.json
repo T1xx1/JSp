@@ -105,10 +105,10 @@
 				}
 			],
 			"[jsp]": {
+				"editor.fontLigatures": true,
 				"editor.detectIndentation": false,
 				"editor.insertSpaces": false,
 				"editor.formatOnSave": true,
-				"editor.fontLigatures": true,
 				"prettier.printWidth": 100,
 				"prettier.singleQuote": true,
 				"prettier.useTabs": true
