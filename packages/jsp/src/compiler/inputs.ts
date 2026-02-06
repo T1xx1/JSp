@@ -18,7 +18,7 @@ export const getInputs = (config: CompleteConfig): string[] => {
 		{
 			exclude: [
 				'node_modules',
-				join(config.rootDir, normalize(config.compiler.emitDir)),
+				normalize(config.compiler.emitDir),
 				...config.exclude.map((filename) => {
 					return join(config.rootDir, normalize(filename));
 				}),
