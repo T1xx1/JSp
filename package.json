@@ -7,11 +7,13 @@
 	"scripts": {
 		"dev": "turbo dev",
 		"build": "turbo build",
+		"docs:dev": "turbo dev --filter=@jsplang/docs...",
+		"docs:build": "turbo build --filter=@jsplang/docs...",
+		"extension-vscode:dev": "turbo dev --filter=extension-vscode... --filter=!tester",
+		"extension-vscode:build": "turbo build --filter=extension-vscode... --filter=!tester",
 		"jsp:dev": "turbo dev --filter=jsp... --filter=!tester",
 		"jsp:build": "turbo build --filter=jsp... --filter=!tester",
-		"jsp:test": "turbo test --filter=jsp...",
-		"extension-vscode:dev": "turbo dev --filter=extension-vscode... --filter=!tester",
-		"extension-vscode:build": "turbo build --filter=extension-vscode... --filter=!tester"
+		"jsp:test": "turbo test --filter=jsp..."
 	},
 	"devDependencies": {
 		"turbo": "^2.7.1"

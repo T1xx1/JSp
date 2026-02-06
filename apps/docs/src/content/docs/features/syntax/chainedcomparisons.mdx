@@ -1,6 +1,6 @@
 ---
 title: Chained comparisons
-lastUpdated: 2026-02-02
+lastUpdated: 2026-02-06
 support:
   tc39:
     value: false
@@ -17,7 +17,7 @@ support:
 import Diff from '../diff.astro';
 import Support from '../support.astro';
 
-Chained comparisons let you concatenate multiple comparisons into single expression without the need of the `&&` gate.
+Chained comparisons let you concatenate multiple comparisons into a single expression without the need of the `&&` gate.
 
 <Support support={frontmatter.support} />
 
@@ -31,10 +31,17 @@ This syntax affects JavaScript original behaviour.
 	const two = 2;
 	const three = 3;
 
-    if (one < two < three) {
-    	console.log('Two is between one and three');
-    }
+	one == two == three; // false
+	one != two != three; // true
 
+	one === two === three; // false
+	one !== two !== three; // true
+
+	one < two < three; // true
+	one <= two <= three; // true
+
+	one > two > three; // false
+	one >= two >= three; // false
     ```
 
     ```ts
@@ -42,9 +49,17 @@ This syntax affects JavaScript original behaviour.
     const two = 2;
     const three = 3;
 
-    if (one < two && two < three) {
-    	console.log('Two is between one and three');
-    }
+    one == two && two == three; // false
+    one != two && two != three; // true
+
+    one === two && two === three; // false
+    one !== two && two !== three; // true
+
+    one < two && two < three; // true
+    one <= two && two <= three; // true
+
+    one > two && two > three; // false
+    one >= two && two >= three; // false
     ```
 
 </Diff>
@@ -55,22 +70,90 @@ With expressions
 	```ts
 	const arr = [0, 1, 2, 3];
 
-    if (arr[0] < arr[1] < arr[2] < arr[3]) {
-    	console.log('1 is between 0 and 2');
-    	console.log('2 is between 1 and 3');
-    }
+	arr[0] == arr[1] == arr[2]; // false
+	arr[0] != arr[1] != arr[2]; // true
+
+	arr[0] === arr[1] === arr[2]; // false
+	arr[0] !== arr[1] !== arr[2]; // true
+
+	arr[0] < arr[1] < arr[2]; // true
+	arr[0] <= arr[1] <= arr[2]; // true
+
+	arr[0] > arr[1] > arr[2]; // false
+	arr[0] >= arr[1] >= arr[2]; // false
     ```
 
     ```ts
     const arr = [0, 1, 2, 3];
 
-    if (arr[0] < arr[1] && arr[1] < arr[2] && arr[2] < arr[3]) {
-    	console.log('1 is between 0 and 2');
-    	console.log('2 is between 1 and 3');
-    }
+    arr[0] == arr[1] && arr[1] == arr[2]; // false
+    arr[0] != arr[1] && arr[1] != arr[2]; // true
+
+    arr[0] === arr[1] && arr[1] === arr[2]; // false
+    arr[0] !== arr[1] && arr[1] !== arr[2]; // true
+
+    arr[0] < arr[1] && arr[1] < arr[2]; // true
+    arr[0] <= arr[1] && arr[1] <= arr[2]; // true
+
+    arr[0] > arr[1] && arr[1] > arr[2]; // false
+    arr[0] >= arr[1] && arr[1] >= arr[2]; // false
     ```
 
 </Diff>
+
+You can also chain more than 3 operators and different operators together:
+
+<Diff>
+	```ts
+	const a = 1;
+	const b = 2;
+	const c = 3;
+
+	a == b < c <= b; // false
+	a >= b !== c; // false
+    ```
+
+    ```ts
+    const a = 1;
+    const b = 2;
+    const c = 3;
+
+    a == b && b < c && c <= b; // false
+    a >= b && b !== c; // false
+    ```
+
+</Diff>
+
+:::caution
+Chained comparisons will be transformed into a standard chained `&&` condition, so avoid using heavy computations in the middle operands as they will be evaluated two or more times.
+
+```ts
+// ❌ Avoid
+const heavyFunction = () => {
+	// ...
+
+	return 2;
+}
+
+const a = 1;
+const c = 3;
+
+a < heavyFunction() < c; // true
+
+// ✅ Do
+const heavyFunction = () => {
+	// ...
+
+	return 2;
+}
+
+const a = 1;
+const b = heavyFunction();
+const c = 3;
+
+a < b < c; // true
+```
+:::
 
 ## Support
 
@@ -78,7 +161,7 @@ This syntax already exists in JavaScript
 
 #### JavaScript
 
-Technically, the chained comparison syntax can be parsed by JavaScript, but it wouldn't work as expected.
+Technically, chained comparison can be parsed by JavaScript, but it wouldn't work as expected.
 
 ```js
 const one = 1;
@@ -88,7 +171,7 @@ const three = 3;
 console.log(one < ten < three); // true
 ```
 
-Since in a chained comparison expression all the operators have the same [precedence](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence), JavaScript will parse the expression from left to right. The comparison operators `>`,`<`,`>=` and `<=` are binary operators, so they evaluate the comparison only between two values at a time. JavaScript will parse the expression like this `(one < ten) < three`
+Since in a chained comparison expression, all the operators have the same [precedence](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence), JavaScript will parse the expression from left to right. The operators `==`, `!=`, `===`, `!==`, `<`, `<=`, `>` and `>=` are binary operators, so they evaluate the comparison only between two values at a time. JavaScript will parse the expression like this `(one < ten) < three`
 
 ```js
 const one = 1;
