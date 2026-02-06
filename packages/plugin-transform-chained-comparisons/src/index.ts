@@ -6,7 +6,7 @@ export default function ({ types: t }: { types: typeof types }) {
 		name: '@jsp/plugin-transform-chained-comparisons',
 		visitor: {
 			BinaryExpression(path: NodePath<BinaryExpression>) {
-				const comparisons = ['>', '>=', '<', '<='];
+				const comparisons = ['==', '!=', '===', '!==', '<', '<=', '>', '>='];
 
 				if (!comparisons.includes(path.node.operator)) {
 					return;
