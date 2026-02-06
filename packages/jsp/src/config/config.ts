@@ -7,6 +7,7 @@ import { tryCatchSync } from '../polyfills/index.js';
 import { exit, panic } from '../utils/index.js';
 
 export type Config = {
+	rootDir?: string;
 	include?: string[];
 	exclude?: string[];
 	compiler?: {
@@ -98,6 +99,7 @@ export type CompleteConfig = Required<Config> & {
 	compiler: Required<Config['compiler']>;
 };
 export const completeConfig: CompleteConfig = {
+	rootDir: './src',
 	include: ['./**'],
 	exclude: [],
 	compiler: {
@@ -106,8 +108,13 @@ export const completeConfig: CompleteConfig = {
 	},
 };
 
+/**
+ * Merge missing JS+ config properties with the default JS+ config properties.
+ * @returns JS+ config with all properties
+ */
 export const mergeConfig = (config: Config): CompleteConfig => {
 	return {
+		rootDir: config.rootDir ?? completeConfig.rootDir,
 		include: config.include ?? completeConfig.include,
 		exclude: config.exclude ?? completeConfig.exclude,
 		compiler: {
@@ -116,6 +123,28 @@ export const mergeConfig = (config: Config): CompleteConfig => {
 		},
 	};
 };
+/**
+ * Parses JS+ config and throws on errors.
+ */
+export const parseConfig = (config: CompleteConfig): void => {
+	/* emitDir */
+	const emitDir = normalize(config.compiler.emitDir);
+
+	if (config.include.includes(emitDir)) {
+		throw exit('`compiler.emitDir` cannot be included in `include`');
+	}
+	if (emitDir === normalize(config.rootDir)) {
+		throw exit('`compiler.emitDir` cannot be the root directory');
+	}
+};
+/**
+ * Get the JS+ complete config in the current working directory.
+ * @returns `{}` or the JS+ complete config
+ */
 export const getCompleteConfig = (): CompleteConfig => {
-	return mergeConfig(getConfig());
+	const completeConfig = mergeConfig(getConfig());
+
+	parseConfig(completeConfig);
+
+	return completeConfig;
 };
