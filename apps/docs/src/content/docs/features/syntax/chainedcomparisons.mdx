@@ -124,6 +124,37 @@ You can also chain more than 3 operators and different operators together:
 
 </Diff>
 
+:::caution
+Chained comparisons will be transformed into a standard chained `&&` condition, so avoid using heavy computations in the middle operands as they will be evaluated two or more times.
+
+```ts
+// ❌ Avoid
+const heavyFunction = () => {
+	// ...
+
+	return 2;
+}
+
+const a = 1;
+const c = 3;
+
+a < heavyFunction() < c; // true
+
+// ✅ Do
+const heavyFunction = () => {
+	// ...
+
+	return 2;
+}
+
+const a = 1;
+const b = heavyFunction();
+const c = 3;
+
+a < b < c; // true
+```
+:::
+
 ## Support
 
 This syntax already exists in JavaScript
