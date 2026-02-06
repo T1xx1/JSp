@@ -63,7 +63,7 @@ export default defineConfig({
 							},
 							{
 								label: 'Getting started',
-								items: ['gettingstarted', 'integratejs', 'integratets'],
+								items: ['gettingstarted', 'integratejs', 'integratets', 'vscodeextension'],
 							},
 							{
 								label: 'Config',
