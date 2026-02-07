@@ -26,7 +26,7 @@ export const emitSourceMap = (
 	config: CompleteConfig,
 ) => {
 	emit(
-		`${filename}.map.json`,
+		`${filename}.map`,
 		JSON.stringify({
 			version: outSourceMap.version,
 			file: getEmitCodeFilename(parse(filename).base, config).replaceAll('\\', '/'),
