@@ -56,13 +56,14 @@ export const printDiagnostics = async (filename: string, jspCode: string, out: O
 				? {
 						line: error.loc.startLine,
 						column: error.loc.startCharacter,
+						name: '',
 					}
 				: sourceMapper.originalPositionFor({
 						line: error.loc.startLine + 1,
 						column: error.loc.startCharacter,
 					});
 
-		if (pos.line === null || pos.column === null) {
+		if (pos.line === null || pos.column === null || (pos.name && pos.name.includes('_'))) {
 			continue;
 		}
 

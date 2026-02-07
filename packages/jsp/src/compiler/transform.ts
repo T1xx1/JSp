@@ -9,6 +9,8 @@ import pluginProposalDoExpressions from '@babel/plugin-proposal-do-expressions';
 /* @ts-expect-error */
 import pluginProposalExportDefaultFrom from '@babel/plugin-proposal-export-default-from';
 /* @ts-expect-error */
+import pluginProposalDecorators from '@babel/plugin-proposal-decorators';
+/* @ts-expect-error */
 import pluginProposalPipelineOperator from '@babel/plugin-proposal-pipeline-operator';
 /* @ts-expect-error */
 import pluginProposalThrowExpressions from '@babel/plugin-proposal-throw-expressions';
@@ -77,7 +79,6 @@ export const transform = (
 			sourceMaps: true,
 			/* code gen */
 			compact: false,
-			retainLines: true,
 			/* plugins */
 			plugins: [
 				/* parse TypeScript */
@@ -103,6 +104,12 @@ export const transform = (
 					{
 						proposal: 'hack',
 						topicToken: '%',
+					},
+				],
+				[
+					pluginProposalDecorators,
+					{
+						version: '2023-11',
 					},
 				],
 				pluginProposalExportDefaultFrom,

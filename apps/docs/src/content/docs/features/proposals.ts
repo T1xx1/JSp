@@ -204,25 +204,5 @@ export const proposals: Proposal[] = [
 				value: false,
 			},
 		},
-	},
-	{
-		title: 'Decorators',
-		support: {
-			tc39: {
-				value: true,
-				stage: 3,
-				link: 'https://github.com/tc39/proposal-decorators',
-			},
-			babel: {
-				value: true,
-				link: 'https://babeljs.io/docs/babel-plugin-proposal-decorators',
-			},
-			civet: {
-				value: false,
-			},
-			jsp: {
-				value: false,
-			},
-		},
-	},
+	}
 ];
