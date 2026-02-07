@@ -1,4 +1,4 @@
-import { transformSync, type BabelFileResult, type ParseResult } from '@babel/core';
+import { transformSync, type ParseResult } from '@babel/core';
 
 /* @ts-expect-error */
 import pluginProposalAsyncDoExpressions from '@babel/plugin-proposal-async-do-expressions';
@@ -22,43 +22,63 @@ import { type CompleteConfig } from '../config/index.js';
 import { tryCatchSync } from '../polyfills/index.js';
 import { panic } from '../utils/index.js';
 
-type P = Exclude<ParseResult['errors'], null>[number];
-
-export type ParseError = P & {
-	code: P['code'] & 'BABEL_PARSE_ERROR';
+export type SourceMap = {
+	version: number;
+	file: string;
+	names: string[];
+	sourceRoot: string;
+	sources: string[];
+	sourcesContent: string[];
+	mappings: string;
+	ignoreList: string[];
 };
-
-export type TransformationResult = BabelFileResult & {
-	syntaxError: false;
+export type BabelResult = {
+	map: SourceMap;
 	ast: ParseResult & {
-		errors: ParseError[];
+		errors: Exclude<ParseResult['errors'], null>;
 	};
 	code: string;
 };
-export type SyntaxError = {
-	syntaxError: true;
-	ast: {
-		errors: ParseError[];
+export type BabelSyntaxError = {
+	code: 'BABEL_PARSE_ERROR';
+	reasonCode: 'UnexpectedToken';
+	message: string;
+	loc: {
+		line: number;
+		column: number;
 	};
 };
 
+export type Transformation =
+	| {
+			map: null;
+			ast: {
+				errors: BabelSyntaxError[];
+			};
+			code: null;
+	  }
+	| BabelResult;
+
 export const transform = (
+	filename: string,
 	jspCode: string,
 	config: CompleteConfig,
-): TransformationResult | SyntaxError => {
-	const { data: ts, error: panicError } = tryCatchSync<
-		null | TransformationResult,
-		null | ParseError
-	>(() => {
+): Transformation => {
+	const { data: ts, error: syntaxError } = tryCatchSync<BabelResult, BabelSyntaxError>(() => {
 		return transformSync(jspCode, {
-			ast: true,
+			filename,
 			parserOpts: {
 				errorRecovery: true,
 				sourceType: 'module',
-				strictMode: true,
 			},
+			/* ast */
+			ast: true,
+			/* source maps */
+			sourceMaps: true,
+			/* code */
 			compact: false,
 			retainLines: true,
+			/* plugins */
 			plugins: [
 				/* parse TypeScript */
 				pluginSyntaxTypeScript,
@@ -87,27 +107,30 @@ export const transform = (
 				],
 				pluginProposalExportDefaultFrom,
 			],
-		}) as TransformationResult;
+		}) as unknown as BabelResult;
 	});
 
-	if (panicError) {
-		if (panicError.code === 'BABEL_PARSE_ERROR' && panicError.reasonCode === 'UnexpectedToken') {
+	if (syntaxError) {
+		if (syntaxError.code === 'BABEL_PARSE_ERROR' && syntaxError.reasonCode === 'UnexpectedToken') {
 			return {
-				syntaxError: true,
+				map: null,
 				ast: {
-					errors: [panicError],
+					errors: [syntaxError],
 				},
+				code: null,
 			};
 		}
 
-		throw panic('ML42CWWWLS', panicError.message);
+		throw panic('ML42CWWWLS', syntaxError.message);
 	}
 
-	if (!ts || !ts.ast || !ts.code) {
+	if (!ts || !ts.ast || !ts.map || ts.code === null) {
 		throw panic('MKYHKYDERU', 'Null Babel transformation');
 	}
 
-	ts.syntaxError = false;
-
-	return ts;
+	return {
+		map: ts.map,
+		ast: ts.ast,
+		code: ts.code,
+	};
 };

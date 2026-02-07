@@ -27,30 +27,27 @@ Default: `['./**']`
 
 ```json
 {
-	"include": [
-		"./src/**",
-		"./tests/**"
-	]
+	"include": ["./src/**", "./tests/**"]
 }
 ```
 
 <FileTree>
 
-- scripts       ❌
-  - format.jsp  ❌
-  - lint.jsp    ❌
-- src           ✅
-  - client      ✅
+- scripts ❌
+  - format.jsp ❌
+  - lint.jsp ❌
+- src ✅
+  - client ✅
     - index.jsp ✅
-	- utils.jsp ✅
-	- utils.ts  ❌
-  - server      ✅
+  - utils.jsp ✅
+  - utils.ts ❌
+  - server ✅
     - index.jsp ✅
-	- lsp.ts    ❌
-  - index.jsp   ✅
-- tests         ✅
-  - index.jsp   ✅
-  - utils.jsp   ✅
+  - lsp.ts ❌
+  - index.jsp ✅
+- tests ✅
+  - index.jsp ✅
+  - utils.jsp ✅
 
 </FileTree>
 
@@ -91,3 +88,9 @@ Default: `./dist`
 :::note
 The emit directory cannot be the [`rootDir`](#rootdir) nor included in [`include`](#include).
 :::
+
+#### `emitSourceMaps`
+
+Emit source maps in the [`emitDir`](#emitdir)
+
+Default: `false`
