@@ -107,6 +107,9 @@ importers:
       commander:
         specifier: ^14.0.2
         version: 14.0.2
+      source-map:
+        specifier: ^0.7.6
+        version: 0.7.6
     devDependencies:
       '@types/babel__core':
         specifier: ^7.20.5

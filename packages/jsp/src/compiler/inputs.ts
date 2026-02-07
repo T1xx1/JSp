@@ -1,7 +1,5 @@
-import { globSync, readFileSync } from 'node:fs';
+import { globSync } from 'node:fs';
 import { join, normalize } from 'node:path';
-
-import chalk from 'chalk';
 
 import type { CompleteConfig } from '../config/index.js';
 import { exit } from '../utils/index.js';
@@ -31,16 +29,4 @@ export const getInputs = (config: CompleteConfig): string[] => {
 	}
 
 	return inputs;
-};
-
-export const readInput = (filename: string): null | string => {
-	const jspCode = readFileSync(filename, 'utf8');
-
-	if (jspCode === '') {
-		console.log(chalk.gray(`${filename} is empty`));
-
-		return null;
-	}
-
-	return jspCode;
 };

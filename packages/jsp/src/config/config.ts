@@ -13,6 +13,7 @@ export type Config = {
 	compiler?: {
 		emitLang?: 'JavaScript' | 'TypeScript';
 		emitDir?: string;
+		emitSourceMaps?: boolean;
 	};
 };
 export const initialConfig = {
@@ -105,6 +106,7 @@ export const completeConfig: CompleteConfig = {
 	compiler: {
 		emitLang: 'TypeScript',
 		emitDir: './dist',
+		emitSourceMaps: false,
 	},
 };
 
@@ -120,6 +122,7 @@ export const mergeConfig = (config: Config): CompleteConfig => {
 		compiler: {
 			emitLang: config.compiler?.emitLang ?? completeConfig.compiler.emitLang,
 			emitDir: config.compiler?.emitDir ?? completeConfig.compiler.emitDir,
+			emitSourceMaps: config.compiler?.emitSourceMaps ?? completeConfig.compiler.emitSourceMaps,
 		},
 	};
 };
