@@ -96,7 +96,7 @@ const printDiagnostic = (
 				.split('\n')[0]
 		}`,
 	);
-	console.log(`${chalk.bgWhite(range.startLine)} ${code}`);
+	console.log(`${chalk.black.bgWhite(range.startLine)} ${code}`);
 	console.log(
 		`${chalk.bgWhite(' '.repeat(range.startLine.toString().length))} ${' '.repeat(range.startCharacter - 1)}${chalk.red('~'.repeat(range.length))}`,
 	);
