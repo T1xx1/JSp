@@ -66,7 +66,7 @@ export const printDiagnostics = async (filename: string, jspCode: string, out: O
 			continue;
 		}
 
-		const line = jspCode.split('\n')[error.loc.startLine]!;
+		const line = jspCode.split('\n')[pos.line - 1]!;
 
 		printDiagnostic(filename, line, error, {
 			startLine: pos.line,
