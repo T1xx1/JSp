@@ -4,7 +4,6 @@ import chalk from 'chalk';
 import { SourceMapConsumer } from 'source-map';
 
 import { getCompleteConfig } from '../config/index.js';
-import { panic } from '../utils/index.js';
 
 import { compile, type Out } from './compile.js';
 import { emitCode, emitSourceMap } from './emit.js';
@@ -64,7 +63,7 @@ export const printDiagnostics = async (filename: string, jspCode: string, out: O
 					});
 
 		if (pos.line === null || pos.column === null) {
-			throw panic('MLCA7TCMXX', 'Null source map positions');
+			continue;
 		}
 
 		const line = jspCode.split('\n')[error.loc.startLine]!;
