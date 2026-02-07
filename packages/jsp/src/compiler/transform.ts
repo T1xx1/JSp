@@ -121,7 +121,7 @@ export const transform = (
 			};
 		}
 
-		throw panic('ML42CWWWLS', syntaxError.code);
+		throw panic('ML42CWWWLS', syntaxError.message);
 	}
 
 	if (!ts || !ts.ast || !ts.map || ts.code === null) {
