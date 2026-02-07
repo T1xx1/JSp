@@ -19,10 +19,6 @@ export const build = () => {
 	for (const filename of filenames) {
 		const jspCode = readFileSync(filename, 'utf8');
 
-		if (jspCode === null) {
-			continue;
-		}
-
 		const out = compile(filename, jspCode, config);
 
 		if (out.diagnostics.length > 0) {
