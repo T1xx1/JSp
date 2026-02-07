@@ -9,7 +9,7 @@ import pluginProposalDoExpressions from '@babel/plugin-proposal-do-expressions';
 /* @ts-expect-error */
 import pluginProposalExportDefaultFrom from '@babel/plugin-proposal-export-default-from';
 /* @ts-expect-error */
-import pluginProposalDecoratos from '@babel/plugin-proposal-decorators';
+import pluginProposalDecorators from '@babel/plugin-proposal-decorators';
 /* @ts-expect-error */
 import pluginProposalPipelineOperator from '@babel/plugin-proposal-pipeline-operator';
 /* @ts-expect-error */
@@ -107,7 +107,7 @@ export const transform = (
 					},
 				],
 				[
-					pluginProposalDecoratos,
+					pluginProposalDecorators,
 					{
 						version: '2023-11',
 					},
