@@ -1,0 +1,72 @@
+---
+title: Decorators
+alias: Metadata decorators
+lastUpdated: 2026-02-06
+support:
+  tc39:
+    value: true
+    stage: 3
+    link: https://github.com/tc39/proposal-decorators
+  babel:
+    value: true
+    link: https://babeljs.io/docs/babel-plugin-proposal-decorators
+  civet:
+    value: false
+  jsp:
+    value: true
+    integration: Babel
+---
+
+import Diff from '../diff.astro';
+import Support from '../support.astro';
+
+<Support support={frontmatter.support} />
+
+Decorate classes, classes methods and their fields with additional functionality.
+
+<Diff>
+	```ts
+	class C {
+		message = "hello!";
+
+		@bound
+		m() {
+			console.log(this.message);
+		}
+	}
+
+	function bound(value, { name, addInitializer }) {
+		addInitializer(function () {
+			this[name] = this[name].bind(this);
+		});
+	}
+	```
+
+	```ts
+	// TypeScript supports decorators behind an experimental flag
+	// JavaScript doesn't support decorators yet
+	```
+</Diff>
+
+<Diff>
+	```ts
+	@defineElement("my-class")
+	class C extends HTMLElement {
+		@reactive accessor clicked = false;
+	}
+	```
+
+	```ts
+	```
+</Diff>
+
+Decorators are special function calls that will pass as argument information about the class, method or field they decorate allowing for reusable and minimal contextual code.
+
+## Integration
+
+This syntax is integrated with Babel's [plugin-proposal-decorators](https://babeljs.io/docs/babel-plugin-proposal-decorators) plugin.
+
+---
+
+#### Resources
+- [TC39 metadata decorator proposal](https://github.com/tc39/proposal-decorator-metadata)

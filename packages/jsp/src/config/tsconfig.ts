@@ -16,6 +16,7 @@ export const tsconfig = {
 		moduleResolution: ModuleResolutionKind.Bundler,
 		moduleDetection: ModuleDetectionKind.Force,
 		resolveJsonModule: true /* JSON */,
+		experimentalDecorators: true,
 		/* type checking */
 		exactOptionalPropertyTypes: true,
 		lib: ['lib.dom.d.ts', 'lib.esnext.d.ts'],
