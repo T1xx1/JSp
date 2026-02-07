@@ -34,7 +34,29 @@ export const compile = (
 		};
 	}
 
-	/* TypeScript */
+	const babelDiagnostics = ts.ast.errors
+		.filter((error) => {
+			const ignoreReasonCodes = ['DeclarationMissingInitializer'];
+
+			if (ignoreReasonCodes.includes(error.reasonCode)) {
+				return false;
+			}
+
+			return true;
+		})
+		.map((error) => {
+			return {
+				type: 'Error' as const,
+				message: error.message,
+				loc: {
+					/* Babel line errors start at 1 */
+					startLine: error.loc.line - 1,
+					startCharacter: error.loc.column,
+					endLine: error.loc.line - 1,
+					endCharacter: error.loc.column + 1,
+				},
+			};
+		});
 	const tsDiagnostics = parseTs(filename, ts.code);
 
 	return {
@@ -42,32 +64,6 @@ export const compile = (
 			config.compiler.emitLang === 'TypeScript'
 				? ts.code
 				: transpile(ts.code, tsconfig.compilerOptions),
-		diagnostics: [
-			...ts.ast.errors
-				/* filter TypeScript errors */
-				.filter((error) => {
-					const ignoreReasonCodes = ['DeclarationMissingInitializer'];
-
-					if (ignoreReasonCodes.includes(error.reasonCode)) {
-						return false;
-					}
-
-					return true;
-				})
-				.map((error) => {
-					return {
-						type: 'Error' as const,
-						message: error.message,
-						loc: {
-							/* Babel line errors start at 1 */
-							startLine: error.loc.line - 1,
-							startCharacter: error.loc.column,
-							endLine: error.loc.line - 1,
-							endCharacter: error.loc.column + 1,
-						},
-					};
-				}),
-			...tsDiagnostics,
-		],
+		diagnostics: [...babelDiagnostics, ...tsDiagnostics],
 	};
 };
