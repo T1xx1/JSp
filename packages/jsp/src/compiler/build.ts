@@ -1,10 +1,12 @@
+import { readFileSync } from 'node:fs';
+
 import chalk from 'chalk';
 
 import { getCompleteConfig } from '../config/index.js';
 
 import { compile } from './compile.js';
 import { emit } from './emit.js';
-import { getInputs, readInput } from './inputs.js';
+import { getInputs } from './inputs.js';
 import { type Diagnostic } from './parse.js';
 
 export const build = () => {
@@ -15,7 +17,7 @@ export const build = () => {
 	let errors = 0;
 
 	for (const filename of filenames) {
-		const jspCode = readInput(filename);
+		const jspCode = readFileSync(filename, 'utf8');
 
 		if (jspCode === null) {
 			continue;
