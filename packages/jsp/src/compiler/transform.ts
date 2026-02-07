@@ -75,7 +75,7 @@ export const transform = (
 			ast: true,
 			/* source maps */
 			sourceMaps: true,
-			/* code */
+			/* code gen */
 			compact: false,
 			retainLines: true,
 			/* plugins */
@@ -88,7 +88,7 @@ export const transform = (
 				pluginTransformNegativeArraySubscript,
 				pluginTransformTypeofNullOperator,
 
-				/* transform TC39 sorted by scope */
+				/* transform TC39 proposals sorted by scope */
 				pluginProposalThrowExpressions,
 				pluginProposalDoExpressions,
 				pluginProposalAsyncDoExpressions,
