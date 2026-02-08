@@ -3,16 +3,14 @@ import { readFileSync } from 'node:fs';
 import chalk from 'chalk';
 import { SourceMapConsumer } from 'source-map';
 
-import { getCompleteConfig } from '../config/index.js';
+import { type CompleteConfig } from '../config/index.js';
 
 import { compile, type Out } from './compile.js';
 import { emitCode, emitSourceMap } from './emit.js';
 import { getInputs } from './inputs.js';
 import { type Diagnostic } from './parse.js';
 
-export const build = async () => {
-	const config = getCompleteConfig();
-
+export const build = async (config: CompleteConfig) => {
 	const filenames = getInputs(config);
 
 	let errors = 0;
