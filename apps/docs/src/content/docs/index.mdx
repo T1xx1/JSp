@@ -9,7 +9,7 @@ hero:
     - text: Get started
       link: /overview
       icon: right-arrow
-lastUpdated: 2026-02-02
+lastUpdated: 2026-02-08
 ---
 
 import Diff from './features/diff.astro';
@@ -38,6 +38,33 @@ import Diff from './features/diff.astro';
     		args.join(' ')
     	)
     );
+    ```
+
+</Diff>
+
+#### [Decorators](/features/syntax/decorators)
+
+<Diff>
+	```ts
+	class C {
+		message = "hello!";
+
+    	@bound
+    	m() {
+    		console.log(this.message);
+    	}
+    }
+
+    function bound(value, { name, addInitializer }) {
+    	addInitializer(function () {
+    		this[name] = this[name].bind(this);
+    	});
+    }
+    ```
+
+    ```ts
+    // TypeScript supports decorators behind an experimental flag
+    // JavaScript doesn't support decorators yet
     ```
 
 </Diff>

@@ -1,75 +1,83 @@
 ---
-import type { Page } from './types';
+import type { Page, Support } from './types';
 
 import Semaphore from './semaphore.svelte';
 
+type Col = 'proposalType' | keyof Support;
+
 type Props = {
 	pages: Page[];
-	hideCols?: ('proposalType' | 'tc39' | 'babel' | 'civet' | 'jsp')[];
+	hideCols?: Col[];
 };
 
 const { pages, hideCols = [] } = Astro.props;
 
-const col = {
+const cols: Record<Col, boolean> = {
 	proposalType: !hideCols.includes('proposalType'),
 	tc39: !hideCols.includes('tc39'),
+	corejs: !hideCols.includes('corejs'),
 	babel: !hideCols.includes('babel'),
 	civet: !hideCols.includes('civet'),
+	other: !hideCols.includes('other'),
 	jsp: !hideCols.includes('jsp'),
 };
 ---
 
-{
-	pages.length === 0 ? (
-		<p>No pages found...</p>
-	) : (
-		<table>
-			<tbody>
-				<tr>
-					<th>Page</th>
-					{col.proposalType && <th>Type</th>}
-					{col.tc39 && <th>TC39</th>}
-					{col.babel && <th>Babel</th>}
-					{col.civet && <th>Civet</th>}
-					{col.jsp && <th>JS+</th>}
-				</tr>
-				{pages.map((page) => {
-					return (
-						<tr>
+<table>
+	<tbody>
+		<tr>
+			<th>Page</th>
+			{cols.proposalType && <th>Type</th>}
+			{cols.tc39 && <th>TC39</th>}
+			{cols.corejs && <th>CoreJS</th>}
+			{cols.babel && <th>Babel</th>}
+			{cols.civet && <th>Civet</th>}
+			{cols.jsp && <th>JS+</th>}
+		</tr>
+		{
+			pages.map((page) => {
+				return (
+					<tr>
+						<td>
+							{page.url ? (
+								<a href={page.url.replace('src/content/docs', '').replace('.mdx', '')}>
+									{page.frontmatter.title}
+								</a>
+							) : page.frontmatter.support.tc39?.value && page.frontmatter.support.tc39?.link ? (
+								<a href={page.frontmatter.support.tc39.link}>{page.frontmatter.title}</a>
+							) : (
+								<span>{page.frontmatter.title}</span>
+							)}
+						</td>
+						{cols.proposalType && <td>{page.frontmatter.proposalType}</td>}
+						{cols.tc39 && (
 							<td>
-								{page.url ? (
-									<a href={page.url.replace('src/content/docs', '').replace('.mdx', '')}>
-										{page.frontmatter.title}
-									</a>
-								) : (
-									page.frontmatter.title
-								)}
+								<Semaphore entity={page.frontmatter.support.tc39} variant="minimal" />
 							</td>
-							{col.proposalType && <td>{page.frontmatter.proposalType}</td>}
-							{col.tc39 && (
-								<td>
-									<Semaphore entity={page.frontmatter.support.tc39} variant="minimal" />
-								</td>
-							)}
-							{col.babel && (
-								<td>
-									<Semaphore entity={page.frontmatter.support.babel} variant="minimal" />
-								</td>
-							)}
-							{col.civet && (
-								<td>
-									<Semaphore entity={page.frontmatter.support.civet} variant="minimal" />
-								</td>
-							)}
-							{col.jsp && (
-								<td>
-									<Semaphore entity={page.frontmatter.support.jsp} variant="minimal" />
-								</td>
-							)}
-						</tr>
-					);
-				})}
-			</tbody>
-		</table>
-	)
-}
+						)}
+						{cols.corejs && (
+							<td>
+								<Semaphore entity={page.frontmatter.support.corejs} variant="minimal" />
+							</td>
+						)}
+						{cols.babel && (
+							<td>
+								<Semaphore entity={page.frontmatter.support.babel} variant="minimal" />
+							</td>
+						)}
+						{cols.civet && (
+							<td>
+								<Semaphore entity={page.frontmatter.support.civet} variant="minimal" />
+							</td>
+						)}
+						{cols.jsp && (
+							<td>
+								<Semaphore entity={page.frontmatter.support.jsp} variant="minimal" />
+							</td>
+						)}
+					</tr>
+				);
+			})
+		}
+	</tbody>
+</table>

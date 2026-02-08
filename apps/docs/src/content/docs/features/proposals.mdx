@@ -5,7 +5,11 @@ lastUpdated: 2026-02-08
 
 import { allPages } from './pages';
 
+import Percent from './percent.astro';
 import Table from './table.astro';
+
+:::note[JS+ currently supports <Percent /> of all proposals]
+:::
 
 ## TC39 proposals
 
@@ -15,6 +19,7 @@ import Table from './table.astro';
 	pages={allPages.filter((proposal) => {
 		return proposal.frontmatter.support.tc39?.stage === 3;
 	})}
+	hideCols={['tc39']}
 />
 
 ### Stage 2.7
@@ -23,6 +28,7 @@ import Table from './table.astro';
 	pages={allPages.filter((proposal) => {
 		return proposal.frontmatter.support.tc39?.stage === 2.7;
 	})}
+	hideCols={['tc39']}
 />
 
 ### Stage 2
@@ -31,6 +37,7 @@ import Table from './table.astro';
 	pages={allPages.filter((proposal) => {
 		return proposal.frontmatter.support.tc39?.stage === 2;
 	})}
+	hideCols={['tc39']}
 />
 
 ### Stage 1
@@ -39,6 +46,7 @@ import Table from './table.astro';
 	pages={allPages.filter((proposal) => {
 		return proposal.frontmatter.support.tc39?.stage === 1;
 	})}
+	hideCols={['tc39']}
 />
 
 ### Stage 0
@@ -47,6 +55,16 @@ import Table from './table.astro';
 	pages={allPages.filter((proposal) => {
 		return proposal.frontmatter.support.tc39?.stage === 0;
 	})}
+	hideCols={['tc39']}
+/>
+
+### Inactive
+
+<Table
+	pages={allPages.filter((proposal) => {
+		return proposal.frontmatter.support.tc39?.stage === 'Inactive';
+	})}
+	hideCols={['tc39']}
 />
 
 ## Others
@@ -55,10 +73,12 @@ import Table from './table.astro';
 	pages={allPages.filter((proposal) => {
 		return proposal.frontmatter.support.tc39?.value === undefined;
 	})}
+	hideCols={['tc39']}
 />
 
 ---
 
 #### Resources
 
+- [TC39 Proposals](https://github.com/tc39)
 - [TC39 process document](https://tc39.es/process-document)

@@ -1,9 +1,9 @@
-export type ProposalType = 'Polyfill' | 'Runtime' | 'Syntax';
+export type ProposalType = '' | 'Polyfill' | 'Runtime' | 'Syntax';
 export type Integration = 'Babel' | 'Custom';
 
 export type Entity = {
 	value: boolean;
-	stage?: number;
+	stage?: number | 'Inactive';
 	link?: string;
 	integration?: Integration;
 };
@@ -14,9 +14,15 @@ export type Support = {
 		value: false;
 	} | {
 		value: true;
-		stage: number;
+		stage: number | 'Inactive';
 		link: string;
 	};
+	corejs?: {
+		value: false;
+	} | {
+		value: true;
+		link: string;
+	},
 	babel?: {
 		value: false;
 	} | {

@@ -1,0 +1,29 @@
+---
+import { allPages } from './pages';
+---
+
+{
+	Math.round(
+		(allPages.filter((page) => {
+			if (
+				page.frontmatter.support.tc39?.value &&
+				page.frontmatter.support.tc39?.stage === 'Inactive'
+			) {
+				return false;
+			}
+
+			return page.frontmatter.support.jsp?.value;
+		}).length /
+			allPages.filter((page) => {
+				if (
+					page.frontmatter.support.tc39?.value &&
+					page.frontmatter.support.tc39?.stage === 'Inactive'
+				) {
+					return false;
+				}
+
+				return true;
+			}).length) *
+			100,
+	)
+}%
