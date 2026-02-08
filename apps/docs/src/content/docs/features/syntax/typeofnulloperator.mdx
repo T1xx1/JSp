@@ -21,7 +21,7 @@ import Support from '../support.astro';
 
 Due to legacy compatibility `typeof null` evaluates to `'object'`. [MDN docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof#typeof_null). [ECMAScript rejected proposal](https://web.archive.org/web/20160331031419/http://wiki.ecmascript.org:80/doku.php?id=harmony:typeof_null).
 
-<Support support={frontmatter.support} />
+<Support frontmatter={frontmatter} />
 
 :::caution
 This syntax affects JavaScript original behaviour.

@@ -10,7 +10,7 @@ type Props = {
 	};
 };
 
-const { support } = Astro.props;
+const { frontmatter } = Astro.props;
 ---
 
 <table>
@@ -25,16 +25,16 @@ const { support } = Astro.props;
 		<tr>
 			<td>{frontmatter.proposalType}</td>
 			<td>
-				<Semaphore entity={support.tc39} />
+				<Semaphore entity={frontmatter.support.tc39} />
 			</td>
 			<td>
-				<Semaphore entity={support.babel} />
+				<Semaphore entity={frontmatter.support.babel} />
 			</td>
 			<td>
-				<Semaphore entity={support.civet} />
+				<Semaphore entity={frontmatter.support.civet} />
 			</td>
 			<td>
-				<Semaphore entity={support.jsp} />
+				<Semaphore entity={frontmatter.support.jsp} />
 			</td>
 		</tr>
 	</tbody>
