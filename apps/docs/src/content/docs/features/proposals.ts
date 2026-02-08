@@ -175,12 +175,196 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
+		title: 'Temporal',
+		proposalType: 'Polyfill',
 		support: {
 			tc39: {
-			},
 				value: true,
+				stage: 3,
+				link: 'https://github.com/tc39/proposal-temporal',
 			},
+		},
+	},
+	{
+		title: 'Legacy RegExp features',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 3,
+				link: 'https://github.com/tc39/proposal-regexp-legacy-features',
+			},
+		},
+	},
+	{
+		title: 'Explicit resource management (using)',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 3,
+				link: 'https://github.com/tc39/proposal-explicit-resource-management',
+			},
+		},
+	},
+	{
+		title: 'Source phase imports',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 3,
+				link: 'https://github.com/tc39/proposal-source-phase-imports',
+			},
+		},
+	},
+	{
+		title: 'Deferring module evaluation (import defer)',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 3,
+				link: 'https://github.com/tc39/proposal-defer-import-eval',
+			},
+		},
+	},
+	{
+		title: 'Dynamic code brand checks (eval checks)',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 3,
+				link: 'https://github.com/tc39/proposal-dynamic-code-brand-checks',
+			},
+		},
+	},
+	{
+		title: 'Atomic.pause (Task)',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 3,
+				link: 'https://github.com/tc39/proposal-atomics-microwait',
+			},
+		},
+	},
+	{
+		title: 'Joint iteration',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 3,
+				link: 'https://github.com/tc39/proposal-joint-iteration',
+			},
+		},
+	},
+	{
+		title: 'Non-extensible applies to private',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 3,
+				link: 'https://github.com/tc39/proposal-nonextensible-applies-to-private',
+			},
+		},
+	},
+	{
+		title: 'ShadowRealm',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2.7,
+				link: 'https://github.com/tc39/proposal-shadowrealm',
+			},
+		},
+	},
+	{
+		title: 'ESM module phase imports (workers import defer)',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2.7,
+				link: 'https://github.com/tc39/proposal-esm-phase-imports',
+			},
+		},
+	},
+	{
+		title: 'Immutable ArrayBuffers',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2.7,
+				link: 'https://github.com/tc39/proposal-immutable-arraybuffer',
+			},
+		},
+	},
+	{
+		title: 'Iterator chunking',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2.7,
+				link: 'https://github.com/tc39/proposal-iterator-chunking',
+			},
+		},
+	},
+	{
+		title: 'Import bytes',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2.7,
+				link: 'https://github.com/tc39/proposal-import-bytes',
+			},
+		},
+	},
+	{
+		title: 'Await dictionaries (Promise.allKeyed)',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2.7,
+				link: 'https://github.com/tc39/proposal-await-dictionary',
+			},
+		},
+	},
+	{
+		title: 'Iterator join',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2.7,
+				link: 'https://github.com/tc39/proposal-iterator-join',
 			},
 		},
 	}
 ];
+
+export const parseProposals = (proposals: Proposal[]): Page[] => {
+	return proposals.map((proposal) => {
+		return {
+			frontmatter: {
+				...proposal,
+				support: {
+					...proposal.support,
+					jsp: {
+						value: false,
+					},
+				},
+			},
+			url: null,
+		};
+	});
+};
