@@ -86,7 +86,7 @@ export default defineConfig({
 						items: [
 							{
 								label: 'Overview',
-								items: ['features', 'features/customplugins', 'features/proposals'],
+								items: ['features', 'features/proposals', 'features/customplugins'],
 							},
 							{
 								label: 'Syntax',
@@ -94,7 +94,6 @@ export default defineConfig({
 									directory: 'features/syntax',
 								},
 							},
-							'features/polyfills',
 						],
 					},
 				]),
