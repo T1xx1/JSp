@@ -8,7 +8,6 @@ import { type CompleteConfig } from '../config/index.js';
 import { compile, type Out } from './compile.js';
 import { emitCode, emitSourceMap } from './emit.js';
 import { getInputs } from './inputs.js';
-import { type Diagnostic } from './parse.js';
 
 export const build = async (config: CompleteConfig) => {
 	const filenames = getInputs(config);
@@ -49,29 +48,47 @@ export const printDiagnostics = async (filename: string, jspCode: string, out: O
 	const sourceMapper = out.sourceMap === null ? null : await new SourceMapConsumer(out.sourceMap);
 
 	for (const error of out.diagnostics) {
-		const pos =
+		const loc =
 			sourceMapper === null
-				? {
-						line: error.loc.startLine,
-						column: error.loc.startCharacter,
-						name: '',
-					}
+				? null
 				: sourceMapper.originalPositionFor({
+						/* line index starts at 1 */
 						line: error.loc.startLine + 1,
 						column: error.loc.startCharacter,
 					});
+		/* only line index starts at 1 */
+		if (loc && loc.line) {
+			loc.line -= 1;
+		}
 
-		if (pos.line === null || pos.column === null || (pos.name && pos.name.includes('_'))) {
+		if (loc !== null && (!loc.source || !loc.line || !loc.column)) {
 			continue;
 		}
 
-		const line = jspCode.split('\n')[pos.line - 1]!;
-
-		printDiagnostic(filename, line, error, {
-			startLine: pos.line,
-			startCharacter: pos.column + 1,
+		const range = {
+			startLine: loc?.line ?? error.loc.startLine,
+			startCharacter: loc?.column ?? error.loc.startCharacter,
 			length: error.loc.endCharacter - error.loc.startCharacter,
-		});
+		};
+
+		const line = jspCode.split('\n')[range.startLine]!;
+
+		printDiagnostic(
+			filename,
+			'Error',
+			error.type,
+			error.message
+				.replace('unknown: ', '')
+				.replace(/ \(\d+:\d+\)/, '')
+				.split('\n')[0]!,
+			line,
+			{
+				/* natural language */
+				startLine: range.startLine + 1,
+				startCharacter: range.startCharacter + 1,
+				length: range.length,
+			},
+		);
 	}
 
 	sourceMapper?.destroy();
@@ -79,8 +96,10 @@ export const printDiagnostics = async (filename: string, jspCode: string, out: O
 
 const printDiagnostic = (
 	filename: string,
+	type: 'Warn' | 'Error',
+	category: string,
+	message: string,
 	code: string,
-	diagnostic: Diagnostic,
 	range: {
 		startLine: number;
 		startCharacter: number;
@@ -88,14 +107,9 @@ const printDiagnostic = (
 	},
 ) => {
 	console.log(
-		`${chalk.red(`${diagnostic.type}:`)} ${chalk.blue(filename)}:${chalk.yellow(range.startLine)}:${chalk.yellow(range.startCharacter)} • ${
-			diagnostic.message
-				.replace('unknown: ', '')
-				.replace(/ \(\d+:\d+\)/, '')
-				.split('\n')[0]
-		}`,
+		`${chalk.blue(filename)}:${chalk.yellow(range.startLine)}:${chalk.yellow(range.startCharacter)} • ${type === 'Error' ? chalk.red(category) : chalk.yellow(category)} • ${message}`,
 	);
-	console.log(`${chalk.black.bgWhite(range.startLine)} ${code}`);
+	console.log(`${chalk.bgWhite.black(range.startLine)} ${code}`);
 	console.log(
 		`${chalk.bgWhite(' '.repeat(range.startLine.toString().length))} ${' '.repeat(range.startCharacter - 1)}${chalk.red('~'.repeat(range.length))}`,
 	);

@@ -28,10 +28,11 @@ export const compile = (filename: string, jspCode: string, config: CompleteConfi
 					type: 'SyntaxError',
 					message: error.message,
 					loc: {
-						/* Babel line errors start at 1 */
+						/* line index start at 1 */
 						startLine: error.loc.line - 1,
 						startCharacter: error.loc.column,
 						endLine: error.loc.line - 1,
+						/* 1 length error */
 						endCharacter: error.loc.column + 1,
 					},
 				};
@@ -55,10 +56,11 @@ export const compile = (filename: string, jspCode: string, config: CompleteConfi
 				type: 'Error' as const,
 				message: error.message,
 				loc: {
-					/* Babel line errors start at 1 */
+					/* index starts at 1 */
 					startLine: error.loc.line - 1,
 					startCharacter: error.loc.column,
 					endLine: error.loc.line - 1,
+					/* 1 length error */
 					endCharacter: error.loc.column + 1,
 				},
 			};
