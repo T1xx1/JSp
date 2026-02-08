@@ -1,3 +1,4 @@
+export type ProposalType = 'Polyfill' | 'Runtime' | 'Syntax';
 export type Integration = 'Babel' | 'Custom';
 
 export type Entity = {
@@ -49,6 +50,7 @@ export type Proposal = {
 export type Page = {
 	frontmatter: {
 		title: string;
+		proposalType: ProposalType;
 		support: Support;
 	};
 	url: null | string;

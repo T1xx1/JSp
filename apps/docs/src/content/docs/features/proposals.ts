@@ -5,6 +5,7 @@ type Proposal = Omit<Page['frontmatter'], 'lastUpdated'>;
 export const proposals: Proposal[] = [
 	{
 		title: 'Composite',
+		proposalType: 'Polyfill',
 		support: {
 			tc39: {
 				value: true,
@@ -18,6 +19,7 @@ export const proposals: Proposal[] = [
 	},
 	{
 		title: 'Math extensions',
+		proposalType: 'Polyfill',
 		support: {
 			other: {
 				value: true,
@@ -30,6 +32,7 @@ export const proposals: Proposal[] = [
 	},
 	{
 		title: 'Function bind',
+		proposalType: 'Syntax',
 		support: {
 			babel: {
 				value: true,
@@ -42,6 +45,7 @@ export const proposals: Proposal[] = [
 	},
 	{
 		title: 'Function sent',
+		proposalType: 'Syntax',
 		support: {
 			tc39: {
 				value: true,
@@ -59,6 +63,7 @@ export const proposals: Proposal[] = [
 	},
 	{
 		title: 'Module blocks',
+		proposalType: 'Runtime',
 		support: {
 			tc39: {
 				value: true,
@@ -76,6 +81,7 @@ export const proposals: Proposal[] = [
 	},
 	{
 		title: 'Partial application',
+		proposalType: 'Syntax',
 		support: {
 			tc39: {
 				value: true,
@@ -93,6 +99,7 @@ export const proposals: Proposal[] = [
 	},
 	{
 		title: 'Destructuring private',
+		proposalType: 'Syntax',
 		support: {
 			tc39: {
 				value: true,
@@ -106,6 +113,7 @@ export const proposals: Proposal[] = [
 	},
 	{
 		title: 'Pattern matching',
+		proposalType: 'Syntax',
 		support: {
 			tc39: {
 				value: true,
@@ -123,6 +131,7 @@ export const proposals: Proposal[] = [
 	},
 	{
 		title: 'Type annotations',
+		proposalType: 'Syntax',
 		support: {
 			tc39: {
 				value: true,
@@ -136,6 +145,7 @@ export const proposals: Proposal[] = [
 	},
 	{
 		title: 'Enums',
+		proposalType: 'Syntax',
 		support: {
 			tc39: {
 				value: true,
@@ -149,6 +159,7 @@ export const proposals: Proposal[] = [
 	},
 	{
 		title: 'Random functions',
+		proposalType: 'Polyfill',
 		support: {
 			tc39: {
 				value: true,
@@ -162,6 +173,7 @@ export const proposals: Proposal[] = [
 	},
 	{
 		title: 'Amounts',
+		proposalType: 'Polyfill',
 		support: {
 			tc39: {
 				value: true,
@@ -175,6 +187,7 @@ export const proposals: Proposal[] = [
 	},
 	{
 		title: 'String dedent',
+		proposalType: 'Runtime',
 		support: {
 			tc39: {
 				value: true,
