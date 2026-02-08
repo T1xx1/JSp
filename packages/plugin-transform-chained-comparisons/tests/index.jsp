@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'tester';
+import { describe, expect, it } from '@jsplang/tester';
 
 describe('baseline', () => {
 	it('equal', () => {
