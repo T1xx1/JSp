@@ -1,5 +1,5 @@
 {
-	"name": "tester",
+	"name": "@jsplang/tester",
 	"type": "module",
 	"scripts": {
 		"dev": "tsc -w",

@@ -16,9 +16,9 @@ import pluginProposalPipelineOperator from '@babel/plugin-proposal-pipeline-oper
 import pluginProposalThrowExpressions from '@babel/plugin-proposal-throw-expressions';
 /* @ts-expect-error */
 import pluginSyntaxTypeScript from '@babel/plugin-syntax-typescript';
-import pluginTransformChainedComparisons from '@jsp/plugin-transform-chained-comparisons';
-import pluginTransformNegativeArraySubscript from '@jsp/plugin-transform-negative-array-subscript';
-import pluginTransformTypeofNullOperator from '@jsp/plugin-transform-typeof-null-operator';
+import pluginTransformChainedComparisons from '@jsplang/plugin-transform-chained-comparisons';
+import pluginTransformNegativeArraySubscript from '@jsplang/plugin-transform-negative-array-subscript';
+import pluginTransformTypeofNullOperator from '@jsplang/plugin-transform-typeof-null-operator';
 
 import { type CompleteConfig } from '../config/index.js';
 import { tryCatchSync } from '../polyfills/index.js';

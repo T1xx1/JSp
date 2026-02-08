@@ -3,7 +3,7 @@ import type { MemberExpression } from '@babel/types';
 
 export default function ({ types: t }: { types: typeof types }) {
 	return {
-		name: '@jsp/plugin-transform-negative-array-subscript',
+		name: '@jsplang/plugin-transform-negative-array-subscript',
 		visitor: {
 			MemberExpression(path: NodePath<MemberExpression>) {
 				if (

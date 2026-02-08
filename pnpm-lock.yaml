@@ -50,6 +50,9 @@ importers:
 
   packages/extension-vscode:
     devDependencies:
+      '@jsplang/jsp':
+        specifier: workspace:*
+        version: link:../jsp
       '@types/vscode':
         specifier: ^1.108.1
         version: 1.108.1
@@ -59,9 +62,6 @@ importers:
       esbuild:
         specifier: ^0.27.2
         version: 0.27.2
-      jsp:
-        specifier: workspace:*
-        version: link:../jsp
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -95,13 +95,13 @@ importers:
       '@babel/plugin-syntax-typescript':
         specifier: ^7.28.6
         version: 7.28.6(@babel/core@7.28.5)
-      '@jsp/plugin-transform-chained-comparisons':
+      '@jsplang/plugin-transform-chained-comparisons':
         specifier: workspace:*
         version: link:../plugin-transform-chained-comparisons
-      '@jsp/plugin-transform-negative-array-subscript':
+      '@jsplang/plugin-transform-negative-array-subscript':
         specifier: workspace:*
         version: link:../plugin-transform-negative-array-subscript
-      '@jsp/plugin-transform-typeof-null-operator':
+      '@jsplang/plugin-transform-typeof-null-operator':
         specifier: workspace:*
         version: link:../plugin-transform-typeof-null-operator
       chalk:
@@ -139,7 +139,7 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
     devDependencies:
-      tester:
+      '@jsplang/tester':
         specifier: workspace:*
         version: link:../tester
 
@@ -158,7 +158,7 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
     devDependencies:
-      tester:
+      '@jsplang/tester':
         specifier: workspace:*
         version: link:../tester
 
@@ -177,7 +177,7 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
     devDependencies:
-      tester:
+      '@jsplang/tester':
         specifier: workspace:*
         version: link:../tester
 
@@ -196,7 +196,7 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
     devDependencies:
-      tester:
+      '@jsplang/tester':
         specifier: workspace:*
         version: link:../tester
 

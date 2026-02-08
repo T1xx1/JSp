@@ -6,8 +6,8 @@ import {
 	type TextDocument,
 } from 'vscode';
 
-import { compile } from 'jsp/compiler';
-import { completeConfig } from 'jsp/config';
+import { compile } from '@jsplang/jsp/compiler';
+import { completeConfig } from '@jsplang/jsp/config';
 
 export const analyze = (document: TextDocument, diagnosticsCollection: DiagnosticCollection) => {
 	if (document.languageId !== 'jsp') {

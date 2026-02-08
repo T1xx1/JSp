@@ -1,5 +1,5 @@
 {
-	"name": "extension-vscode",
+	"name": "@jsplang/extension-vscode",
 	"type": "module",
 	"version": "0.1.0",
 	"displayName": "JS+",
@@ -19,7 +19,7 @@
 		"@types/vscode": "^1.108.1",
 		"@vscode/vsce": "^3.7.1",
 		"esbuild": "^0.27.2",
-		"jsp": "workspace:*",
+		"@jsplang/jsp": "workspace:*",
 		"typescript": "^5.9.3"
 	},
 	"repository": {
