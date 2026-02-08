@@ -129,85 +129,82 @@ importers:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5
+    devDependencies:
       '@babel/types':
         specifier: ^7.28.6
         version: 7.28.6
+      '@jsplang/tester':
+        specifier: workspace:*
+        version: link:../tester
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
-    devDependencies:
-      '@jsplang/tester':
-        specifier: workspace:*
-        version: link:../tester
 
   packages/plugin-transform-chained-comparisons:
     dependencies:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5
+    devDependencies:
       '@babel/types':
         specifier: ^7.28.6
         version: 7.28.6
+      '@jsplang/tester':
+        specifier: workspace:*
+        version: link:../tester
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
-    devDependencies:
-      '@jsplang/tester':
-        specifier: workspace:*
-        version: link:../tester
 
   packages/plugin-transform-negative-array-subscript:
     dependencies:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5
+    devDependencies:
       '@babel/types':
         specifier: ^7.28.6
         version: 7.28.6
+      '@jsplang/tester':
+        specifier: workspace:*
+        version: link:../tester
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
-    devDependencies:
-      '@jsplang/tester':
-        specifier: workspace:*
-        version: link:../tester
 
   packages/plugin-transform-typeof-null-operator:
     dependencies:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5
+    devDependencies:
       '@babel/types':
         specifier: ^7.28.6
         version: 7.28.6
+      '@jsplang/tester':
+        specifier: workspace:*
+        version: link:../tester
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
-    devDependencies:
-      '@jsplang/tester':
-        specifier: workspace:*
-        version: link:../tester
 
   packages/tester:
     dependencies:
       '@babel/core':
         specifier: ^7.28.5
         version: 7.28.5
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
     devDependencies:
       '@babel/plugin-transform-typescript':
         specifier: ^7.28.5
@@ -218,6 +215,9 @@ importers:
       '@types/node':
         specifier: ^25.0.3
         version: 25.0.3
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^4.0.16
         version: 4.0.16(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)

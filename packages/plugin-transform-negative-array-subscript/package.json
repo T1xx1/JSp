@@ -14,12 +14,12 @@
 		}
 	},
 	"peerDependencies": {
-		"@babel/core": "^7.28.5",
-		"@babel/types": "^7.28.6",
-		"@types/babel__core": "^7.20.5",
-		"typescript": "^5.9.3"
+		"@babel/core": "^7.28.5"
 	},
 	"devDependencies": {
-		"@jsplang/tester": "workspace:*"
+		"@babel/types": "^7.28.6",
+		"@jsplang/tester": "workspace:*",
+		"@types/babel__core": "^7.20.5",
+		"typescript": "^5.9.3"
 	}
 }
