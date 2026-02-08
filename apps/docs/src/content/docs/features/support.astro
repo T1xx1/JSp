@@ -1,10 +1,12 @@
 ---
-import type { Page } from './types';
+import type { ProposalType, Support } from './types';
 
 import Semaphore from './semaphore.svelte';
 
 type Props = {
-	support: Page['frontmatter']['support'];
+	frontmatter: {
+		support: Support;
+	};
 };
 
 const { support } = Astro.props;

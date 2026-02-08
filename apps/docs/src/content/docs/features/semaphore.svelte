@@ -1,16 +1,11 @@
 <script lang="ts">
-	import type { Integration } from './types';
+	import type { Entity } from './types';
 
 	let {
 		entity,
 		variant = 'default',
 	}: {
-		entity?: {
-			value: boolean;
-			stage?: number;
-			link?: string;
-			integration?: Integration;
-		};
+		entity?: Entity;
 		variant?: 'default' | 'minimal';
 	} = $props();
 </script>
