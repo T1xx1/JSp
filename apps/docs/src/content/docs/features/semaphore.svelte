@@ -14,10 +14,10 @@
 	{#if entity}
 		{#if entity.value === true}
 			✅
-			{#if entity.stage !== undefined}
-				Stage {entity.stage}
-			{/if}
 			{#if variant === 'default'}
+				{#if entity.stage !== undefined}
+					Stage {entity.stage}
+				{/if}
 				{#if entity.link}
 					<a href={entity.link}>View</a>
 				{/if}
