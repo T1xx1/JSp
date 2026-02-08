@@ -5,6 +5,8 @@ import { chdir, cwd, exit } from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 import { transformSync } from '@babel/core';
+/* @ts-expect-error */
+import babelPluginTransformTypescript from '@babel/plugin-transform-typescript';
 
 const testerRoot = dirname(dirname(fileURLToPath(import.meta.url)));
 
@@ -29,7 +31,7 @@ for (const testFilename of testFilenames) {
 	const jsp = readFileSync(testFilename, 'utf8');
 
 	const js = transformSync(jsp, {
-		plugins: ['@babel/plugin-transform-typescript', packageTransformator.default],
+		plugins: [babelPluginTransformTypescript, packageTransformator.default],
 	});
 
 	if (!js || !js.code) {
