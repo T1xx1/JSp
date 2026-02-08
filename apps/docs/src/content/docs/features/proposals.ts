@@ -4,16 +4,13 @@ type Proposal = Omit<Page['frontmatter'], 'lastUpdated'>;
 
 export const proposals: Proposal[] = [
 	{
-		title: 'Composite',
+		title: 'Composites',
 		proposalType: 'Polyfill',
 		support: {
 			tc39: {
 				value: true,
 				stage: 1,
 				link: 'https://github.com/tc39/proposal-composites',
-			},
-			jsp: {
-				value: false,
 			},
 		},
 	},
@@ -25,21 +22,15 @@ export const proposals: Proposal[] = [
 				value: true,
 				link: 'https://github.com/rwaldron/proposal-math-extensions',
 			},
-			jsp: {
-				value: false,
-			},
 		},
 	},
 	{
-		title: 'Function bind',
+		title: 'Function bind (::)',
 		proposalType: 'Syntax',
 		support: {
 			babel: {
 				value: true,
 				link: 'https://babeljs.io/docs/babel-plugin-proposal-function-bind',
-			},
-			jsp: {
-				value: false,
 			},
 		},
 	},
@@ -56,9 +47,6 @@ export const proposals: Proposal[] = [
 				value: true,
 				link: 'https://babeljs.io/docs/babel-plugin-proposal-function-sent',
 			},
-			jsp: {
-				value: false,
-			},
 		},
 	},
 	{
@@ -73,9 +61,6 @@ export const proposals: Proposal[] = [
 			babel: {
 				value: true,
 				link: 'https://babeljs.io/docs/babel-plugin-syntax-module-blocks',
-			},
-			jsp: {
-				value: false,
 			},
 		},
 	},
@@ -92,9 +77,6 @@ export const proposals: Proposal[] = [
 				value: true,
 				link: 'https://babeljs.io/docs/babel-plugin-proposal-partial-application',
 			},
-			jsp: {
-				value: false,
-			},
 		},
 	},
 	{
@@ -106,13 +88,10 @@ export const proposals: Proposal[] = [
 				stage: 2,
 				link: 'https://github.com/tc39/proposal-destructuring-private',
 			},
-			jsp: {
-				value: false,
-			},
 		},
 	},
 	{
-		title: 'Pattern matching',
+		title: 'Pattern matching (match)',
 		proposalType: 'Syntax',
 		support: {
 			tc39: {
@@ -123,9 +102,6 @@ export const proposals: Proposal[] = [
 			civet: {
 				value: true,
 				link: 'https://civet.dev/reference#pattern-matching',
-			},
-			jsp: {
-				value: false,
 			},
 		},
 	},
@@ -138,9 +114,6 @@ export const proposals: Proposal[] = [
 				stage: 1,
 				link: 'https://github.com/tc39/proposal-type-annotations',
 			},
-			jsp: {
-				value: false,
-			},
 		},
 	},
 	{
@@ -151,9 +124,6 @@ export const proposals: Proposal[] = [
 				value: true,
 				stage: 0,
 				link: 'https://github.com/tc39/proposal-enum',
-			},
-			jsp: {
-				value: false,
 			},
 		},
 	},
@@ -166,9 +136,6 @@ export const proposals: Proposal[] = [
 				stage: 1,
 				link: 'https://github.com/tc39/proposal-random-functions',
 			},
-			jsp: {
-				value: false,
-			},
 		},
 	},
 	{
@@ -179,9 +146,6 @@ export const proposals: Proposal[] = [
 				value: true,
 				stage: 1,
 				link: 'https://github.com/tc39/proposal-amount',
-			},
-			jsp: {
-				value: false,
 			},
 		},
 	},
@@ -198,23 +162,24 @@ export const proposals: Proposal[] = [
 				value: true,
 				link: 'https://civet.dev/reference#triple-quoted-strings',
 			},
-			jsp: {
-				value: false,
-			},
 		},
 	},
 	{
-		title: 'Rest everywhere',
+		title: 'Rest everywhere (...)',
+		proposalType: 'Syntax',
 		support: {
-			tc39: {
-				value: false,
-			},
 			civet: {
 				value: true,
 				link: 'https://civet.dev/reference#rest',
 			},
-			jsp: {
-				value: false,
+		},
+	},
+	{
+		support: {
+			tc39: {
+			},
+				value: true,
+			},
 			},
 		},
 	}
