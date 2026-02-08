@@ -3,12 +3,27 @@ title: Overview
 lastUpdated: 2026-02-02
 ---
 
-import Syntax from './syntax.astro';
+import { pages } from './pages';
 
-<Syntax />
+import Table from './table.astro';
 
----
+## Syntax
 
-#### Resources
+<Table
+	pages={pages.filter((page) => page.frontmatter.proposalType === 'Syntax')}
+	hideCols={['proposalType']}
+/>
 
-- https://tc39.es/process-document
+## Polyfills
+
+<Table
+	pages={pages.filter((page) => page.frontmatter.proposalType === 'Polyfill')}
+	hideCols={['proposalType']}
+/>
+
+## Runtime
+
+<Table
+	pages={pages.filter((page) => page.frontmatter.proposalType === 'Runtime')}
+	hideCols={['proposalType']}
+/>

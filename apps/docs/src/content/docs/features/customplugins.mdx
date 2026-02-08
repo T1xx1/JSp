@@ -3,6 +3,10 @@ title: Custom plugins
 lastUpdated: 2026-02-05
 ---
 
-import Custom from './custom.astro';
+import Table from './table.astro';
 
-<Custom />
+<Table
+	pages={Object.values(import.meta.glob('./syntax/*.mdx', { eager: true })).filter((page) => {
+		return page.frontmatter.support.jsp?.integration === 'Custom';
+	})}
+/>

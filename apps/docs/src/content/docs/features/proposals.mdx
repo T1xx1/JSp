@@ -3,6 +3,62 @@ title: Proposals
 lastUpdated: 2026-02-05
 ---
 
-import Proposals from './proposals.astro';
+import { allPages } from './pages';
 
-<Proposals />
+import Table from './table.astro';
+
+## TC39 proposals
+
+### Stage 3
+
+<Table
+	pages={allPages.filter((proposal) => {
+		return proposal.frontmatter.support.tc39?.stage === 3;
+	})}
+/>
+
+### Stage 2.7
+
+<Table
+	pages={allPages.filter((proposal) => {
+		return proposal.frontmatter.support.tc39?.stage === 2.7;
+	})}
+/>
+
+### Stage 2
+
+<Table
+	pages={allPages.filter((proposal) => {
+		return proposal.frontmatter.support.tc39?.stage === 2;
+	})}
+/>
+
+### Stage 1
+
+<Table
+	pages={allPages.filter((proposal) => {
+		return proposal.frontmatter.support.tc39?.stage === 1;
+	})}
+/>
+
+### Stage 0
+
+<Table
+	pages={allPages.filter((proposal) => {
+		return proposal.frontmatter.support.tc39?.stage === 0;
+	})}
+/>
+
+## Others
+
+<Table
+	pages={allPages.filter((proposal) => {
+		return proposal.frontmatter.support.tc39?.value === undefined;
+	})}
+/>
+
+---
+
+#### Resources
+
+- [TC39 process document](https://tc39.es/process-document)
