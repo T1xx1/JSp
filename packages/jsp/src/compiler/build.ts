@@ -61,7 +61,7 @@ export const printDiagnostics = async (filename: string, jspCode: string, out: O
 			loc.line -= 1;
 		}
 
-		if (loc !== null && (!loc.source || !loc.line || !loc.column)) {
+		if (loc !== null && (loc.source === null || loc.line === null || loc.column === null)) {
 			continue;
 		}
 
