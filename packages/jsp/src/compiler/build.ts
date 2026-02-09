@@ -75,8 +75,8 @@ export const printDiagnostics = async (filename: string, jspCode: string, out: O
 
 		printDiagnostic(
 			filename,
-			'Error',
 			error.type,
+			error.category,
 			error.message
 				.replace('unknown: ', '')
 				.replace(/ \(\d+:\d+\)/, '')
@@ -96,7 +96,7 @@ export const printDiagnostics = async (filename: string, jspCode: string, out: O
 
 const printDiagnostic = (
 	filename: string,
-	type: 'Warn' | 'Error',
+	type: 'Warning' | 'Error',
 	category: string,
 	message: string,
 	code: string,
@@ -107,7 +107,7 @@ const printDiagnostic = (
 	},
 ) => {
 	console.log(
-		`${chalk.blue(filename)}:${chalk.yellow(range.startLine)}:${chalk.yellow(range.startCharacter)} • ${type === 'Error' ? chalk.red(category) : chalk.yellow(category)} • ${message}`,
+		`${chalk.blue(filename)}:${chalk.yellow(range.startLine)}:${chalk.yellow(range.startCharacter)} • ${type === 'Error' ? chalk.red(category + type) : chalk.yellow(category + type)} • ${message}`,
 	);
 	console.log(`${chalk.bgWhite.black(range.startLine)} ${code}`);
 	console.log(

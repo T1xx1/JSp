@@ -13,7 +13,8 @@ import {
 import { tsconfig } from '../config/index.js';
 
 export type Diagnostic = {
-	type: 'Error' | 'SemanticError' | 'SyntaxError';
+	type: 'Warning' | 'Error';
+	category: 'Linter' | 'Runtime' | 'Semantic' | 'Syntax';
 	message: string;
 	loc: {
 		startLine: number;
@@ -52,7 +53,8 @@ export const parseTs = (filename: string, tsCode: string): Diagnostic[] => {
 		).getLineAndCharacterOfPosition((diagnostic.start ?? 0) + (diagnostic.length ?? 0));
 
 		return {
-			type: 'SemanticError' as const,
+			type: 'Error',
+			category: 'Semantic',
 			message: flattenDiagnosticMessageText(diagnostic.messageText, sys.newLine),
 			loc: {
 				startLine: startLine,
