@@ -1,5 +1,6 @@
 import { transformSync, type ParseResult } from '@babel/core';
 
+import pluginSubset from '@jsplang/plugin-subset';
 /* @ts-expect-error */
 import pluginProposalAsyncDoExpressions from '@babel/plugin-proposal-async-do-expressions';
 /* @ts-expect-error */
@@ -88,6 +89,9 @@ export const transform = (
 				pluginTransformChainedComparisons,
 				pluginTransformNegativeArraySubscript,
 				pluginTransformTypeofNullOperator,
+
+				/* subset */
+				pluginSubset,
 
 				/* transform TC39 proposals sorted by scope */
 				pluginProposalThrowExpressions,
