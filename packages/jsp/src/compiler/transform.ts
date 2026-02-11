@@ -80,6 +80,7 @@ export const transform = (
 			sourceMaps: true,
 			/* code gen */
 			compact: false,
+			retainLines: true,
 			/* plugins */
 			plugins: [
 				/* parse TypeScript */
@@ -122,6 +123,17 @@ export const transform = (
 	});
 
 	if (syntaxError) {
+		/* @ts-expect-error */
+		if (syntaxError.category === 'Syntax') {
+			return {
+				map: null,
+				ast: {
+					errors: [syntaxError],
+				},
+				code: null,
+			};
+		}
+
 		if (syntaxError.code === 'BABEL_PARSE_ERROR' && syntaxError.reasonCode === 'UnexpectedToken') {
 			return {
 				map: null,

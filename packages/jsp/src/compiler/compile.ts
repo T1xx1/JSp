@@ -53,14 +53,11 @@ export const compile = (filename: string, jspCode: string, config: CompleteConfi
 			return true;
 		})
 		.map((error) => {
-			/* @ts-expect-error */
-			if (error.type) {
-				return error as unknown as Diagnostic;
-			}
-
 			return {
-				type: 'Error' as const,
-				category: 'Semantic' as const,
+				/* @ts-expect-error */
+				type: error.type ?? 'Error' as const,
+				/* @ts-expect-error */
+				category: error.category ?? 'Semantic' as const,
 				message: error.message,
 				loc: {
 					/* index starts at 1 */
