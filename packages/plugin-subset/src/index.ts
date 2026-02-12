@@ -137,6 +137,16 @@ export default function ({ types: t }: { types: typeof types }) {
 				}
 			},
 			UnaryExpression(path: NodePath<UnaryExpression>, state: State) {
+				/* + number coercion */
+				if (path.node.operator === '+' && t.isNumericLiteral(path.node.argument)) {
+					state.file.ast.errors.push({
+						type: 'Error',
+						category: 'Subset',
+						message: 'Prefer `parseInt()` or `parseFloat()` over `+` implicit coercion',
+						loc: loc(path.node.loc),
+					});
+				}
+
 				/* -0 */
 				if (
 					path.isUnaryExpression(path.node) &&
