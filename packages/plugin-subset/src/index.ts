@@ -15,7 +15,7 @@ export type State = PluginPass & {
 		ast: {
 			errors: {
 				type: 'Warning' | 'Error';
-				category: 'Subset';
+				category: 'Semantic';
 				message: string;
 				loc: {
 					line: number;
@@ -52,7 +52,7 @@ export default function ({ types: t }: { types: typeof types }) {
 				) {
 					state.file.ast.errors.push({
 						type: 'Error',
-						category: 'Subset',
+						category: 'Semantic',
 						message: "`0/0` doesn't make sense",
 						loc: loc(path.node.loc),
 					});
@@ -63,7 +63,7 @@ export default function ({ types: t }: { types: typeof types }) {
 				if (t.isIdentifier(path.node.callee) && path.node.callee.name === 'require') {
 					state.file.ast.errors.push({
 						type: 'Error',
-						category: 'Subset',
+						category: 'Semantic',
 						message:
 							'`require()` is a deprecated artifact. Use `import` or `createRequire()` instead.',
 						loc: loc(path.node.loc),
@@ -74,7 +74,7 @@ export default function ({ types: t }: { types: typeof types }) {
 				/* # modifier */
 				state.file.ast.errors.push({
 					type: 'Error',
-					category: 'Subset',
+					category: 'Semantic',
 					message: 'Prefer TypeScript `private` keyword over JavaScript # modifier',
 					loc: loc(path.node.loc),
 				});
@@ -84,7 +84,7 @@ export default function ({ types: t }: { types: typeof types }) {
 				if (t.isIdentifier(path.node.property) && path.node.property.name === 'at') {
 					state.file.ast.errors.push({
 						type: 'Error',
-						category: 'Subset',
+						category: 'Semantic',
 						message: 'Prefer negative array subscripts over `.at()`',
 						loc: loc(path.node.loc),
 					});
@@ -92,7 +92,7 @@ export default function ({ types: t }: { types: typeof types }) {
 				if (t.isIdentifier(path.node.property) && path.node.property.name === 'with') {
 					state.file.ast.errors.push({
 						type: 'Error',
-						category: 'Subset',
+						category: 'Semantic',
 						message: 'Prefer negative array subscripts over `.with()`',
 						loc: loc(path.node.loc),
 					});
@@ -102,7 +102,7 @@ export default function ({ types: t }: { types: typeof types }) {
 				if (t.isIdentifier(path.node.object) && path.node.object.name === 'Date') {
 					state.file.ast.errors.push({
 						type: 'Warning' /* temporary */,
-						category: 'Subset',
+						category: 'Semantic',
 						message: '`Date` is a deprecated artifact. Use `Temporal` instead.',
 						loc: loc(path.node.loc),
 					});
@@ -117,7 +117,7 @@ export default function ({ types: t }: { types: typeof types }) {
 				) {
 					state.file.ast.errors.push({
 						type: 'Error',
-						category: 'Subset',
+						category: 'Semantic',
 						message: '`document.all` is a deprecated artifact',
 						loc: loc(path.node.loc),
 					});
@@ -128,7 +128,7 @@ export default function ({ types: t }: { types: typeof types }) {
 				if (path.node.name === 'undefined' && !t.isGenericTypeAnnotation(path.parent)) {
 					state.file.ast.errors.push({
 						type: 'Error',
-						category: 'Subset',
+						category: 'Semantic',
 						message:
 							'`undefined` should not be used explicitly. For nullish initialitations use `null` instead',
 						loc: loc(path.node.loc),
@@ -140,7 +140,7 @@ export default function ({ types: t }: { types: typeof types }) {
 				if (path.node.operator === '+' && t.isNumericLiteral(path.node.argument)) {
 					state.file.ast.errors.push({
 						type: 'Error',
-						category: 'Subset',
+						category: 'Semantic',
 						message: 'Prefer `parseInt()` or `parseFloat()` over `+` implicit coercion',
 						loc: loc(path.node.loc),
 					});
@@ -155,7 +155,7 @@ export default function ({ types: t }: { types: typeof types }) {
 				) {
 					state.file.ast.errors.push({
 						type: 'Error',
-						category: 'Subset',
+						category: 'Semantic',
 						message: "`-0` doesn't make sense. Use `0` instead",
 						loc: loc(path.node.loc),
 					});
@@ -166,7 +166,7 @@ export default function ({ types: t }: { types: typeof types }) {
 				if (t.isConditionalExpression(path.node.init)) {
 					state.file.ast.errors.push({
 						type: 'Error',
-						category: 'Subset',
+						category: 'Semantic',
 						message: 'Prefer `do` expressions over ternaries for variable declarations',
 						loc: loc(path.node.loc),
 					});

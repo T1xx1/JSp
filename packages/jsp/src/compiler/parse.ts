@@ -14,7 +14,7 @@ import { tsconfig } from '../config/index.js';
 
 export type Diagnostic = {
 	type: 'Warning' | 'Error';
-	category: 'Linter' | 'Runtime' | 'Semantic' | 'Syntax';
+	category: 'Runtime' | 'Semantic' | 'Syntax';
 	message: string;
 	loc: {
 		startLine: number;
