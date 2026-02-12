@@ -138,7 +138,7 @@ export default function ({ types: t }: { types: typeof types }) {
 			},
 			UnaryExpression(path: NodePath<UnaryExpression>, state: State) {
 				/* + number coercion */
-				if (path.node.operator === '+' && t.isNumericLiteral(path.node.argument)) {
+				if (path.node.operator === '+' && t.isStringLiteral(path.node.argument)) {
 					state.file.ast.errors.push({
 						type: 'Error',
 						category: 'Semantic',
