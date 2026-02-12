@@ -5,7 +5,6 @@ import type {
 	ClassPrivateProperty,
 	Identifier,
 	MemberExpression,
-	NewExpression,
 	SourceLocation,
 	UnaryExpression,
 	VariableDeclarator,
@@ -74,7 +73,7 @@ export default function ({ types: t }: { types: typeof types }) {
 			ClassPrivateProperty(path: NodePath<ClassPrivateProperty>, state: State) {
 				/* # modifier */
 				state.file.ast.errors.push({
-					type: 'Warning',
+					type: 'Error',
 					category: 'Subset',
 					message: 'Prefer TypeScript `private` keyword over JavaScript # modifier',
 					loc: loc(path.node.loc),
@@ -84,7 +83,7 @@ export default function ({ types: t }: { types: typeof types }) {
 				/* .at() and .with() */
 				if (t.isIdentifier(path.node.property) && path.node.property.name === 'at') {
 					state.file.ast.errors.push({
-						type: 'Warning',
+						type: 'Error',
 						category: 'Subset',
 						message: 'Prefer negative array subscripts over `.at()`',
 						loc: loc(path.node.loc),
@@ -92,7 +91,7 @@ export default function ({ types: t }: { types: typeof types }) {
 				}
 				if (t.isIdentifier(path.node.property) && path.node.property.name === 'with') {
 					state.file.ast.errors.push({
-						type: 'Warning',
+						type: 'Error',
 						category: 'Subset',
 						message: 'Prefer negative array subscripts over `.with()`',
 						loc: loc(path.node.loc),
@@ -128,7 +127,7 @@ export default function ({ types: t }: { types: typeof types }) {
 				/* undefined */
 				if (path.node.name === 'undefined' && !t.isGenericTypeAnnotation(path.parent)) {
 					state.file.ast.errors.push({
-						type: 'Warning',
+						type: 'Error',
 						category: 'Subset',
 						message:
 							'`undefined` should not be used explicitly. For nullish initialitations use `null` instead',
@@ -155,7 +154,7 @@ export default function ({ types: t }: { types: typeof types }) {
 					path.node.argument.value === 0
 				) {
 					state.file.ast.errors.push({
-						type: 'Warning',
+						type: 'Error',
 						category: 'Subset',
 						message: "`-0` doesn't make sense. Use `0` instead",
 						loc: loc(path.node.loc),
@@ -166,7 +165,7 @@ export default function ({ types: t }: { types: typeof types }) {
 				/* variable declaration with ternaries */
 				if (t.isConditionalExpression(path.node.init)) {
 					state.file.ast.errors.push({
-						type: 'Warning',
+						type: 'Error',
 						category: 'Subset',
 						message: 'Prefer `do` expressions over ternaries for variable declarations',
 						loc: loc(path.node.loc),
