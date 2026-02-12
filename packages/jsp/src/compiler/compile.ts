@@ -25,7 +25,8 @@ export const compile = (filename: string, jspCode: string, config: CompleteConfi
 			sourceMap: null,
 			diagnostics: ts.ast.errors.map((error) => {
 				return {
-					type: 'SyntaxError',
+					type: 'Error',
+					category: 'Syntax',
 					message: error.message,
 					loc: {
 						/* line index start at 1 */
@@ -53,7 +54,10 @@ export const compile = (filename: string, jspCode: string, config: CompleteConfi
 		})
 		.map((error) => {
 			return {
-				type: 'Error' as const,
+				/* @ts-expect-error */
+				type: error.type ?? 'Error' as const,
+				/* @ts-expect-error */
+				category: error.category ?? 'Semantic' as const,
 				message: error.message,
 				loc: {
 					/* index starts at 1 */

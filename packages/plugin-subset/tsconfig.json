@@ -1,0 +1,32 @@
+{
+	"include": ["./src/**/*.ts"],
+	"compilerOptions": {
+		/* parser */
+		"skipLibCheck": true,
+		"alwaysStrict": true /* ECMAScript */,
+		"strict": true /* TypeScript */,
+		"module": "NodeNext",
+		"moduleDetection": "force",
+		"resolveJsonModule": true /* JSON */,
+		/* type checking */
+		"exactOptionalPropertyTypes": true,
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"noUncheckedIndexedAccess": true,
+		"noUncheckedSideEffectImports": true,
+		/* linter */
+		"allowUnreachableCode": false,
+		"allowUnusedLabels": false,
+		"noImplicitOverride": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"verbatimModuleSyntax": true,
+		/* compiler */
+		"target": "ESNext",
+		"sourceMap": true,
+		"declaration": true,
+		"declarationMap": true,
+		"outDir": "./dist"
+	}
+}

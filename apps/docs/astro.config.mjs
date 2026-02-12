@@ -57,41 +57,54 @@ export default defineConfig({
 						icon: 'open-book',
 						link: '/overview',
 						items: [
-							{
-								label: 'Hello, World!',
-								items: ['overview', 'philosophy'],
-							},
+							'overview',
 							{
 								label: 'Getting started',
 								items: ['gettingstarted', 'integratejs', 'integratets', 'vscodeextension'],
 							},
 							{
 								label: 'Config',
-								autogenerate: {
-									directory: 'config',
-								},
+								items: ['config', 'config/reference', 'config/tsconfig'],
 							},
 							'changelog',
 							{
-								label: 'Other',
-								items: ['branding'],
+								label: 'Internals',
+								items: ['philosophy', 'branding', 'tech'],
 								collapsed: true,
 							},
 						],
 					},
 					{
-						label: 'Features',
+						label: 'Language',
 						icon: 'rocket',
-						link: '/features',
+						link: '/language',
 						items: [
 							{
 								label: 'Overview',
-								items: ['features', 'features/proposals', 'features/customplugins'],
+								items: [
+									'language',
+									'language/features',
+									'language/subset',
+									'language/proposals',
+									'language/customplugins',
+								],
 							},
 							{
 								label: 'Syntax',
 								autogenerate: {
-									directory: 'features/syntax',
+									directory: 'language/syntax',
+								},
+							},
+							{
+								label: 'Polyfills',
+								autogenerate: {
+									directory: 'language/polyfill',
+								},
+							},
+							{
+								label: 'Runtime',
+								autogenerate: {
+									directory: 'language/runtime',
 								},
 							},
 						],
