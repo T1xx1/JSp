@@ -7,12 +7,29 @@ header a.site-title {
 
 /* homepage */
 
-/* reduce logo dimension */
-.hero > img {
-	@apply w-[9rem] md:w-[15rem];
+.hero {
+	/* reduce logo dimension */
+	> img {
+		@apply w-[9rem] md:w-[15rem];
+	}
+
+	/* reduce actions gap */
+	.actions {
+		@apply gap-4;
+	}
 }
 
 /* all pages */
+
+/* sidebar */
+.sidebar-content {
+	@apply p-3;
+
+	/* reduce topics gap */
+	.starlight-sidebar-topics {
+		@apply -space-y-1;
+	}
+}
 
 /* reduce right sidebar width */
 .main-pane {
@@ -21,4 +38,11 @@ header a.site-title {
 	> main .sl-container:not(:has(.hero)) {
 		@apply ml-2 max-w-full;
 	}
+}
+
+/* components */
+
+/* reduce link cards gap */
+.card-grid {
+	@apply gap-4;
 }

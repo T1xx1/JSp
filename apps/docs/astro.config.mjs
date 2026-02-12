@@ -57,24 +57,19 @@ export default defineConfig({
 						icon: 'open-book',
 						link: '/overview',
 						items: [
-							{
-								label: 'Hello, World!',
-								items: ['overview', 'philosophy'],
-							},
+							'overview',
 							{
 								label: 'Getting started',
 								items: ['gettingstarted', 'integratejs', 'integratets', 'vscodeextension'],
 							},
 							{
 								label: 'Config',
-								autogenerate: {
-									directory: 'config',
-								},
+								items: ['config', 'config/reference', 'config/tsconfig'],
 							},
 							'changelog',
 							{
-								label: 'Other',
-								items: ['branding'],
+								label: 'Internals',
+								items: ['philosophy', 'branding', 'tech'],
 								collapsed: true,
 							},
 						],
@@ -86,7 +81,13 @@ export default defineConfig({
 						items: [
 							{
 								label: 'Overview',
-								items: ['language', 'language/proposals', 'language/customplugins'],
+								items: [
+									'language',
+									'language/features',
+									'language/subset',
+									'language/proposals',
+									'language/customplugins',
+								],
 							},
 							{
 								label: 'Syntax',

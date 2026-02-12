@@ -1,20 +1,11 @@
 ---
 title: Overview
-lastUpdated: 2026-02-08
+lastUpdated: 2026-02-12
 ---
 
-import { polyfillPages, runtimePages, syntaxPages } from './pages';
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-import Table from './table.astro';
-
-## Syntax
-
-<Table pages={syntaxPages} hideCols={['proposalType']} />
-
-## Polyfills
-
-<Table pages={polyfillPages} hideCols={['proposalType']} />
-
-## Runtime
-
-<Table pages={runtimePages} hideCols={['proposalType']} />
+<CardGrid>
+	<LinkCard href="/language/features" title="Features" description="New shiny things" />
+	<LinkCard href="/language/subset" title="Subset" description="Breaking changes from JS and TS" />
+</CardGrid>
