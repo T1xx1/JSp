@@ -96,7 +96,15 @@ export default defineConfig({
 							},
 							{
 								label: 'Polyfills',
-								items: [],
+								autogenerate: {
+									directory: 'language/polyfill',
+								},
+							},
+							{
+								label: 'Runtime',
+								autogenerate: {
+									directory: 'language/runtime',
+								},
 							},
 						],
 					},

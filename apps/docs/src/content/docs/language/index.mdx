@@ -3,27 +3,18 @@ title: Overview
 lastUpdated: 2026-02-08
 ---
 
-import { pages } from './pages';
+import { polyfillPages, runtimePages, syntaxPages } from './pages';
 
 import Table from './table.astro';
 
 ## Syntax
 
-<Table
-	pages={pages.filter((page) => page.frontmatter.proposalType === 'Syntax')}
-	hideCols={['proposalType']}
-/>
+<Table pages={syntaxPages} hideCols={['proposalType']} />
 
 ## Polyfills
 
-<Table
-	pages={pages.filter((page) => page.frontmatter.proposalType === 'Polyfill')}
-	hideCols={['proposalType']}
-/>
+<Table pages={polyfillPages} hideCols={['proposalType']} />
 
 ## Runtime
 
-<Table
-	pages={pages.filter((page) => page.frontmatter.proposalType === 'Runtime')}
-	hideCols={['proposalType']}
-/>
+<Table pages={runtimePages} hideCols={['proposalType']} />
