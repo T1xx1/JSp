@@ -45,6 +45,7 @@ export default function ({ types: t }: { types: typeof types }) {
 			BinaryExpression(path: NodePath<BinaryExpression>, state: State) {
 				/* 0/0 */
 				if (
+					path.node.operator === '/' &&
 					t.isNumericLiteral(path.node.left) &&
 					path.node.left.value === 0 &&
 					t.isNumericLiteral(path.node.right) &&
