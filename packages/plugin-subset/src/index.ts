@@ -131,7 +131,7 @@ export default function ({ types: t }: { types: typeof types }) {
 						type: 'Error',
 						category: 'Semantic',
 						message:
-							'`undefined` should not be used explicitly. For nullish initialitations use `null` instead',
+							'`undefined` should not be used explicitly. For nullish initializations use `null` instead',
 						loc: loc(path.node.loc),
 					});
 				}
