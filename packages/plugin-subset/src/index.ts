@@ -1,5 +1,6 @@
 import { types, type NodePath, type PluginPass } from '@babel/core';
 import type {
+	BinaryExpression,
 	CallExpression,
 	ClassPrivateProperty,
 	Identifier,
@@ -42,6 +43,22 @@ export default function ({ types: t }: { types: typeof types }) {
 	return {
 		name: '@jsplang/plugin-linter',
 		visitor: {
+			BinaryExpression(path: NodePath<BinaryExpression>, state: State) {
+				/* 0/0 */
+				if (
+					t.isNumericLiteral(path.node.left) &&
+					path.node.left.value === 0 &&
+					t.isNumericLiteral(path.node.right) &&
+					path.node.right.value === 0
+				) {
+					state.file.ast.errors.push({
+						type: 'Error',
+						category: 'Subset',
+						message: "`0/0` doesn't make sense",
+						loc: loc(path.node.loc),
+					});
+				}
+			},
 			CallExpression(path: NodePath<CallExpression>, state: State) {
 				/* require() */
 				if (t.isIdentifier(path.node.callee) && path.node.callee.name === 'require') {
