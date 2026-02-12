@@ -149,7 +149,6 @@ export default function ({ types: t }: { types: typeof types }) {
 
 				/* -0 */
 				if (
-					path.isUnaryExpression(path.node) &&
 					path.node.operator === '-' &&
 					t.isNumericLiteral(path.node.argument) &&
 					path.node.argument.value === 0
