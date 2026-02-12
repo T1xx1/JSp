@@ -6,7 +6,7 @@
 			"outputs": ["dist/**"]
 		},
 		"test": {
-			"outputs": ["tests/**"]
+			"outputs": ["tests/out/**"]
 		}
 	}
 }
