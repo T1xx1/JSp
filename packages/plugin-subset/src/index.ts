@@ -126,7 +126,7 @@ export default function ({ types: t }: { types: typeof types }) {
 			},
 			Identifier(path: NodePath<Identifier>, state: State) {
 				/* undefined */
-				if (path.node.name === 'undefined' && !t.isGenericTypeAnnotation(path.parent)) {
+				if (path.node.name === 'undefined' && !t.isTSUndefinedKeyword(path.parent)) {
 					state.file.ast.errors.push({
 						type: 'Error',
 						category: 'Semantic',
