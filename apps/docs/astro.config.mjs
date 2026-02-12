@@ -80,19 +80,23 @@ export default defineConfig({
 						],
 					},
 					{
-						label: 'Features',
+						label: 'Language',
 						icon: 'rocket',
-						link: '/features',
+						link: '/language',
 						items: [
 							{
 								label: 'Overview',
-								items: ['features', 'features/proposals', 'features/customplugins'],
+								items: ['language', 'language/proposals', 'language/customplugins'],
 							},
 							{
 								label: 'Syntax',
 								autogenerate: {
-									directory: 'features/syntax',
+									directory: 'language/syntax',
 								},
+							},
+							{
+								label: 'Polyfills',
+								items: [],
 							},
 						],
 					},
