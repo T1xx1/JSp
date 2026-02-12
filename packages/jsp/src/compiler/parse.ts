@@ -5,6 +5,7 @@ import {
 	createCompilerHost,
 	createProgram,
 	createSourceFile,
+	DiagnosticCategory,
 	flattenDiagnosticMessageText,
 	getPreEmitDiagnostics,
 	sys,
@@ -53,7 +54,7 @@ export const parseTs = (filename: string, tsCode: string): Diagnostic[] => {
 		).getLineAndCharacterOfPosition((diagnostic.start ?? 0) + (diagnostic.length ?? 0));
 
 		return {
-			type: 'Error',
+			type: diagnostic.category === DiagnosticCategory.Warning ? 'Warning' : 'Error',
 			category: 'Semantic',
 			message: flattenDiagnosticMessageText(diagnostic.messageText, sys.newLine),
 			loc: {
