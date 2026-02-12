@@ -1,3 +1,3 @@
 # Subset plugin
 
-> [Docs](https://jsplang.vercel.app/features/subset)
+> [Docs](https://jsplang.vercel.app/language/subset)

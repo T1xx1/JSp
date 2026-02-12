@@ -1,6 +1,6 @@
 # Negative array subscript transform plugin
 
-> [Docs](https://jsplang.vercel.app/features/syntax/negativearraysubscript)
+> [Docs](https://jsplang.vercel.app/language/runtime/negativearraysubscript)
 
 ```jsp
 const array = [0, 1, 2, 3];

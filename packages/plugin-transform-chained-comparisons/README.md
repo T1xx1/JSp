@@ -1,6 +1,6 @@
 # Chained comparisons transform plugin
 
-> [Docs](https://jsplang.vercel.app/features/syntax/chainedcomparisons)
+> [Docs](https://jsplang.vercel.app/language/runtime/chainedcomparisons)
 
 ```jsp
 const a = 1;
