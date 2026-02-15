@@ -1,5 +1,4 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { createRequire } from 'node:module';
 import { join, normalize } from 'node:path';
 import { cwd } from 'node:process';
 
@@ -67,7 +66,7 @@ export const getConfig = (): Config => {
 	/* `.ts` config */
 	if (configPath.endsWith('.ts')) {
 		const { data, error } = tryCatchSync(() => {
-			return createRequire(import.meta.url)(configPath).default as Config;
+			return require(configPath) as Config;
 		});
 
 		if (error || !data) {
