@@ -48,11 +48,11 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/extension-vscode:
+  apps/extension-vscode:
     devDependencies:
       '@jsplang/jsp':
         specifier: workspace:*
-        version: link:../jsp
+        version: link:../../packages/jsp
       '@types/vscode':
         specifier: ^1.109.0
         version: 1.109.0
