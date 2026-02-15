@@ -9,9 +9,9 @@
 		"vscode": "^1.109.0"
 	},
 	"scripts": {
-		"dev": "node esbuild.js --watch",
+		"dev": "node esbuild.mjs --watch",
 		"build": "pnpm bundle && pnpm package",
-		"bundle": "node esbuild.js",
+		"bundle": "node esbuild.mjs",
 		"package": "vsce package --no-dependencies"
 	},
 	"devDependencies": {
