@@ -8,7 +8,7 @@
 		"$schema": {
 			"type": "string",
 			"description": "JSON $schema",
-			"default": "https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/src/config/%24schema.json"
+			"default": "./node_modules/jsp/config.json"
 		},
 		"include": {
 			"type": "array",

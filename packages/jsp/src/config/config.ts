@@ -17,7 +17,7 @@ export type Config = {
 	};
 };
 export const initialConfig = {
-	$schema: 'https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/config.json',
+	$schema: './node_modules/jsp/config.json',
 };
 
 /**

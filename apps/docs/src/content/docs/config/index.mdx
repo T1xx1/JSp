@@ -23,6 +23,14 @@ For `.json` configs you can use the following `$schema` for IntelliSense:
 }
 ```
 
+If JS+ is installed as a dependency, you can also fetch it directly from the package:
+```jsonc
+/* .config/jsp.json or jsp.config.json */
+{
+	"$schema": "./node_modules/jsp/config.json",
+}
+```
+
 > [Source](https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/config.json)
 
 For `.ts` configs you can import the `Config` type for type safety:
