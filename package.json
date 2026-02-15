@@ -9,8 +9,8 @@
 		"build": "turbo build",
 		"docs:dev": "turbo dev --filter=@jsplang/docs...",
 		"docs:build": "turbo build --filter=@jsplang/docs...",
-		"extension-vscode:dev": "turbo dev --filter=@jsplang/extension-vscode... --filter=!@jsplang/tester",
-		"extension-vscode:build": "turbo build --filter=@jsplang/extension-vscode... --filter=!@jsplang/tester",
+		"extension-vscode:dev": "turbo dev --filter=extension-vscode... --filter=!@jsplang/tester",
+		"extension-vscode:build": "turbo build --filter=extension-vscode... --filter=!@jsplang/tester",
 		"jsp:dev": "turbo dev --filter=@jsplang/jsp... --filter=!@jsplang/tester",
 		"jsp:build": "turbo build --filter=@jsplang/jsp... --filter=!@jsplang/tester",
 		"jsp:test": "turbo test --filter=@jsplang/jsp..."

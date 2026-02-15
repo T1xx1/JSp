@@ -1,5 +1,5 @@
 {
-	"name": "@jsplang/extension-vscode",
+	"name": "extension-vscode",
 	"version": "0.1.0",
 	"displayName": "JS+",
 	"description": "JS+ for VSCode",
