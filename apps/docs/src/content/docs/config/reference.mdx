@@ -21,7 +21,7 @@ The root directory cannot be the [`emitDir`](#emitdir)
 
 #### `include`
 
-Array of glob patterns to include in your program
+List of glob patterns to include in your program
 
 Default: `['./**']`
 
@@ -57,7 +57,7 @@ File extensions can be omitted since JS+ cannot parse files that don't end with 
 
 #### `exclude`
 
-Array of glob patterns to exclude when resolving [`include`](#include)
+List of glob patterns to exclude when resolving [`include`](#include)
 
 Default: `[]`
 
@@ -75,13 +75,13 @@ Configuration for the compilation process
 
 #### `emitLang`
 
-Language to emit JS+ into. Can be `JavaScript` or `TypeScript`
+Language to compile JS+ into. Can be `JavaScript` or `TypeScript`
 
 Default: `TypeScript`
 
 #### `emitDir`
 
-Folder to compile JS+ files into
+directory to compile JS+ files into
 
 Default: `./dist`
 

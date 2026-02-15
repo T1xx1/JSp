@@ -7,15 +7,20 @@
 	"properties": {
 		"$schema": {
 			"type": "string",
-			"description": "JSON $schema",
+			"description": "JSON $schema. Defaults to './node_modules/jsp/config.json'",
 			"default": "./node_modules/jsp/config.json"
+		},
+		"rootDir": {
+			"type": "string",
+			"description": "Root directory of your program. Defaults to './src'",
+			"default": "./src"
 		},
 		"include": {
 			"type": "array",
 			"items": {
 				"type": "string"
 			},
-			"description": "List of glob patterns that match JS+ files to be parsed. Defaults to ['./**']",
+			"description": "List of glob patterns to include in your program. Defaults to ['./**']",
 			"default": ["./**"]
 		},
 		"exclude": {
@@ -23,12 +28,12 @@
 			"items": {
 				"type": "string"
 			},
-			"description": "List of glob patterns to exclude for the include property",
+			"description": "List of glob patterns to exclude when resolving `include`. Defaults to []",
 			"default": []
 		},
 		"compiler": {
 			"type": "object",
-			"description": "JS+ compiler options",
+			"description": "Configuration for the compilation process",
 			"additionalProperties": false,
 			"properties": {
 				"emitLang": {
@@ -39,8 +44,13 @@
 				},
 				"emitDir": {
 					"type": "string",
-					"description": "Output directory. Defaults to './dist'",
+					"description": "Directory to compile JS+ into. Defaults to './dist'",
 					"default": "./dist"
+				},
+				"emitSourceMaps": {
+					"type": "boolean",
+					"description": "Emit source maps in the `emitDir`. Defaults to false",
+					"default": false
 				}
 			}
 		}
