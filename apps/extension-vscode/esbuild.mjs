@@ -19,7 +19,7 @@ async function main() {
 	});
 
 	if (dev) {
-		ctx.watch();
+		await ctx.watch();
 	} else {
 		await ctx.rebuild();
 		await ctx.dispose();
