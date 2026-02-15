@@ -2,7 +2,7 @@
 	"name": "extension-vscode",
 	"version": "0.1.0",
 	"displayName": "JS+",
-	"description": "JS+ for VSCode",
+	"description": "JS+ for VS Code",
 	"icon": "./assets/icon.png",
 	"publisher": "jsplang",
 	"engines": {

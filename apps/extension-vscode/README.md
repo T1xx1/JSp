@@ -1,1 +1,1 @@
-# JS+ for VSCode
+# JS+ for VS Code
