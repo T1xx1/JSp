@@ -3,16 +3,12 @@
 	"compilerOptions": {
 		/* parser */
 		"skipLibCheck": true,
-		"alwaysStrict": true /* ECMAScript */,
-		"strict": true /* TypeScript */,
+		"strict": true,
 		"module": "ESNext",
 		"moduleResolution": "bundler",
 		"moduleDetection": "force",
-		"resolveJsonModule": true /* JSON */,
 		/* type checking */
 		"exactOptionalPropertyTypes": true,
-		"noImplicitAny": true,
-		"noImplicitThis": true,
 		"noUncheckedIndexedAccess": true,
 		"noUncheckedSideEffectImports": true,
 		/* linter */
@@ -24,8 +20,6 @@
 		"noUnusedParameters": true,
 		"verbatimModuleSyntax": true,
 		/* compiler */
-		"target": "ES2024",
-		"lib": ["ES2024"],
-		"outDir": "./dist"
+		"noEmit": true
 	}
 }

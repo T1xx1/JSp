@@ -67,7 +67,7 @@ export const getConfig = (): Config => {
 	/* `.ts` config */
 	if (configPath.endsWith('.ts')) {
 		const { data, error } = tryCatchSync(() => {
-			return createRequire(import.meta.url)(configPath).default as Config;
+			return createRequire(import.meta.url)(configPath) as Config;
 		});
 
 		if (error || !data) {

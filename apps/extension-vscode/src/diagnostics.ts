@@ -28,8 +28,8 @@ export const analyze = (document: TextDocument, diagnosticsCollection: Diagnosti
 					error.loc.endLine,
 					error.loc.endCharacter,
 				),
-				error.message,
-				DiagnosticSeverity.Error,
+				`${error.category} • ${error.message}`,
+				error.type === 'Warning' ? DiagnosticSeverity.Warning : DiagnosticSeverity.Error,
 			);
 		}),
 	);
