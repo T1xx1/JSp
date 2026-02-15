@@ -14,12 +14,12 @@ export const emit = (filename: string, data: string, config: CompleteConfig) => 
 	writeFileSync(emitPath, data, 'utf8');
 };
 
-export const getEmitCodeFilename = (filename: string, config: CompleteConfig) => {
+export const getEmitFilename = (filename: string, config: CompleteConfig) => {
 	return filename.replace('.jsp', config.compiler.emitLang === 'TypeScript' ? '.ts' : '.js');
 };
 
 export const emitCode = (filename: string, outCode: string, config: CompleteConfig) => {
-	emit(getEmitCodeFilename(filename, config), outCode, config);
+	emit(getEmitFilename(filename, config), outCode, config);
 };
 export const emitSourceMap = (
 	filename: string,
@@ -27,10 +27,10 @@ export const emitSourceMap = (
 	config: CompleteConfig,
 ) => {
 	emit(
-		`${filename}.map`,
+		`${getEmitFilename(filename, config)}.map`,
 		JSON.stringify({
 			version: outSourceMap.version,
-			file: getEmitCodeFilename(parse(filename).base, config).replaceAll('\\', '/'),
+			file: getEmitFilename(parse(filename).base, config).replaceAll('\\', '/'),
 			sourceRoot: '',
 			sources: [join('../', filename).replaceAll('\\', '/')],
 			names: [],
