@@ -20,13 +20,13 @@
 		}
 	},
 	"dependencies": {
-		"@babel/core": "^7.28.5",
+		"@babel/core": "^7.29.0",
 		"@babel/plugin-proposal-async-do-expressions": "^7.27.1",
 		"@babel/plugin-proposal-decorators": "^7.29.0",
 		"@babel/plugin-proposal-discard-binding": "^7.28.0",
-		"@babel/plugin-proposal-do-expressions": "^7.28.3",
+		"@babel/plugin-proposal-do-expressions": "^7.28.6",
 		"@babel/plugin-proposal-export-default-from": "^7.27.1",
-		"@babel/plugin-proposal-pipeline-operator": "^7.27.1",
+		"@babel/plugin-proposal-pipeline-operator": "^7.28.6",
 		"@babel/plugin-proposal-throw-expressions": "^7.27.1",
 		"@babel/plugin-syntax-typescript": "^7.28.6",
 		"@jsplang/plugin-subset": "workspace:*",
@@ -34,12 +34,12 @@
 		"@jsplang/plugin-transform-negative-array-subscript": "workspace:*",
 		"@jsplang/plugin-transform-typeof-null-operator": "workspace:*",
 		"chalk": "^5.6.2",
-		"commander": "^14.0.2",
+		"commander": "^14.0.3",
 		"source-map": "^0.7.6"
 	},
 	"devDependencies": {
 		"@types/babel__core": "^7.20.5",
-		"@types/node": "^25.0.3",
+		"@types/node": "^25.2.3",
 		"typescript": "^5.9.3"
 	}
 }
