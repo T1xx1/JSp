@@ -24,7 +24,7 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/t1xx1/jsp",
-		"directory": "packages/extension-vscode"
+		"directory": "apps/extension-vscode"
 	},
 	"main": "./dist/extension.js",
 	"files": [
