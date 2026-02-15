@@ -1,9 +1,68 @@
+import { transformSync, type ParseResult } from '@babel/core';
+import pluginSubset from '@jsplang/plugin-subset';
+/* @ts-expect-error */
+import pluginProposalAsyncDoExpressions from '@babel/plugin-proposal-async-do-expressions';
+/* @ts-expect-error */
+import pluginProposalDiscardBinding from '@babel/plugin-proposal-discard-binding';
+/* @ts-expect-error */
+import pluginProposalDoExpressions from '@babel/plugin-proposal-do-expressions';
+/* @ts-expect-error */
+import pluginProposalExportDefaultFrom from '@babel/plugin-proposal-export-default-from';
+/* @ts-expect-error */
+import pluginProposalDecorators from '@babel/plugin-proposal-decorators';
+/* @ts-expect-error */
+import pluginProposalPipelineOperator from '@babel/plugin-proposal-pipeline-operator';
+/* @ts-expect-error */
+import pluginProposalThrowExpressions from '@babel/plugin-proposal-throw-expressions';
+/* @ts-expect-error */
+import pluginSyntaxTypeScript from '@babel/plugin-syntax-typescript';
+import pluginTransformChainedComparisons from '@jsplang/plugin-transform-chained-comparisons';
+import pluginTransformNegativeArraySubscript from '@jsplang/plugin-transform-negative-array-subscript';
+import pluginTransformTypeofNullOperator from '@jsplang/plugin-transform-typeof-null-operator';
 import { transpile } from 'typescript';
 
 import { tsconfig, type CompleteConfig } from '../config/index.js';
+import { tryCatchSync } from '../polyfills/index.js';
+import { panic } from '../utils/index.js';
 
 import { parseTs, type Diagnostic } from './parse.js';
-import { transform, type SourceMap } from './transform.js';
+
+export type SourceMap = {
+	version: number;
+	file: string;
+	names: string[];
+	sourceRoot: string;
+	sources: string[];
+	sourcesContent: string[];
+	mappings: string;
+	ignoreList: string[];
+};
+export type BabelResult = {
+	map: SourceMap;
+	ast: ParseResult & {
+		errors: Exclude<ParseResult['errors'], null>;
+	};
+	code: string;
+};
+export type BabelSyntaxError = {
+	code: 'BABEL_PARSE_ERROR';
+	reasonCode: 'UnexpectedToken';
+	message: string;
+	loc: {
+		line: number;
+		column: number;
+	};
+};
+
+export type Transformation =
+	| {
+			map: null;
+			ast: {
+				errors: BabelSyntaxError[];
+			};
+			code: null;
+	  }
+	| BabelResult;
 
 export type Out =
 	| {
@@ -18,46 +77,120 @@ export type Out =
 	  };
 
 export const compile = (filename: string, jspCode: string, config: CompleteConfig): Out => {
-	const ts = transform(filename, jspCode, config);
+	const { data: ts, error: syntaxError } = tryCatchSync<BabelResult, BabelSyntaxError>(() => {
+		return transformSync(jspCode, {
+			filename,
+			parserOpts: {
+				errorRecovery: true,
+				sourceType: 'module',
+			},
+			/* ast */
+			ast: true,
+			/* source maps */
+			sourceMaps: true,
+			/* code gen */
+			compact: false,
+			retainLines: true,
+			/* plugins */
+			plugins: [
+				/* parse TypeScript */
+				pluginSyntaxTypeScript,
 
-	if (ts.code === null) {
-		return {
-			sourceMap: null,
-			diagnostics: ts.ast.errors.map((error) => {
-				return {
-					type: 'Error',
-					category: 'Syntax',
-					message: error.message,
-					loc: {
-						/* line index start at 1 */
-						startLine: error.loc.line - 1,
-						startCharacter: error.loc.column,
-						endLine: error.loc.line - 1,
-						/* 1 length error */
-						endCharacter: error.loc.column + 1,
+				/* transform custom syntax */
+				pluginTransformChainedComparisons,
+				pluginTransformNegativeArraySubscript,
+				pluginTransformTypeofNullOperator,
+
+				/* subset */
+				pluginSubset,
+
+				/* transform TC39 proposals sorted by scope */
+				pluginProposalThrowExpressions,
+				pluginProposalDoExpressions,
+				pluginProposalAsyncDoExpressions,
+				[
+					pluginProposalDiscardBinding,
+					{
+						syntaxType: 'void',
 					},
-				};
-			}),
-			code: null,
-		};
+				],
+				[
+					pluginProposalPipelineOperator,
+					{
+						proposal: 'hack',
+						topicToken: '%',
+					},
+				],
+				[
+					pluginProposalDecorators,
+					{
+						version: '2023-11',
+					},
+				],
+				pluginProposalExportDefaultFrom,
+			],
+		}) as unknown as BabelResult;
+	});
+
+	if (syntaxError) {
+		/* @ts-expect-error */
+		if (syntaxError.jspDiagnostic) {
+			return {
+				sourceMap: null,
+				diagnostics: [
+					{
+						type: 'Error',
+						category: 'Syntax',
+						message: syntaxError.message,
+						/* @ts-expect-error */
+						loc: syntaxError.loc,
+					},
+				],
+				code: null,
+			};
+		}
+
+		if (syntaxError.code === 'BABEL_PARSE_ERROR' && syntaxError.reasonCode === 'UnexpectedToken') {
+			return {
+				sourceMap: null,
+				diagnostics: [
+					{
+						type: 'Error',
+						category: 'Syntax',
+						message: syntaxError.message,
+						loc: {
+							/* line index start at 1 */
+							startLine: syntaxError.loc.line - 1,
+							startCharacter: syntaxError.loc.column,
+							endLine: syntaxError.loc.line - 1,
+							/* 1 length error */
+							endCharacter: syntaxError.loc.column + 1,
+						},
+					},
+				],
+				code: null,
+			};
+		}
+
+		throw panic('ML42CWWWLS', syntaxError.message);
+	}
+
+	if (!ts || !ts.ast || !ts.map || ts.code === null) {
+		throw panic('MKYHKYDERU', 'Null Babel transformation');
 	}
 
 	const babelDiagnostics = ts.ast.errors
 		.filter((error) => {
 			const ignoreReasonCodes = ['DeclarationMissingInitializer'];
 
-			if (ignoreReasonCodes.includes(error.reasonCode)) {
-				return false;
-			}
-
-			return true;
+			return !ignoreReasonCodes.includes(error.reasonCode);
 		})
 		.map((error) => {
 			return {
 				/* @ts-expect-error */
-				type: error.type ?? 'Error' as const,
+				type: error.type ?? ('Error' as const),
 				/* @ts-expect-error */
-				category: error.category ?? 'Semantic' as const,
+				category: error.category ?? ('Semantic' as const),
 				message: error.message,
 				loc: {
 					/* index starts at 1 */

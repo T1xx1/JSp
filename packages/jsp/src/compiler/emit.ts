@@ -3,7 +3,8 @@ import { dirname, join, parse, relative } from 'node:path';
 import { cwd } from 'node:process';
 
 import type { CompleteConfig } from '../config/index.js';
-import type { SourceMap } from './transform.js';
+
+import type { SourceMap } from './compile.js';
 
 export const emit = (filename: string, data: string, config: CompleteConfig) => {
 	const emitPath = join(cwd(), config.compiler.emitDir, relative(config.rootDir, filename));
