@@ -2,7 +2,7 @@ import { rmSync } from 'node:fs';
 
 import esbuild from 'esbuild';
 
-const watch = process.argv.includes('--watch');
+const dev = process.argv.includes('--dev');
 
 async function main() {
 	rmSync('./dist', { recursive: true, force: true });
@@ -11,14 +11,14 @@ async function main() {
 		entryPoints: ['./src/extension.ts'],
 		bundle: true,
 		format: 'cjs',
-		minify: true,
+		minify: !dev,
 		platform: 'node',
 		target: 'node16',
 		outfile: './dist/extension.js',
 		external: ['@babel/preset-typescript', 'vscode'],
 	});
 
-	if (watch) {
+	if (dev) {
 		ctx.watch();
 	} else {
 		await ctx.rebuild();
