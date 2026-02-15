@@ -1,6 +1,5 @@
 {
 	"name": "@jsplang/extension-vscode",
-	"type": "module",
 	"version": "0.1.0",
 	"displayName": "JS+",
 	"description": "JS+ for VSCode",
@@ -12,7 +11,7 @@
 	"scripts": {
 		"dev": "tsc -w",
 		"build": "pnpm bundle && pnpm package",
-		"bundle": "node esbuild.js --production",
+		"bundle": "node esbuild.js",
 		"package": "vsce package --no-dependencies"
 	},
 	"devDependencies": {

@@ -2,21 +2,18 @@ import { rmSync } from 'node:fs';
 
 import esbuild from 'esbuild';
 
-const production = process.argv.includes('--production');
-
 async function main() {
 	rmSync('./dist', { recursive: true, force: true });
 
-	const ctx = await esbuild.build({
+	await esbuild.build({
 		entryPoints: ['./src/extension.ts'],
 		bundle: true,
-		format: 'esm',
-		minify: production,
-		sourcemap: false,
-		sourcesContent: false,
+		format: 'cjs',
+		minify: true,
 		platform: 'node',
+		target: 'node16',
 		outfile: './dist/extension.js',
-		external: ['vscode', '@babel/preset-typescript'],
+		external: ['@babel/preset-typescript', 'vscode'],
 	});
 }
 
