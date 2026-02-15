@@ -7,7 +7,7 @@
 	"icon": "./assets/icon.png",
 	"publisher": "jsplang",
 	"engines": {
-		"vscode": "^1.108.1"
+		"vscode": "^1.109.0"
 	},
 	"scripts": {
 		"dev": "tsc -w",
