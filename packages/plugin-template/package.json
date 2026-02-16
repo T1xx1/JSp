@@ -1,7 +1,7 @@
 {
 	"name": "@jsplang/plugin-template",
-	"type": "module",
 	"version": "0.1.0",
+	"type": "module",
 	"scripts": {
 		"dev": "tsc -w",
 		"build": "tsc",
