@@ -10,7 +10,6 @@ export const tsconfig = {
 	compilerOptions: {
 		/* parser */
 		skipLibCheck: true,
-		alwaysStrict: true /* ECMAScript */,
 		strict: true /* TypeScript */,
 		module: ModuleKind.ESNext,
 		moduleResolution: ModuleResolutionKind.Bundler,
@@ -19,8 +18,6 @@ export const tsconfig = {
 		/* type checking */
 		exactOptionalPropertyTypes: true,
 		lib: ['lib.dom.d.ts', 'lib.esnext.d.ts'],
-		noImplicitAny: true,
-		noImplicitThis: true,
 		noUncheckedIndexedAccess: true,
 		noUncheckedSideEffectImports: true,
 		/* linter */

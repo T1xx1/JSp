@@ -3,15 +3,13 @@
 	"compilerOptions": {
 		/* parser */
 		"skipLibCheck": true,
-		"alwaysStrict": true /* ECMAScript */,
-		"strict": true /* TypeScript */,
-		"module": "NodeNext",
+		"strict": true, /* TypeScript */
+		"module": "ESNext",
+		"moduleResolution": "bundler",
 		"moduleDetection": "force",
-		"resolveJsonModule": true /* JSON */,
+		"resolveJsonModule": true, /* JSON */
 		/* type checking */
 		"exactOptionalPropertyTypes": true,
-		"noImplicitAny": true,
-		"noImplicitThis": true,
 		"noUncheckedIndexedAccess": true,
 		"noUncheckedSideEffectImports": true,
 		/* linter */
