@@ -17,6 +17,12 @@ export type Support = {
 		stage: number | 'Inactive';
 		link: string;
 	};
+	mdn?: {
+		value: false;
+	} | {
+		value: true;
+		link: string;
+	}
 	corejs?: {
 		value: false;
 	} | {

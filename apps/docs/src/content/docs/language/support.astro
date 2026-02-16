@@ -18,6 +18,7 @@ const { frontmatter } = Astro.props;
 		<tr>
 			<th>Type</th>
 			<th>TC39</th>
+			<th>MDN</th>
 			<th>CoreJS</th>
 			<th>Babel</th>
 			<th>Civet</th>
@@ -27,6 +28,13 @@ const { frontmatter } = Astro.props;
 			<td>{frontmatter.proposalType}</td>
 			<td>
 				<Semaphore entity={frontmatter.support.tc39} />
+			</td>
+			<td>
+				{
+					frontmatter.support.mdn?.value && frontmatter.support.mdn?.link && (
+						<a href={frontmatter.support.mdn.link}>✅</a>
+					)
+				}
 			</td>
 			<td>
 				<Semaphore entity={frontmatter.support.corejs} />

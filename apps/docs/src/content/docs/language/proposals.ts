@@ -160,6 +160,10 @@ export const proposals: Proposal[] = [
 				stage: 3,
 				link: 'https://github.com/tc39/proposal-temporal',
 			},
+			mdn: {
+				value: true,
+				link: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Temporal',
+			},
 		},
 	},
 	{
@@ -182,6 +186,10 @@ export const proposals: Proposal[] = [
 				stage: 3,
 				link: 'https://github.com/tc39/proposal-explicit-resource-management',
 			},
+			mdn: {
+				value: true,
+				link: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/using'
+			}
 		},
 	},
 	{
@@ -226,6 +234,10 @@ export const proposals: Proposal[] = [
 				stage: 3,
 				link: 'https://github.com/tc39/proposal-atomics-microwait',
 			},
+			mdn: {
+				value: true,
+				link: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics/pause'
+			}
 		},
 	},
 	{
@@ -1822,8 +1834,8 @@ export const proposals: Proposal[] = [
 			},
 			corejs: {
 				value: true,
-				link: 'https://core-js.io/docs/features/proposals/function-prototype-demethodize'
-			}
+				link: 'https://core-js.io/docs/features/proposals/function-prototype-demethodize',
+			},
 		},
 	},
 	{
@@ -2375,10 +2387,10 @@ export const proposals: Proposal[] = [
 		support: {
 			corejs: {
 				value: true,
-				link: 'https://core-js.io/docs/features/proposals/function-prototype-demethodize'
-			}
+				link: 'https://core-js.io/docs/features/proposals/function-prototype-demethodize',
+			},
 		},
-	}
+	},
 ];
 
 export const parseProposals = (proposals: Proposal[]): Page[] => {

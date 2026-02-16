@@ -15,6 +15,7 @@ const { pages, hideCols = [] } = Astro.props;
 const cols: Record<Col, boolean> = {
 	proposalType: !hideCols.includes('proposalType'),
 	tc39: !hideCols.includes('tc39'),
+	mdn: !hideCols.includes('mdn'),
 	corejs: !hideCols.includes('corejs'),
 	babel: !hideCols.includes('babel'),
 	civet: !hideCols.includes('civet'),
@@ -26,7 +27,7 @@ const cols: Record<Col, boolean> = {
 <table>
 	<tbody>
 		<tr>
-			<th>Page</th>
+			<th>Feature</th>
 			{cols.proposalType && <th>Type</th>}
 			{cols.tc39 && <th>TC39</th>}
 			{cols.corejs && <th>CoreJS</th>}
@@ -43,6 +44,8 @@ const cols: Record<Col, boolean> = {
 								<a href={page.url.replace('src/content/docs', '').replace('.mdx', '')}>
 									{page.frontmatter.title}
 								</a>
+							) : page.frontmatter.support.mdn?.value && page.frontmatter.support.mdn?.link ? (
+								<a href={page.frontmatter.support.mdn.link}>{page.frontmatter.title}</a>
 							) : page.frontmatter.support.tc39?.value && page.frontmatter.support.tc39?.link ? (
 								<a href={page.frontmatter.support.tc39.link}>{page.frontmatter.title}</a>
 							) : (
