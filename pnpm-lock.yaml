@@ -104,9 +104,15 @@ importers:
       '@jsplang/plugin-transform-negative-array-subscript':
         specifier: workspace:*
         version: link:../plugin-transform-negative-array-subscript
+      '@jsplang/plugin-transform-polyfills':
+        specifier: workspace:*
+        version: link:../plugin-transform-polyfills
       '@jsplang/plugin-transform-typeof-null-operator':
         specifier: workspace:*
         version: link:../plugin-transform-typeof-null-operator
+      '@jsplang/polyfill-math-clamp':
+        specifier: workspace:*
+        version: link:../polyfill-math-clamp
       chalk:
         specifier: ^5.6.2
         version: 5.6.2
@@ -203,6 +209,25 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/plugin-transform-polyfills:
+    dependencies:
+      '@babel/core':
+        specifier: ^7.28.5
+        version: 7.29.0
+    devDependencies:
+      '@babel/types':
+        specifier: ^7.29.0
+        version: 7.29.0
+      '@jsplang/tester':
+        specifier: workspace:*
+        version: link:../tester
+      '@types/babel__core':
+        specifier: ^7.20.5
+        version: 7.20.5
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   packages/plugin-transform-typeof-null-operator:
     dependencies:
       '@babel/core':
@@ -218,6 +243,12 @@ importers:
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/polyfill-math-clamp:
+    devDependencies:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3

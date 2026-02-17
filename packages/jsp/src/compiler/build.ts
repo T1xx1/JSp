@@ -8,6 +8,7 @@ import { type CompleteConfig } from '../config/index.js';
 import { compile, type Out } from './compile.js';
 import { emitCode, emitSourceMap } from './emit.js';
 import { getInputs } from './inputs.js';
+import { emitPolyfills } from './polyfill.js';
 
 export const build = async (config: CompleteConfig) => {
 	const filenames = getInputs(config);
@@ -36,6 +37,8 @@ export const build = async (config: CompleteConfig) => {
 
 		emitCode(filename, out.code, config);
 	}
+
+	emitPolyfills(config);
 
 	if (errors === 0) {
 		console.log(chalk.green('JS+ compiled successfully'));

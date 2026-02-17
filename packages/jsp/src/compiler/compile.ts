@@ -18,6 +18,7 @@ import pluginProposalThrowExpressions from '@babel/plugin-proposal-throw-express
 import pluginSyntaxTypeScript from '@babel/plugin-syntax-typescript';
 import pluginTransformChainedComparisons from '@jsplang/plugin-transform-chained-comparisons';
 import pluginTransformNegativeArraySubscript from '@jsplang/plugin-transform-negative-array-subscript';
+import pluginTransformPolyfills from '@jsplang/plugin-transform-polyfills';
 import pluginTransformTypeofNullOperator from '@jsplang/plugin-transform-typeof-null-operator';
 import { transpile } from 'typescript';
 
@@ -128,6 +129,9 @@ export const compile = (filename: string, jspCode: string, config: CompleteConfi
 					},
 				],
 				pluginProposalExportDefaultFrom,
+
+				/* polyfills */
+				pluginTransformPolyfills,
 			],
 		}) as unknown as BabelResult;
 	});

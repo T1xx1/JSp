@@ -32,7 +32,9 @@
 		"@jsplang/plugin-subset": "workspace:*",
 		"@jsplang/plugin-transform-chained-comparisons": "workspace:*",
 		"@jsplang/plugin-transform-negative-array-subscript": "workspace:*",
+		"@jsplang/plugin-transform-polyfills": "workspace:*",
 		"@jsplang/plugin-transform-typeof-null-operator": "workspace:*",
+		"@jsplang/polyfill-math-clamp": "workspace:*",
 		"chalk": "^5.6.2",
 		"commander": "^14.0.3",
 		"source-map": "^0.7.6"
