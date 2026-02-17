@@ -1,0 +1,74 @@
+---
+title: Proposals by type
+lastUpdated: 2026-02-17
+---
+
+import { polyfillProposals, syntaxProposals, runtimeProposals } from './proposals';
+
+import Table from './table.astro';
+
+## Runtime proposals
+
+<Table
+	pages={runtimeProposals.toSorted((a, b) => {
+    	const stageA = a.frontmatter.support.tc39?.stage === 'Inactive' ? -1 : a.frontmatter.support.tc39?.stage;
+    	const stageB = b.frontmatter.support.tc39?.stage === 'Inactive' ? -1 : b.frontmatter.support.tc39?.stage;
+
+    	if (stageA !== stageB) {
+    		return stageB - stageA;
+    	}
+
+    	if (a.frontmatter.support.corejs?.value !== b.frontmatter.support.corejs?.value) {
+    		return -1;
+    	}
+
+    	return a.frontmatter.title.localeCompare(b.frontmatter.title);
+    })}
+    hideCols={['proposalType']}
+    variant='details'
+
+/>
+
+## Syntax proposals
+
+<Table
+	pages={syntaxProposals.toSorted((a, b) => {
+    	const stageA = a.frontmatter.support.tc39?.stage === 'Inactive' ? -1 : a.frontmatter.support.tc39?.stage;
+    	const stageB = b.frontmatter.support.tc39?.stage === 'Inactive' ? -1 : b.frontmatter.support.tc39?.stage;
+
+    	if (stageA !== stageB) {
+    		return stageB - stageA;
+    	}
+
+    	if (a.frontmatter.support.corejs?.value !== b.frontmatter.support.corejs?.value) {
+    		return -1;
+    	}
+
+    	return a.frontmatter.title.localeCompare(b.frontmatter.title);
+    })}
+    hideCols={['proposalType']}
+    variant='details'
+
+/>
+
+## Polyfill proposals
+
+<Table
+	pages={polyfillProposals.toSorted((a, b) => {
+    	const stageA = a.frontmatter.support.tc39?.stage === 'Inactive' ? -1 : a.frontmatter.support.tc39?.stage;
+    	const stageB = b.frontmatter.support.tc39?.stage === 'Inactive' ? -1 : b.frontmatter.support.tc39?.stage;
+
+    	if (stageA !== stageB) {
+    		return stageB - stageA;
+    	}
+
+    	if (a.frontmatter.support.corejs?.value !== b.frontmatter.support.corejs?.value) {
+    		return -1;
+    	}
+
+    	return a.frontmatter.title.localeCompare(b.frontmatter.title);
+    })}
+    hideCols={['proposalType']}
+    variant='details'
+
+/>

@@ -107,6 +107,11 @@ export default defineConfig({
 									directory: 'language/runtime',
 								},
 							},
+							{
+								label: 'Other',
+								items: ['language/proposalsbytype'],
+								collapsed: true,
+							},
 						],
 					},
 				]),
