@@ -21,6 +21,17 @@ export default function ({ types: t }: { types: typeof types }) {
 
 				if (
 					t.isIdentifier(path.node.object) &&
+					path.node.object.name === 'Object' &&
+					t.isIdentifier(path.node.property) &&
+					['keysLength', 'getOwnPropertyNamesLength', 'getOwnPropertySymbolsLength'].includes(
+						path.node.property.name,
+					)
+				) {
+					state.polyfills.add('_jsp/polyfill/object-propertycount');
+				}
+
+				if (
+					t.isIdentifier(path.node.object) &&
 					path.node.object.name === 'Promise' &&
 					t.isIdentifier(path.node.property) &&
 					path.node.property.name === 'isPromise'

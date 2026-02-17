@@ -113,6 +113,9 @@ importers:
       '@jsplang/polyfill-math-clamp':
         specifier: workspace:*
         version: link:../polyfill-math-clamp
+      '@jsplang/polyfill-object-propertycount':
+        specifier: workspace:*
+        version: link:../polyfill-object-propertycount
       '@jsplang/polyfill-promise-ispromise':
         specifier: workspace:*
         version: link:../polyfill-promise-ispromise
@@ -251,6 +254,12 @@ importers:
         version: 5.9.3
 
   packages/polyfill-math-clamp:
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/polyfill-object-propertycount:
     devDependencies:
       typescript:
         specifier: ^5.9.3
