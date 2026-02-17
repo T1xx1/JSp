@@ -16,4 +16,5 @@ const emitPackage = (packageName: string, filename: string, config: CompleteConf
 
 export const emitPolyfills = (config: CompleteConfig) => {
 	emitPackage('@jsplang/polyfill-math-clamp', 'math-clamp.ts', config);
+	emitPackage('@jsplang/polyfill-promise-ispromise', 'promise-ispromise.ts', config);
 };

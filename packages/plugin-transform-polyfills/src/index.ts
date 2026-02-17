@@ -18,6 +18,15 @@ export default function ({ types: t }: { types: typeof types }) {
 				) {
 					state.polyfills.add('_jsp/polyfill/math-clamp');
 				}
+
+				if (
+					t.isIdentifier(path.node.object) &&
+					path.node.object.name === 'Promise' &&
+					t.isIdentifier(path.node.property) &&
+					path.node.property.name === 'isPromise'
+				) {
+					state.polyfills.add('_jsp/polyfill/promise-ispromise');
+				}
 			},
 			Program: {
 				enter(path: NodePath<Program>, state: State) {
