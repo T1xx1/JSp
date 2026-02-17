@@ -38,6 +38,14 @@ export default function ({ types: t }: { types: typeof types }) {
 				) {
 					state.polyfills.add('_jsp/polyfill/promise-ispromise');
 				}
+
+				if (
+					t.isIdentifier(path.node.object) &&
+					path.node.object.name === 'Random' &&
+					t.isIdentifier(path.node.property)
+				) {
+					state.polyfills.add('_jsp/polyfill/random');
+				}
 			},
 			Program: {
 				enter(path: NodePath<Program>, state: State) {

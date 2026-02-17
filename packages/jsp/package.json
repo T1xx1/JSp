@@ -37,6 +37,7 @@
 		"@jsplang/polyfill-math-clamp": "workspace:*",
 		"@jsplang/polyfill-object-propertycount": "workspace:*",
 		"@jsplang/polyfill-promise-ispromise": "workspace:*",
+		"@jsplang/polyfill-random-namespace": "workspace:*",
 		"chalk": "^5.6.2",
 		"commander": "^14.0.3",
 		"source-map": "^0.7.6"
