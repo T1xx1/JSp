@@ -1,0 +1,12 @@
+{
+	"name": "@jsplang/polyfill-random-namespace",
+	"version": "0.1.0",
+	"type": "module",
+	"scripts": {
+		"dev": "tsc -w",
+		"build": "tsc"
+	},
+	"devDependencies": {
+		"typescript": "^5.9.3"
+	}
+}
