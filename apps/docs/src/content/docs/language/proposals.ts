@@ -2,7 +2,7 @@ import type { Page } from './types';
 
 type Proposal = Omit<Page['frontmatter'], 'lastUpdated'>;
 
-export const proposals: Proposal[] = [
+const p: Proposal[] = [
 	{
 		title: 'Composites',
 		proposalType: 'Polyfill',
@@ -2393,7 +2393,7 @@ export const proposals: Proposal[] = [
 	},
 ];
 
-export const parseProposals = (proposals: Proposal[]): Page[] => {
+const parseProposals = (proposals: Proposal[]): Page[] => {
 	return proposals.map((proposal) => {
 		return {
 			frontmatter: {
@@ -2409,3 +2409,5 @@ export const parseProposals = (proposals: Proposal[]): Page[] => {
 		};
 	});
 };
+
+export const proposals = parseProposals(p);
