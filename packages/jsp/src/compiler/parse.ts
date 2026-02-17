@@ -30,13 +30,17 @@ export const tsFilename = (filename: string): string => {
 };
 
 export const parseTs = (filename: string, tsCode: string): Diagnostic[] => {
-	const source = createSourceFile(tsFilename(filename), tsCode, tsconfig.compilerOptions.target);
-
 	const host = createCompilerHost(tsconfig.compilerOptions);
 	const getSourceFile = host.getSourceFile;
 
 	host.getSourceFile = (filename, languageVersion) => {
 		if (filename.includes('.jsp')) {
+			const source = createSourceFile(
+				tsFilename(filename),
+				tsCode,
+				tsconfig.compilerOptions.target,
+			);
+
 			return source;
 		}
 
@@ -45,24 +49,28 @@ export const parseTs = (filename: string, tsCode: string): Diagnostic[] => {
 
 	const tsProgram = createProgram([tsFilename(filename)], tsconfig.compilerOptions, host);
 
-	return getPreEmitDiagnostics(tsProgram).map((diagnostic) => {
-		const { line: startLine, character: startCharacter } = (
-			diagnostic.file ?? source
-		).getLineAndCharacterOfPosition(diagnostic.start ?? 0);
-		const { line: endLine, character: endCharacter } = (
-			diagnostic.file ?? source
-		).getLineAndCharacterOfPosition((diagnostic.start ?? 0) + (diagnostic.length ?? 0));
+	return getPreEmitDiagnostics(tsProgram)
+		.filter((diagnostic) => {
+			return !!diagnostic.file;
+		})
+		.map((diagnostic) => {
+			const { line: startLine, character: startCharacter } =
+				diagnostic.file!.getLineAndCharacterOfPosition(diagnostic.start ?? 0);
+			const { line: endLine, character: endCharacter } =
+				diagnostic.file!.getLineAndCharacterOfPosition(
+					(diagnostic.start ?? 0) + (diagnostic.length ?? 0),
+				);
 
-		return {
-			type: diagnostic.category === DiagnosticCategory.Warning ? 'Warning' : 'Error',
-			category: 'Semantic',
-			message: flattenDiagnosticMessageText(diagnostic.messageText, sys.newLine),
-			loc: {
-				startLine: startLine,
-				startCharacter: startCharacter,
-				endLine: endLine,
-				endCharacter: endCharacter,
-			},
-		};
-	});
+			return {
+				type: diagnostic.category === DiagnosticCategory.Warning ? 'Warning' : 'Error',
+				category: 'Semantic',
+				message: flattenDiagnosticMessageText(diagnostic.messageText, sys.newLine),
+				loc: {
+					startLine: startLine,
+					startCharacter: startCharacter,
+					endLine: endLine,
+					endCharacter: endCharacter,
+				},
+			};
+		});
 };
