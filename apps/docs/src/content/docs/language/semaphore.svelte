@@ -6,7 +6,7 @@
 		variant = 'default',
 	}: {
 		entity?: Entity;
-		variant?: 'default' | 'minimal';
+		variant?: 'default' | 'details';
 	} = $props();
 </script>
 
@@ -14,7 +14,7 @@
 	{#if entity}
 		{#if entity.value === true}
 			✅
-			{#if variant === 'default'}
+			{#if variant === 'details'}
 				{#if entity.stage !== undefined}
 					Stage {entity.stage}
 				{/if}
