@@ -259,6 +259,12 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/polyfill-iterator-chunking:
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   packages/polyfill-math-clamp:
     devDependencies:
       typescript:
