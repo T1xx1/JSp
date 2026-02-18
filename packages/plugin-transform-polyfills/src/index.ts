@@ -7,7 +7,7 @@ type State = PluginPass & {
 
 export default function ({ types: t }: { types: typeof types }) {
 	return {
-		name: '@jsplang/plugin-template',
+		name: '@jsplang/plugin-transform-polyfills',
 		visitor: {
 			MemberExpression(path: NodePath<MemberExpression>, state: State) {
 				if (
