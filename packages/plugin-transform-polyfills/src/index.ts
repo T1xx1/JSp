@@ -10,19 +10,16 @@ export default function ({ types: t }: { types: typeof types }) {
 		name: '@jsplang/plugin-transform-polyfills',
 		visitor: {
 			MemberExpression(path: NodePath<MemberExpression>, state: State) {
-				if (
-					t.isIdentifier(path.node.object) &&
-					path.node.object.name === 'Math' &&
-					t.isIdentifier(path.node.property) &&
-					path.node.property.name === 'clamp'
-				) {
+				if (!t.isIdentifier(path.node.object) || !t.isIdentifier(path.node.property)) {
+					return;
+				}
+
+				if (path.node.object.name === 'Math' && path.node.property.name === 'clamp') {
 					state.polyfills.add('_jsp/polyfill/math-clamp');
 				}
 
 				if (
-					t.isIdentifier(path.node.object) &&
 					path.node.object.name === 'Object' &&
-					t.isIdentifier(path.node.property) &&
 					['keysLength', 'getOwnPropertyNamesLength', 'getOwnPropertySymbolsLength'].includes(
 						path.node.property.name,
 					)
@@ -31,28 +28,17 @@ export default function ({ types: t }: { types: typeof types }) {
 				}
 
 				if (
-					t.isIdentifier(path.node.object) &&
 					path.node.object.name === 'Promise' &&
-					t.isIdentifier(path.node.property) &&
-					(path.node.property.name === 'allKeyed' || path.node.property.name === 'allSettledKeyed')
+					['allKeyed', 'allSettledKeyed'].includes(path.node.property.name)
 				) {
 					state.polyfills.add('_jsp/polyfill/promise-allkeyed');
 				}
 
-				if (
-					t.isIdentifier(path.node.object) &&
-					path.node.object.name === 'Promise' &&
-					t.isIdentifier(path.node.property) &&
-					path.node.property.name === 'isPromise'
-				) {
+				if (path.node.object.name === 'Promise' && path.node.property.name === 'isPromise') {
 					state.polyfills.add('_jsp/polyfill/promise-ispromise');
 				}
 
-				if (
-					t.isIdentifier(path.node.object) &&
-					path.node.object.name === 'Random' &&
-					t.isIdentifier(path.node.property)
-				) {
+				if (path.node.object.name === 'Random') {
 					state.polyfills.add('_jsp/polyfill/random');
 				}
 			},
