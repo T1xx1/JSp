@@ -116,6 +116,9 @@ importers:
       '@jsplang/polyfill-object-propertycount':
         specifier: workspace:*
         version: link:../polyfill-object-propertycount
+      '@jsplang/polyfill-promise-allkeyed':
+        specifier: workspace:*
+        version: link:../polyfill-promise-allKeyed
       '@jsplang/polyfill-promise-ispromise':
         specifier: workspace:*
         version: link:../polyfill-promise-ispromise

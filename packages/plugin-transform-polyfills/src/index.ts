@@ -34,6 +34,15 @@ export default function ({ types: t }: { types: typeof types }) {
 					t.isIdentifier(path.node.object) &&
 					path.node.object.name === 'Promise' &&
 					t.isIdentifier(path.node.property) &&
+					(path.node.property.name === 'allKeyed' || path.node.property.name === 'allSettledKeyed')
+				) {
+					state.polyfills.add('_jsp/polyfill/promise-allkeyed');
+				}
+
+				if (
+					t.isIdentifier(path.node.object) &&
+					path.node.object.name === 'Promise' &&
+					t.isIdentifier(path.node.property) &&
 					path.node.property.name === 'isPromise'
 				) {
 					state.polyfills.add('_jsp/polyfill/promise-ispromise');

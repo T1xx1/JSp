@@ -36,6 +36,7 @@
 		"@jsplang/plugin-transform-typeof-null-operator": "workspace:*",
 		"@jsplang/polyfill-math-clamp": "workspace:*",
 		"@jsplang/polyfill-object-propertycount": "workspace:*",
+		"@jsplang/polyfill-promise-allkeyed": "workspace:*",
 		"@jsplang/polyfill-promise-ispromise": "workspace:*",
 		"@jsplang/polyfill-random-namespace": "workspace:*",
 		"chalk": "^5.6.2",
