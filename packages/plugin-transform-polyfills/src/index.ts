@@ -14,6 +14,10 @@ export default function ({ types: t }: { types: typeof types }) {
 					return;
 				}
 
+				if (['chunks', 'windows'].includes(path.node.property.name)) {
+					state.polyfills.add('_jsp/polyfill/iterator-chunking');
+				};
+
 				if (path.node.object.name === 'Math' && path.node.property.name === 'clamp') {
 					state.polyfills.add('_jsp/polyfill/math-clamp');
 				}

@@ -34,6 +34,7 @@
 		"@jsplang/plugin-transform-negative-array-subscript": "workspace:*",
 		"@jsplang/plugin-transform-polyfills": "workspace:*",
 		"@jsplang/plugin-transform-typeof-null-operator": "workspace:*",
+		"@jsplang/polyfill-iterator-chunking": "workspace:*",
 		"@jsplang/polyfill-math-clamp": "workspace:*",
 		"@jsplang/polyfill-object-propertycount": "workspace:*",
 		"@jsplang/polyfill-promise-allkeyed": "workspace:*",

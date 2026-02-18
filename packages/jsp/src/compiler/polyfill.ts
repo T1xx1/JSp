@@ -15,6 +15,7 @@ const emitPackage = (packageName: string, filename: string, config: CompleteConf
 };
 
 export const emitPolyfills = (config: CompleteConfig) => {
+	emitPackage('@jsplang/polyfill-iterator-chunking', 'iterator-chunking.ts', config);
 	emitPackage('@jsplang/polyfill-math-clamp', 'math-clamp.ts', config);
 	emitPackage('@jsplang/polyfill-object-propertycount', 'object-propertycount.ts', config);
 	emitPackage('@jsplang/polyfill-promise-allkeyed', 'promise-allkeyed.ts', config);

@@ -110,6 +110,9 @@ importers:
       '@jsplang/plugin-transform-typeof-null-operator':
         specifier: workspace:*
         version: link:../plugin-transform-typeof-null-operator
+      '@jsplang/polyfill-iterator-chunking':
+        specifier: workspace:*
+        version: link:../polyfill-iterator-chunking
       '@jsplang/polyfill-math-clamp':
         specifier: workspace:*
         version: link:../polyfill-math-clamp
