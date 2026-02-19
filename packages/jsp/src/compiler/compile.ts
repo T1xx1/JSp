@@ -23,8 +23,7 @@ import pluginTransformTypeofNullOperator from '@jsplang/plugin-transform-typeof-
 import { transpile } from 'typescript';
 
 import { tsconfig, type CompleteConfig } from '../config/index.js';
-import { tryCatchSync } from '../polyfills/index.js';
-import { panic } from '../utils/index.js';
+import { panic, tryCatchSync } from '../utils/index.js';
 
 import { parseTs, type Diagnostic } from './parse.js';
 

@@ -3,8 +3,7 @@ import { createRequire } from 'node:module';
 import { join, normalize } from 'node:path';
 import { cwd } from 'node:process';
 
-import { tryCatchSync } from '../polyfills/index.js';
-import { exit, panic } from '../utils/index.js';
+import { exit, panic, tryCatchSync } from '../utils/index.js';
 
 export type Config = {
 	rootDir?: string;
