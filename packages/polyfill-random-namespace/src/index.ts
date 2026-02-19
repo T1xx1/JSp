@@ -28,7 +28,7 @@ globalThis.Random = {
 	/* range() {}, */
 	/**
 	 * @param low Minimum value. Defaults to 0
-	 * @param high Minimum value. Defaults to 1
+	 * @param high Maximum value. Defaults to 1
 	 * @returns A random integer between `low` and `high`
 	 *
 	 * @see https://jsplang.vercel.app/language/polyfill/randomnamespace
@@ -40,13 +40,6 @@ globalThis.Random = {
 
 		return Math.floor(Math.random() * (high - low + 1)) + low;
 	},
-	/**
-	 * @param low Minimum value. Defaults to 0n
-	 * @param high Minimum value. Defaults to 1n
-	 * @returns A random bigint between `low` and `high`
-	 *
-	 * @see https://jsplang.vercel.app/language/polyfill/randomnamespace
-	 */
 	/* bigint() {}, */
 	/* bytes() {}, */
 	/* fillBytes() {}, */
