@@ -663,17 +663,6 @@ const polyfillPs: Proposal[] = [
 		},
 	},
 	{
-		title: 'More random functions (Random)',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-random-functions',
-			},
-		},
-	},
-	{
 		title: 'Representing amounts',
 		proposalType: 'Polyfill',
 		support: {
