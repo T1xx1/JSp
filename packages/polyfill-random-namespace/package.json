@@ -6,6 +6,11 @@
 		"dev": "tsc -w",
 		"build": "tsc"
 	},
+	"exports": {
+		".": {
+			"default": "./src/index.ts"
+		}
+	},
 	"devDependencies": {
 		"typescript": "^5.9.3"
 	}
