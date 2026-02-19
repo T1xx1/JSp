@@ -822,17 +822,6 @@ const polyfillPs: Proposal[] = [
 		},
 	},
 	{
-		title: 'Promise.isPromise',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2,
-				link: 'https://github.com/tc39/proposal-native-promise-predicate',
-			},
-		},
-	},
-	{
 		title: 'Error stack accessor',
 		proposalType: 'Polyfill',
 		support: {
