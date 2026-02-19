@@ -18,8 +18,11 @@ import Table from './table.astro';
     		return stageB - stageA;
     	}
 
-    	if (a.frontmatter.support.corejs?.value !== b.frontmatter.support.corejs?.value) {
-    		return -1;
+    	const corejsA = a.frontmatter.support.corejs?.value === true ? 1 : 0;
+    	const corejsB = b.frontmatter.support.corejs?.value === true ? 1 : 0;
+
+    	if (corejsA !== corejsB) {
+    		return corejsB - corejsA;
     	}
 
     	return a.frontmatter.title.localeCompare(b.frontmatter.title);
@@ -40,8 +43,11 @@ import Table from './table.astro';
     		return stageB - stageA;
     	}
 
-    	if (a.frontmatter.support.corejs?.value !== b.frontmatter.support.corejs?.value) {
-    		return -1;
+    	const corejsA = a.frontmatter.support.corejs?.value === true ? 1 : 0;
+    	const corejsB = b.frontmatter.support.corejs?.value === true ? 1 : 0;
+
+    	if (corejsA !== corejsB) {
+    		return corejsB - corejsA;
     	}
 
     	return a.frontmatter.title.localeCompare(b.frontmatter.title);
@@ -62,8 +68,11 @@ import Table from './table.astro';
     		return stageB - stageA;
     	}
 
-    	if (a.frontmatter.support.corejs?.value !== b.frontmatter.support.corejs?.value) {
-    		return -1;
+    	const corejsA = a.frontmatter.support.corejs?.value === true ? 1 : 0;
+		const corejsB = b.frontmatter.support.corejs?.value === true ? 1 : 0;
+
+    	if (corejsA !== corejsB) {
+    		return corejsB - corejsA;
     	}
 
     	return a.frontmatter.title.localeCompare(b.frontmatter.title);
