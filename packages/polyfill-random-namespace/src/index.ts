@@ -17,7 +17,7 @@ export const Random = {
 
 		return Math.random() * (high - low) + low;
 	},
-	range() {},
+	/* range() {}, */
 	/**
 	 * @param low Minimum value. Defaults to 0
 	 * @param high Minimum value. Defaults to 1
@@ -34,6 +34,6 @@ export const Random = {
 	bigint(low: bigint = 0n, high: bigint = 1n) {
 		return BigInt(Math.floor(Math.random() * (Number(high) - Number(low) + 1))) + low;
 	},
-	bytes() {},
-	fillBytes() {},
+	/* bytes() {}, */
+	/* fillBytes() {}, */
 };
