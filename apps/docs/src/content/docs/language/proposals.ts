@@ -213,7 +213,7 @@ const runtimePs: Proposal[] = [
 		},
 	},
 	{
-		title: 'Date.parse uniform parsin',
+		title: 'Date.parse uniform parsing',
 		proposalType: 'Runtime',
 		support: {
 			tc39: {
@@ -464,7 +464,7 @@ const syntaxPs: Proposal[] = [
 		},
 	},
 	{
-		title: 'Exctractors',
+		title: 'Extractors',
 		proposalType: 'Syntax',
 		support: {
 			tc39: {
@@ -660,7 +660,7 @@ const polyfillPs: Proposal[] = [
 				stage: 2,
 				link: 'https://github.com/tc39/proposal-object-keys-length',
 			},
-			md: {
+			mdn: {
 				value: false,
 			},
 			corejs: {
@@ -898,7 +898,7 @@ const polyfillPs: Proposal[] = [
 		},
 	},
 	{
-		title: 'TypeArray concat',
+		title: 'TypedArray concat',
 		proposalType: 'Polyfill',
 		support: {
 			tc39: {
