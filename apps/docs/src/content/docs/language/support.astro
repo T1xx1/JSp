@@ -27,26 +27,22 @@ const { frontmatter } = Astro.props;
 		<tr>
 			<td>{frontmatter.proposalType}</td>
 			<td>
-				<Semaphore entity={frontmatter.support.tc39} />
+				<Semaphore entity={frontmatter.support.tc39} variant="details" />
 			</td>
 			<td>
-				{
-					frontmatter.support.mdn?.value && frontmatter.support.mdn?.link && (
-						<a href={frontmatter.support.mdn.link}>✅</a>
-					)
-				}
+				<Semaphore entity={frontmatter.support.mdn} variant="details" />
 			</td>
 			<td>
-				<Semaphore entity={frontmatter.support.corejs} />
+				<Semaphore entity={frontmatter.support.corejs} variant="details" />
 			</td>
 			<td>
-				<Semaphore entity={frontmatter.support.babel} />
+				<Semaphore entity={frontmatter.support.babel} variant="details" />
 			</td>
 			<td>
-				<Semaphore entity={frontmatter.support.civet} />
+				<Semaphore entity={frontmatter.support.civet} variant="details" />
 			</td>
 			<td>
-				<Semaphore entity={frontmatter.support.jsp} />
+				<Semaphore entity={frontmatter.support.jsp} variant="details" />
 			</td>
 		</tr>
 	</tbody>
