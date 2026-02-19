@@ -1,8 +1,9 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { join } from 'node:path';
 
 import type { CompleteConfig } from '../config/index.js';
+import { exit } from '../utils/exit.js';
 
 import { emit } from './emit.js';
 
@@ -17,6 +18,10 @@ const emitPackage = (packageName: string, filename: string, config: CompleteConf
 };
 
 export const emitPolyfills = (config: CompleteConfig) => {
+	if (existsSync(join(config.rootDir, '_jsp'))) {
+		throw exit('`_jsp` is a reserved folder name');
+	}
+
 	const polyfills: {
 		packageName: string;
 		emitFilename: string;
