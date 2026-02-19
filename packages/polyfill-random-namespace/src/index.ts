@@ -1,7 +1,8 @@
 /**
  * @see https://jsplang.vercel.app/language/polyfill/randomnamespace
  */
-export const Random = {
+/* @ts-expect-error */
+globalThis.Random = {
 	/**
 	 * @returns A random number between 0 and 1
 	 *

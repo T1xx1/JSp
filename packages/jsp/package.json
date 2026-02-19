@@ -32,7 +32,6 @@
 		"@jsplang/plugin-subset": "workspace:*",
 		"@jsplang/plugin-transform-chained-comparisons": "workspace:*",
 		"@jsplang/plugin-transform-negative-array-subscript": "workspace:*",
-		"@jsplang/plugin-transform-polyfills": "workspace:*",
 		"@jsplang/plugin-transform-typeof-null-operator": "workspace:*",
 		"@jsplang/polyfill-iterator-chunking": "workspace:*",
 		"@jsplang/polyfill-math-clamp": "workspace:*",
@@ -45,6 +44,7 @@
 		"source-map": "^0.7.6"
 	},
 	"devDependencies": {
+		"@babel/types": "^7.29.0",
 		"@types/babel__core": "^7.20.5",
 		"@types/node": "^25.2.3",
 		"typescript": "^5.9.3"

@@ -1,4 +1,5 @@
-import { transformSync, type ParseResult } from '@babel/core';
+import { transformSync, type ParseResult, type NodePath } from '@babel/core';
+import { type Program } from '@babel/types';
 import pluginSubset from '@jsplang/plugin-subset';
 /* @ts-expect-error */
 import pluginProposalAsyncDoExpressions from '@babel/plugin-proposal-async-do-expressions';
@@ -18,7 +19,6 @@ import pluginProposalThrowExpressions from '@babel/plugin-proposal-throw-express
 import pluginSyntaxTypeScript from '@babel/plugin-syntax-typescript';
 import pluginTransformChainedComparisons from '@jsplang/plugin-transform-chained-comparisons';
 import pluginTransformNegativeArraySubscript from '@jsplang/plugin-transform-negative-array-subscript';
-import pluginTransformPolyfills from '@jsplang/plugin-transform-polyfills';
 import pluginTransformTypeofNullOperator from '@jsplang/plugin-transform-typeof-null-operator';
 import { transpile } from 'typescript';
 
@@ -130,7 +130,20 @@ export const compile = (filename: string, jspCode: string, config: CompleteConfi
 				pluginProposalExportDefaultFrom,
 
 				/* polyfills */
-				pluginTransformPolyfills,
+				function ({ types: t }) {
+					return {
+						visitor: {
+							Program: {
+								exit(path: NodePath<Program>) {
+									path.unshiftContainer(
+										'body',
+										t.importDeclaration([], t.stringLiteral('./_jsp/index')),
+									);
+								},
+							},
+						},
+					};
+				},
 			],
 		}) as unknown as BabelResult;
 	});

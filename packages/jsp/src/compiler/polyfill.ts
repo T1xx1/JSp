@@ -6,8 +6,10 @@ import type { CompleteConfig } from '../config/index.js';
 
 import { emit } from './emit.js';
 
+const polyfillsDir = join('./_jsp', 'polyfills');
+
 const emitPackage = (packageName: string, filename: string, config: CompleteConfig) => {
-	const filenamePath = join('_jsp', 'polyfills', filename);
+	const filenamePath = join(polyfillsDir, filename);
 	const packagePath = createRequire(import.meta.url).resolve(packageName);
 	const packageRaw = `${readFileSync(packagePath, 'utf8')}export {};`;
 
@@ -15,10 +17,49 @@ const emitPackage = (packageName: string, filename: string, config: CompleteConf
 };
 
 export const emitPolyfills = (config: CompleteConfig) => {
-	emitPackage('@jsplang/polyfill-iterator-chunking', 'iterator-chunking.ts', config);
-	emitPackage('@jsplang/polyfill-math-clamp', 'math-clamp.ts', config);
-	emitPackage('@jsplang/polyfill-object-propertycount', 'object-propertycount.ts', config);
-	emitPackage('@jsplang/polyfill-promise-allkeyed', 'promise-allkeyed.ts', config);
-	emitPackage('@jsplang/polyfill-promise-ispromise', 'promise-ispromise.ts', config);
-	emitPackage('@jsplang/polyfill-random-namespace', 'random.ts', config);
+	const polyfills: {
+		packageName: string;
+		emitFilename: string;
+	}[] = [
+		{
+			packageName: '@jsplang/polyfill-iterator-chunking',
+			emitFilename: './iterator-chunking.ts',
+		},
+		{
+			packageName: '@jsplang/polyfill-math-clamp',
+			emitFilename: './math-clamp.ts',
+		},
+		{
+			packageName: '@jsplang/polyfill-object-propertycount',
+			emitFilename: './object-propertycount.ts',
+		},
+		{
+			packageName: '@jsplang/polyfill-promise-allkeyed',
+			emitFilename: './promise-allkeyed.ts',
+		},
+		{
+			packageName: '@jsplang/polyfill-promise-ispromise',
+			emitFilename: './promise-ispromise.ts',
+		},
+		{
+			packageName: '@jsplang/polyfill-random-namespace',
+			emitFilename: './random.ts',
+		},
+	];
+
+	for (const polyfill of polyfills) {
+		emitPackage(polyfill.packageName, polyfill.emitFilename, config);
+	}
+
+	/* _jsp/polyfill/index */
+	const polyfillsIndex = polyfills
+		.map((polyfills) => {
+			return `import '${polyfills.emitFilename}';`;
+		})
+		.join('\n');
+
+	emit(join(polyfillsDir, 'index.ts'), polyfillsIndex, config);
+
+	/* _jsp/index */
+	emit(join('./_jsp', 'index.ts'), "import './polyfills/index';", config);
 };
