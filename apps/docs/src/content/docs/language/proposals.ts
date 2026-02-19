@@ -844,21 +844,6 @@ const polyfillPs: Proposal[] = [
 		},
 	},
 	{
-		title: 'Math.clamp',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2,
-				link: 'https://github.com/tc39/proposal-math-clamp',
-			},
-			corejs: {
-				value: true,
-				link: 'https://core-js.io/docs/features/proposals/number-prototype-clamp',
-			},
-		},
-	},
-	{
 		title: 'Error stack accessor',
 		proposalType: 'Polyfill',
 		support: {
