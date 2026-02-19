@@ -6,14 +6,15 @@ lastUpdated: 2026-02-08
 import { allPages } from './pages';
 
 import Percent from './percent.astro';
+import PercentTip from './percenttip.astro';
 import Table from './table.astro';
 
-:::note[JS+ currently supports <Percent /> of all proposals]
+:::note[JS+ currently supports <Percent pages={allPages} /> of all proposals]
 :::
 
 ## TC39 proposals
 
-### Stage 3
+### Stage 3 • <PercentTip pages={allPages.filter((proposal) => proposal.frontmatter.support.tc39?.stage === 3)} />
 
 <Table
 	pages={allPages.filter((proposal) => {
@@ -22,7 +23,7 @@ import Table from './table.astro';
 	hideCols={['tc39']}
 />
 
-### Stage 2.7
+### Stage 2.7 • <PercentTip pages={allPages.filter((proposal) => proposal.frontmatter.support.tc39?.stage === 2.7)} />
 
 <Table
 	pages={allPages.filter((proposal) => {
@@ -31,7 +32,7 @@ import Table from './table.astro';
 	hideCols={['tc39']}
 />
 
-### Stage 2
+### Stage 2 • <PercentTip pages={allPages.filter((proposal) => proposal.frontmatter.support.tc39?.stage === 2)} />
 
 <Table
 	pages={allPages.filter((proposal) => {
@@ -40,7 +41,7 @@ import Table from './table.astro';
 	hideCols={['tc39']}
 />
 
-### Stage 1
+### Stage 1 • <PercentTip pages={allPages.filter((proposal) => proposal.frontmatter.support.tc39?.stage === 1)} />
 
 <Table
 	pages={allPages.filter((proposal) => {
@@ -49,7 +50,7 @@ import Table from './table.astro';
 	hideCols={['tc39']}
 />
 
-### Stage 0
+### Stage 0 • <PercentTip pages={allPages.filter((proposal) => proposal.frontmatter.support.tc39?.stage === 0)} />
 
 <Table
 	pages={allPages.filter((proposal) => {
@@ -58,7 +59,7 @@ import Table from './table.astro';
 	hideCols={['tc39']}
 />
 
-### Inactive
+### Inactive • <PercentTip pages={allPages.filter((proposal) => proposal.frontmatter.support.tc39?.stage === 'Inactive')} />
 
 <Table
 	pages={allPages.filter((proposal) => {
@@ -67,7 +68,7 @@ import Table from './table.astro';
 	hideCols={['tc39']}
 />
 
-## Others
+## Others • <PercentTip pages={allPages.filter((proposal) => proposal.frontmatter.support.tc39?.value === undefined)} />
 
 <Table
 	pages={allPages.filter((proposal) => {
@@ -80,7 +81,7 @@ import Table from './table.astro';
 
 #### Resources
 
-- [TC39 Proposals](https://github.com/tc39)
+- [TC39 proposals](https://github.com/tc39)
 - [TC39 process document](https://tc39.es/process-document)
 
 #### Related

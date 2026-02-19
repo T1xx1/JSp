@@ -1,0 +1,15 @@
+---
+import type { Page } from './types';
+
+import Percent from './percent.astro';
+
+type Props = {
+	pages: Page[];
+};
+
+const { pages } = Astro.props;
+---
+
+<span class="text-sm">
+	<Percent pages={pages} />
+</span>
