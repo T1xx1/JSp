@@ -8,8 +8,7 @@
 	},
 	"exports": {
 		".": {
-			"default": "./dist/allKeyed.js",
-			"types": "./dist/allKeyed.d.ts"
+			"default": "./src/index.ts"
 		}
 	},
 	"devDependencies": {

@@ -121,7 +121,7 @@ importers:
         version: link:../polyfill-object-propertycount
       '@jsplang/polyfill-promise-allkeyed':
         specifier: workspace:*
-        version: link:../polyfill-promise-allKeyed
+        version: link:../polyfill-promise-allkeyed
       '@jsplang/polyfill-promise-ispromise':
         specifier: workspace:*
         version: link:../polyfill-promise-ispromise
@@ -280,7 +280,7 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/polyfill-promise-allKeyed:
+  packages/polyfill-promise-allkeyed:
     devDependencies:
       typescript:
         specifier: ^5.9.3
