@@ -722,17 +722,6 @@ const polyfillPs: Proposal[] = [
 		},
 	},
 	{
-		title: 'Await dictionaries (Promise.allKeyed)',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2.7,
-				link: 'https://github.com/tc39/proposal-await-dictionary',
-			},
-		},
-	},
-	{
 		title: 'Iterator join',
 		proposalType: 'Polyfill',
 		support: {

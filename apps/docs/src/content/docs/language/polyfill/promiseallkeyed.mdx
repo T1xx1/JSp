@@ -1,0 +1,74 @@
+---
+title: Promise allKeyed
+lastUpdated: 2026-02-19
+proposalType: Polyfill
+support:
+  tc39:
+    value: true
+    stage: 2.7
+    link: https://github.com/tc39/proposal-await-dictionary
+  mdn:
+    value: false
+  corejs:
+    value: false
+  babel:
+    value: false
+  civet:
+    value: false
+  jsp:
+    value: true
+    integration: Custom
+---
+
+Object-based counterparts to `Promise.all` and `Promise.allSettled`. Instead of accepting an array of promises and returning an array of results, they accept a record of promises and return a record of results under the same keys.
+
+### `Promise.allKeyed(promises)`
+
+Resolves when all promises in the record have resolved, returning a record with the same keys mapped to their resolved values. Rejects immediately if any promise rejects.
+
+```ts
+const result = await Promise.allKeyed({
+  user: fetchUser(),
+  settings: fetchSettings(),
+  notifications: fetchNotifications(),
+});
+
+result.user          // → resolved User
+result.settings      // → resolved Settings
+result.notifications // → resolved Notification[]
+```
+
+Rejects immediately if any promise rejects, just like `Promise.all`:
+
+```ts
+await Promise.allKeyed({
+  a: Promise.resolve(1),
+  b: Promise.reject(new Error("failed")),
+});
+// ✗ Error: failed
+```
+
+### `Promise.allSettledKeyed(promises)`
+
+```ts
+const result = await Promise.allSettledKeyed({
+  user: fetchUser(),
+  settings: fetchSettings(),
+  notifications: fetchNotifications(),
+});
+
+if (result.user.status === "fulfilled") {
+  console.log(result.user.value);
+} else {
+  console.error(result.user.reason);
+}
+```
+
+## `allKeyed` vs `allSettledKeyed`
+
+| | Rejects early | Result type |
+|---|---|---|
+| `allKeyed` | ✅ yes | `Awaited<T>` |
+| `allSettledKeyed` | ❌ no | `PromiseSettledResult<Awaited<T>>` |
+
+Use `allKeyed` when all results are required to proceed. Use `allSettledKeyed` when you want to handle each outcome independently.
