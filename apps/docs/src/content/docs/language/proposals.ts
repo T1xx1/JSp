@@ -9,7 +9,7 @@ const parseProposals = (proposals: Proposal[]): Page[] => {
 				...proposal,
 				support: {
 					...proposal.support,
-					jsp: {
+					jsp: proposal.support.jsp ?? {
 						value: false,
 					},
 				},
@@ -652,6 +652,34 @@ export const syntaxProposals = parseProposals(syntaxPs);
 
 const polyfillPs: Proposal[] = [
 	{
+		title: 'Object.keysLength',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2,
+				link: 'https://github.com/tc39/proposal-object-keys-length',
+			},
+			md: {
+				value: false,
+			},
+			corejs: {
+				value: false,
+			},
+			babel: {
+				value: false,
+			},
+			civet: {
+				value: false,
+			},
+			/* @ts-expect-error */
+			jsp: {
+				value: true,
+			},
+		},
+	},
+	//
+	{
 		title: 'Composites',
 		proposalType: 'Polyfill',
 		support: {
@@ -785,17 +813,6 @@ const polyfillPs: Proposal[] = [
 				value: true,
 				stage: 2,
 				link: 'https://github.com/tc39/proposal-json-parseimmutable',
-			},
-		},
-	},
-	{
-		title: 'Object.keysLength',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2,
-				link: 'https://github.com/tc39/proposal-object-keys-length',
 			},
 		},
 	},

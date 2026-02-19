@@ -1,5 +1,9 @@
 ---
 title: Object property count
+aliases:
+  - Object.keysLength
+  - Object.getOwnPropertyNamesLength
+  - Object.getOwnPropertySymbolsLength
 lastUpdated: 2026-02-19
 proposalType: Polyfill
 support:
@@ -19,6 +23,10 @@ support:
     value: true
     integration: Custom
 ---
+
+:::note
+This feature implements the [Object.keysLength TC39 stage 2 proposal](https://github.com/tc39/proposal-object-keys-length) too.
+:::
 
 Easily retrieve the length of an object's keys, own property names, and own property symbols.
 
