@@ -1,44 +1,49 @@
 declare global {
 	interface PromiseConstructor {
-		allKeyed<D extends Record<string | symbol, Promise<any>>>(
-			promises: D,
-		): Promise<{ [K in keyof D]: Awaited<D[K]> }>;
+		/**
+		 * @see https://jsplang.vercel.app/language/polyfill/promiseallkeyed
+		 */
+		allKeyed<T extends Record<string | symbol, Promise<any>>>(
+			promises: T,
+		): Promise<{ [K in keyof T]: Awaited<T[K]> }>;
 
-		allSettledKeyed<D extends Record<string | symbol, Promise<any>>>(
-			promises: D,
-		): Promise<{ [K in keyof D]: PromiseSettledResult<Awaited<D[K]>> }>;
+		/**
+		 * @see https://jsplang.vercel.app/language/polyfill/promiseallkeyed
+		 */
+		allSettledKeyed<T extends Record<string | symbol, Promise<any>>>(
+			promises: T,
+		): Promise<{ [K in keyof T]: PromiseSettledResult<Awaited<T[K]>> }>;
 	}
 }
 
-Promise.allKeyed = async (promises) => {
-	const keys = [
-		...Object.keys(promises),
-		...Object.getOwnPropertySymbols(promises).filter((s) =>
-			Object.prototype.propertyIsEnumerable.call(promises, s),
+function enumerableKeys(object: Record<string | symbol, unknown>): (string | symbol)[] {
+	return [
+		...Object.keys(object),
+		...Object.getOwnPropertySymbols(object).filter((s) =>
+			Object.prototype.propertyIsEnumerable.call(object, s),
 		),
 	];
+}
 
+Promise.allKeyed = function (promises) {
+	const keys = enumerableKeys(promises);
 	return Promise.all(keys.map((k) => promises[k])).then((values) => {
-		const result = {};
+		const result = {} as { [K in keyof typeof promises]: Awaited<(typeof promises)[K]> };
 		keys.forEach((k, i) => {
-			result[k] = values[i];
+			result[k as keyof typeof promises] = values[i];
 		});
 		return result;
 	});
 };
 
-Promise.allSettledKeyed = async (promises) => {
-	const keys = [
-		...Object.keys(promises),
-		...Object.getOwnPropertySymbols(promises).filter((s) =>
-			Object.prototype.propertyIsEnumerable.call(promises, s),
-		),
-	];
-
+Promise.allSettledKeyed = function (promises) {
+	const keys = enumerableKeys(promises);
 	return Promise.allSettled(keys.map((k) => promises[k])).then((results) => {
-		const result = {};
+		const result = {} as {
+			[K in keyof typeof promises]: PromiseSettledResult<Awaited<(typeof promises)[K]>>;
+		};
 		keys.forEach((k, i) => {
-			result[k] = results[i];
+			result[k as keyof typeof promises] = results[i];
 		});
 		return result;
 	});
