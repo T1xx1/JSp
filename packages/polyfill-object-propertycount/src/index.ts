@@ -1,17 +1,26 @@
 declare global {
-	interface Object {
-		keysLength: (object: object) => number;
-		getOwnPropertyNamesLength: (object: object) => number;
-		getOwnPropertySymbolsLength: (object: object) => number;
+	interface ObjectConstructor {
+		/**
+		 * @see https://jsplang.vercel.app/language/polyfill/objectpropertycount
+		 */
+		keysLength(object: object): number;
+		/**
+		 * @see https://jsplang.vercel.app/language/polyfill/objectpropertycount
+		 */
+		getOwnPropertyNamesLength(object: object): number;
+		/**
+		 * @see https://jsplang.vercel.app/language/polyfill/objectpropertycount
+		 */
+		getOwnPropertySymbolsLength(object: object): number;
 	}
 }
 
-Object.keysLength = (object) => {
+Object.keysLength = function (object) {
 	return Object.keys(object).length;
-}
-Object.getOwnPropertyNamesLength = (object) => {
+};
+Object.getOwnPropertyNamesLength = function (object) {
 	return Object.getOwnPropertyNames(object).length;
-}
-Object.getOwnPropertySymbolsLength = (object) => {
+};
+Object.getOwnPropertySymbolsLength = function (object) {
 	return Object.getOwnPropertySymbols(object).length;
-}
+};
