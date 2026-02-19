@@ -81,13 +81,7 @@ export default defineConfig({
 						items: [
 							{
 								label: 'Overview',
-								items: [
-									'language',
-									'language/features',
-									'language/subset',
-									'language/proposals',
-									'language/customplugins',
-								],
+								items: ['language', 'language/features', 'language/subset', 'language/proposals'],
 							},
 							{
 								label: 'Syntax',
@@ -109,7 +103,7 @@ export default defineConfig({
 							},
 							{
 								label: 'Other',
-								items: ['language/proposalsbytype'],
+								items: ['language/proposalsbytype', 'language/customplugins'],
 								collapsed: true,
 							},
 						],

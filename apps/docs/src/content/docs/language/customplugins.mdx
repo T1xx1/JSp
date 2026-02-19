@@ -11,4 +11,5 @@ import Table from './table.astro';
 	pages={allPages.filter((page) => {
 		return page.frontmatter.support.jsp?.integration === 'Custom';
 	})}
+	hideCols={['corejs', 'babel']}
 />
