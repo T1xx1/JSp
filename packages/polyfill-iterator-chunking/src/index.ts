@@ -65,7 +65,7 @@ function isValidSize(n: unknown): n is number {
 // Obtain Iterator.prototype via a generator
 const IteratorPrototype: object = Object.getPrototypeOf(Object.getPrototypeOf((function* () {})()));
 
-(IteratorPrototype as any).chunks = function chunks<T>(
+(IteratorPrototype as any).chunks = function <T>(
 	this: Iterator<T>,
 	chunkSize: number,
 ): IterableIterator<T[]> {
@@ -108,7 +108,7 @@ const IteratorPrototype: object = Object.getPrototypeOf(Object.getPrototypeOf((f
 	})() as IterableIterator<T[]>;
 };
 
-(IteratorPrototype as any).windows = function windows<T>(
+(IteratorPrototype as any).windows = function <T>(
 	this: Iterator<T>,
 	windowSize: number,
 	undersized?: UndersizedOption,
