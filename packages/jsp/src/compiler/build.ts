@@ -79,7 +79,8 @@ export const printDiagnostics = async (filename: string, jspCode: string, out: O
 		const range = {
 			startLine: startLoc?.line ?? error.loc.startLine,
 			startCharacter: startLoc?.column ?? error.loc.startCharacter,
-			length: endLoc?.column ?? error.loc.endCharacter - (startLoc?.column ?? error.loc.startCharacter),
+			length:
+				(endLoc?.column ?? error.loc.endCharacter) - (startLoc?.column ?? error.loc.startCharacter),
 		};
 
 		printDiagnostic(
