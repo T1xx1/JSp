@@ -8,9 +8,10 @@ type Col = 'proposalType' | keyof Support;
 type Props = {
 	pages: Page[];
 	hideCols?: Col[];
+	variant?: 'default' | 'details';
 };
 
-const { pages, hideCols = [] } = Astro.props;
+const { pages, hideCols = [], variant = 'default' } = Astro.props;
 
 const cols: Record<Col, boolean> = {
 	proposalType: !hideCols.includes('proposalType'),
@@ -55,27 +56,27 @@ const cols: Record<Col, boolean> = {
 						{cols.proposalType && <td>{page.frontmatter.proposalType}</td>}
 						{cols.tc39 && (
 							<td>
-								<Semaphore entity={page.frontmatter.support.tc39} variant="minimal" />
+								<Semaphore entity={page.frontmatter.support.tc39} variant={variant} />
 							</td>
 						)}
 						{cols.corejs && (
 							<td>
-								<Semaphore entity={page.frontmatter.support.corejs} variant="minimal" />
+								<Semaphore entity={page.frontmatter.support.corejs} variant={variant} />
 							</td>
 						)}
 						{cols.babel && (
 							<td>
-								<Semaphore entity={page.frontmatter.support.babel} variant="minimal" />
+								<Semaphore entity={page.frontmatter.support.babel} variant={variant} />
 							</td>
 						)}
 						{cols.civet && (
 							<td>
-								<Semaphore entity={page.frontmatter.support.civet} variant="minimal" />
+								<Semaphore entity={page.frontmatter.support.civet} variant={variant} />
 							</td>
 						)}
 						{cols.jsp && (
 							<td>
-								<Semaphore entity={page.frontmatter.support.jsp} variant="minimal" />
+								<Semaphore entity={page.frontmatter.support.jsp} variant={variant} />
 							</td>
 						)}
 					</tr>

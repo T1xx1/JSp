@@ -1,3 +1,3 @@
 # JS+ docs
 
-> https://jsplang.vercel.app
+> [Docs](https://jsplang.vercel.app)

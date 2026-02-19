@@ -1,0 +1,42 @@
+---
+title: Math clamp
+lastUpdated: 2026-02-19
+proposalType: Polyfill
+support:
+  tc39:
+    value: true
+    stage: 2
+    link: https://github.com/tc39/proposal-math-clamp
+  mdn:
+    value: false
+  corejs:
+    value: true
+    link: https://core-js.io/docs/features/proposals/number-prototype-clamp
+  babel:
+    value: false
+  civet:
+    value: false
+  jsp:
+    value: true
+    integration: Custom
+---
+
+Constrains a number to stay within a given range.
+
+### `Math.clamp(value, min, max)`
+
+Returns `value` if it lies within `[min, max]`, `min` if it is below, or `max` if it is above.
+
+```ts
+Math.clamp(5, 1, 10)  // → 5  (within range)
+Math.clamp(0, 1, 10)  // → 1  (below min)
+Math.clamp(99, 1, 10) // → 10 (above max)
+
+Math.clamp(10, 10, 10) // → 10 (min, value, and max are equal)
+
+Math.clamp(5, 10, 1)  // ✗ RangeError: min (10) must not be greater than max (1)
+```
+
+:::caution
+Both the `min` and `max` arguments are required. Partial use it's not supported since the same behaviour can be achieved with `Math.min` and `Math.max`.
+:::

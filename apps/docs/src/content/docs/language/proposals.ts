@@ -2,18 +2,264 @@ import type { Page } from './types';
 
 type Proposal = Omit<Page['frontmatter'], 'lastUpdated'>;
 
-export const proposals: Proposal[] = [
+const parseProposals = (proposals: Proposal[]): Page[] => {
+	return proposals.map((proposal) => {
+		return {
+			frontmatter: {
+				...proposal,
+				support: {
+					...proposal.support,
+					jsp: proposal.support.jsp ?? {
+						value: false,
+					},
+				},
+			},
+			url: null,
+		};
+	});
+};
+
+const runtimePs: Proposal[] = [
 	{
-		title: 'Composites',
-		proposalType: 'Polyfill',
+		title: 'String dedent',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2,
+				link: 'https://github.com/tc39/proposal-string-dedent',
+			},
+			corejs: {
+				value: true,
+				link: 'https://core-js.io/docs/features/proposals/string-dedent',
+			},
+			civet: {
+				value: true,
+				link: 'https://civet.dev/reference#triple-quoted-strings',
+			},
+		},
+	},
+	{
+		title: 'Source phase imports',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 3,
+				link: 'https://github.com/tc39/proposal-source-phase-imports',
+			},
+		},
+	},
+	{
+		title: 'Dynamic code brand checks (eval checks)',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 3,
+				link: 'https://github.com/tc39/proposal-dynamic-code-brand-checks',
+			},
+		},
+	},
+	{
+		title: 'Joint iteration',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 3,
+				link: 'https://github.com/tc39/proposal-joint-iteration',
+			},
+			corejs: {
+				value: true,
+				link: 'https://core-js.io/docs/features/proposals/joint-iteration',
+			},
+		},
+	},
+	{
+		title: 'Non-extensible applies to private',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 3,
+				link: 'https://github.com/tc39/proposal-nonextensible-applies-to-private',
+			},
+		},
+	},
+	{
+		title: 'ESM module phase imports (workers import defer)',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2.7,
+				link: 'https://github.com/tc39/proposal-esm-phase-imports',
+			},
+		},
+	},
+	{
+		title: 'Immutable ArrayBuffers',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2.7,
+				link: 'https://github.com/tc39/proposal-immutable-arraybuffer',
+			},
+		},
+	},
+	{
+		title: 'Dynamic import host adjustment',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2,
+				link: 'https://github.com/tc39/proposal-dynamic-import-host-adjustment',
+			},
+		},
+	},
+	{
+		title: 'Module expressions',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2,
+				link: 'https://github.com/tc39/proposal-module-expressions',
+			},
+		},
+	},
+	{
+		title: 'Import text',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2,
+				link: 'https://github.com/tc39/proposal-import-text',
+			},
+		},
+	},
+	{
+		title: 'Jobcallback module',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2,
+				link: 'https://github.com/tc39/proposal-jobcallback-module',
+			},
+		},
+	},
+	{
+		title: 'Change Number.parseInt/parseFloat not to coerce null/undefined/NaN',
+		proposalType: 'Runtime',
 		support: {
 			tc39: {
 				value: true,
 				stage: 1,
-				link: 'https://github.com/tc39/proposal-composites',
+				link: '',
 			},
 		},
 	},
+	{
+		title: 'Inspector',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-inspector',
+			},
+		},
+	},
+	{
+		title: 'Compare strings by codepoint',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-compare-strings-by-codepoint',
+			},
+			corejs: {
+				value: true,
+				link: 'https://core-js.io/docs/features/proposals/string-prototype-codepoints',
+			},
+		},
+	},
+	{
+		title: 'Secure ES',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-ses',
+			},
+		},
+	},
+	{
+		title: 'Binary AST',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-binary-ast',
+			},
+		},
+	},
+	{
+		title: 'Date.parse uniform parsing',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-uniform-interchange-date-parsing',
+			},
+		},
+	},
+	{
+		title: 'Compartments',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-compartments',
+			},
+		},
+	},
+	{
+		title: 'Function Memoization',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-function-memo',
+			},
+		},
+	},
+	{
+		title: 'Date.parse fallback semantics',
+		proposalType: 'Runtime',
+		support: {
+			tc39: {
+				value: true,
+				stage: 'Inactive',
+				link: 'https://github.com/tc39/proposal-date-time-string-format',
+			},
+		},
+	},
+];
+export const runtimeProposals = parseProposals(runtimePs);
+
+const syntaxPs: Proposal[] = [
 	{
 		title: 'Function sent',
 		proposalType: 'Syntax',
@@ -101,13 +347,346 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'More random functions (Random)',
+		title: 'Rest everywhere (...)',
+		proposalType: 'Syntax',
+		support: {
+			civet: {
+				value: true,
+				link: 'https://civet.dev/reference#rest',
+			},
+		},
+	},
+	{
+		title: 'Explicit resource management (using)',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 3,
+				link: 'https://github.com/tc39/proposal-explicit-resource-management',
+			},
+			mdn: {
+				value: true,
+				link: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/using',
+			},
+		},
+	},
+	{
+		title: 'Deferring module evaluation (import defer)',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 3,
+				link: 'https://github.com/tc39/proposal-defer-import-eval',
+			},
+		},
+	},
+	{
+		title: 'Atomic.pause (Task)',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 3,
+				link: 'https://github.com/tc39/proposal-atomics-microwait',
+			},
+			mdn: {
+				value: true,
+				link: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics/pause',
+			},
+		},
+	},
+	{
+		title: 'Import bytes',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2.7,
+				link: 'https://github.com/tc39/proposal-import-bytes',
+			},
+		},
+	},
+	{
+		title: 'Import sync',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2,
+				link: 'https://github.com/tc39/proposal-import-sync',
+			},
+		},
+	},
+	{
+		title: 'Function implementation hiding proposal (hide source directive)',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2,
+				link: 'https://github.com/tc39/proposal-function-implementation-hiding',
+			},
+		},
+	},
+	{
+		title: 'RegExp buffer boundaries',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2,
+				link: 'https://github.com/tc39/proposal-regexp-buffer-boundaries',
+			},
+		},
+	},
+	{
+		title: 'Seeded pseudo random numbers',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2,
+				link: 'https://github.com/tc39/proposal-seeded-random',
+			},
+		},
+	},
+	{
+		title: 'Deferred re-exports (export defer)',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2,
+				link: 'https://github.com/tc39/proposal-deferred-reexports',
+			},
+		},
+	},
+	{
+		title: 'Extractors',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2,
+				link: 'https://github.com/tc39/proposal-extractors',
+			},
+			corejs: {
+				value: true,
+				link: 'https://core-js.io/docs/features/proposals/symbol-custommatcher-for-extractors',
+			},
+		},
+	},
+	{
+		title: 'Structs',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2,
+				link: 'https://github.com/tc39/proposal-structs',
+			},
+		},
+	},
+	{
+		title: 'Composable accessors (@memoized, @validate, @normalize)',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-composable-accessors',
+			},
+		},
+	},
+	{
+		title: 'Alias accessors (alias)',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-alias-accessors',
+			},
+		},
+	},
+	{
+		title: 'Slice notation',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-slice-notation',
+			},
+		},
+	},
+	{
+		title: 'Decimal',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-decimal',
+			},
+		},
+	},
+	{
+		title: 'RegExp \\R Escape',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-regexp-r-escape',
+			},
+		},
+	},
+	{
+		title: 'RegExp Atomic Operators',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-regexp-atomic-operators',
+			},
+		},
+	},
+	{
+		title: 'Negated in and instanceof operators',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-negated-in-instanceof',
+			},
+		},
+	},
+	{
+		title: 'Enums',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-enum',
+			},
+		},
+	},
+	{
+		title: 'Function bind syntax (::)',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 0,
+				link: 'https://github.com/tc39/proposal-bind-operator',
+			},
+			babel: {
+				value: true,
+				link: 'https://babeljs.io/docs/babel-plugin-proposal-function-bind',
+			},
+		},
+	},
+	{
+		title: 'as destructuring patterns',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 0,
+				link: 'https://github.com/zkat/proposal-as-patterns',
+			},
+		},
+	},
+	{
+		title: 'from ... import',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 'Inactive',
+				link: 'https://github.com/bmeck/proposal-from-import',
+			},
+		},
+	},
+	{
+		title: 'String.prototype.at',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 'Inactive',
+				link: 'https://github.com/mathiasbynens/String.prototype.at',
+			},
+		},
+	},
+	{
+		title: 'deprecated',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 'Inactive',
+				link: 'https://github.com/jasnell/proposal-deprecated',
+			},
+		},
+	},
+	{
+		title: 'use module',
+		proposalType: 'Syntax',
+		support: {
+			tc39: {
+				value: true,
+				stage: 'Inactive',
+				link: 'https://github.com/tc39/proposal-modules-pragma',
+			},
+		},
+	},
+];
+export const syntaxProposals = parseProposals(syntaxPs);
+
+const polyfillPs: Proposal[] = [
+	{
+		title: 'Object.keysLength',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 2,
+				link: 'https://github.com/tc39/proposal-object-keys-length',
+			},
+			mdn: {
+				value: false,
+			},
+			corejs: {
+				value: false,
+			},
+			babel: {
+				value: false,
+			},
+			civet: {
+				value: false,
+			},
+			/* @ts-expect-error */
+			jsp: {
+				value: true,
+			},
+		},
+	},
+	//
+	{
+		title: 'Composites',
 		proposalType: 'Polyfill',
 		support: {
 			tc39: {
 				value: true,
 				stage: 1,
-				link: 'https://github.com/tc39/proposal-random-functions',
+				link: 'https://github.com/tc39/proposal-composites',
 			},
 		},
 	},
@@ -119,35 +698,6 @@ export const proposals: Proposal[] = [
 				value: true,
 				stage: 1,
 				link: 'https://github.com/tc39/proposal-amount',
-			},
-		},
-	},
-	{
-		title: 'String dedent',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2,
-				link: 'https://github.com/tc39/proposal-string-dedent',
-			},
-			corejs: {
-				value: true,
-				link: 'https://core-js.io/docs/features/proposals/string-dedent',
-			},
-			civet: {
-				value: true,
-				link: 'https://civet.dev/reference#triple-quoted-strings',
-			},
-		},
-	},
-	{
-		title: 'Rest everywhere (...)',
-		proposalType: 'Syntax',
-		support: {
-			civet: {
-				value: true,
-				link: 'https://civet.dev/reference#rest',
 			},
 		},
 	},
@@ -178,95 +728,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'Explicit resource management (using)',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 3,
-				link: 'https://github.com/tc39/proposal-explicit-resource-management',
-			},
-			mdn: {
-				value: true,
-				link: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/using'
-			}
-		},
-	},
-	{
-		title: 'Source phase imports',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 3,
-				link: 'https://github.com/tc39/proposal-source-phase-imports',
-			},
-		},
-	},
-	{
-		title: 'Deferring module evaluation (import defer)',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 3,
-				link: 'https://github.com/tc39/proposal-defer-import-eval',
-			},
-		},
-	},
-	{
-		title: 'Dynamic code brand checks (eval checks)',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 3,
-				link: 'https://github.com/tc39/proposal-dynamic-code-brand-checks',
-			},
-		},
-	},
-	{
-		title: 'Atomic.pause (Task)',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 3,
-				link: 'https://github.com/tc39/proposal-atomics-microwait',
-			},
-			mdn: {
-				value: true,
-				link: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics/pause'
-			}
-		},
-	},
-	{
-		title: 'Joint iteration',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 3,
-				link: 'https://github.com/tc39/proposal-joint-iteration',
-			},
-			corejs: {
-				value: true,
-				link: 'https://core-js.io/docs/features/proposals/joint-iteration',
-			},
-		},
-	},
-	{
-		title: 'Non-extensible applies to private',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 3,
-				link: 'https://github.com/tc39/proposal-nonextensible-applies-to-private',
-			},
-		},
-	},
-	{
 		title: 'ShadowRealm',
 		proposalType: 'Polyfill',
 		support: {
@@ -278,65 +739,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'ESM module phase imports (workers import defer)',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2.7,
-				link: 'https://github.com/tc39/proposal-esm-phase-imports',
-			},
-		},
-	},
-	{
-		title: 'Immutable ArrayBuffers',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2.7,
-				link: 'https://github.com/tc39/proposal-immutable-arraybuffer',
-			},
-		},
-	},
-	{
-		title: 'Iterator chunking',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2.7,
-				link: 'https://github.com/tc39/proposal-iterator-chunking',
-			},
-			corejs: {
-				value: true,
-				link: 'https://core-js.io/docs/features/proposals/iterator-chunking',
-			},
-		},
-	},
-	{
-		title: 'Import bytes',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2.7,
-				link: 'https://github.com/tc39/proposal-import-bytes',
-			},
-		},
-	},
-	{
-		title: 'Await dictionaries (Promise.allKeyed)',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2.7,
-				link: 'https://github.com/tc39/proposal-await-dictionary',
-			},
-		},
-	},
-	{
 		title: 'Iterator join',
 		proposalType: 'Polyfill',
 		support: {
@@ -344,28 +746,6 @@ export const proposals: Proposal[] = [
 				value: true,
 				stage: 2.7,
 				link: 'https://github.com/tc39/proposal-iterator-join',
-			},
-		},
-	},
-	{
-		title: 'Import sync',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2,
-				link: 'https://github.com/tc39/proposal-import-sync',
-			},
-		},
-	},
-	{
-		title: 'Function implementation hiding proposal (hide source directive)',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2,
-				link: 'https://github.com/tc39/proposal-function-implementation-hiding',
 			},
 		},
 	},
@@ -392,39 +772,6 @@ export const proposals: Proposal[] = [
 			corejs: {
 				value: true,
 				link: 'https://core-js.io/docs/features/proposals/array-istemplateobject',
-			},
-		},
-	},
-	{
-		title: 'Dynamic import host adjustment',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2,
-				link: 'https://github.com/tc39/proposal-dynamic-import-host-adjustment',
-			},
-		},
-	},
-	{
-		title: 'Module expressions',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2,
-				link: 'https://github.com/tc39/proposal-module-expressions',
-			},
-		},
-	},
-	{
-		title: 'RegExp buffer boundaries',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2,
-				link: 'https://github.com/tc39/proposal-regexp-buffer-boundaries',
 			},
 		},
 	},
@@ -470,28 +817,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'Object.keysLength',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2,
-				link: 'https://github.com/tc39/proposal-object-keys-length',
-			},
-		},
-	},
-	{
-		title: 'Import text',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2,
-				link: 'https://github.com/tc39/proposal-import-text',
-			},
-		},
-	},
-	{
 		title: 'Error.captureStackTrace',
 		proposalType: 'Polyfill',
 		support: {
@@ -503,54 +828,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'Promise.isPromise',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2,
-				link: 'https://github.com/tc39/proposal-native-promise-predicate',
-			},
-		},
-	},
-	{
-		title: 'Math.clamp',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2,
-				link: 'https://github.com/tc39/proposal-math-clamp',
-			},
-			corejs: {
-				value: true,
-				link: 'https://core-js.io/docs/features/proposals/number-prototype-clamp',
-			},
-		},
-	},
-	{
-		title: 'Seeded pseudo random numbers',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2,
-				link: 'https://github.com/tc39/proposal-seeded-random',
-			},
-		},
-	},
-	{
-		title: 'Deferred re-exports (export defer)',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2,
-				link: 'https://github.com/tc39/proposal-deferred-reexports',
-			},
-		},
-	},
-	{
 		title: 'Error stack accessor',
 		proposalType: 'Polyfill',
 		support: {
@@ -558,43 +835,6 @@ export const proposals: Proposal[] = [
 				value: true,
 				stage: 2,
 				link: 'https://github.com/tc39/proposal-error-stack-accessor',
-			},
-		},
-	},
-	{
-		title: 'Exctractors',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2,
-				link: 'https://github.com/tc39/proposal-extractors',
-			},
-			corejs: {
-				value: true,
-				link: 'https://core-js.io/docs/features/proposals/symbol-custommatcher-for-extractors',
-			},
-		},
-	},
-	{
-		title: 'Structs',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2,
-				link: 'https://github.com/tc39/proposal-structs',
-			},
-		},
-	},
-	{
-		title: 'Jobcallback module',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2,
-				link: 'https://github.com/tc39/proposal-jobcallback-module',
 			},
 		},
 	},
@@ -621,39 +861,6 @@ export const proposals: Proposal[] = [
 			corejs: {
 				value: true,
 				link: 'https://core-js.io/docs/features/proposals/iterator-range',
-			},
-		},
-	},
-	{
-		title: 'Change Number.parseInt/parseFloat not to coerce null/undefined/NaN',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: '',
-			},
-		},
-	},
-	{
-		title: 'Composable accessors (@memoized, @validate, @normalize)',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-composable-accessors',
-			},
-		},
-	},
-	{
-		title: 'Alias accessors (alias)',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-alias-accessors',
 			},
 		},
 	},
@@ -691,50 +898,13 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'TypeArray concat',
+		title: 'TypedArray concat',
 		proposalType: 'Polyfill',
 		support: {
 			tc39: {
 				value: true,
 				stage: 1,
 				link: 'https://github.com/tc39/proposal-typedarray-concat',
-			},
-		},
-	},
-	{
-		title: 'Inspector',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-inspector',
-			},
-		},
-	},
-	{
-		title: 'Object.propertyCount',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-object-property-count',
-			},
-		},
-	},
-	{
-		title: 'Compare strings by codepoint',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-compare-strings-by-codepoint',
-			},
-			corejs: {
-				value: true,
-				link: 'https://core-js.io/docs/features/proposals/string-prototype-codepoints',
 			},
 		},
 	},
@@ -754,17 +924,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'Secure ES',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-ses',
-			},
-		},
-	},
-	{
 		title: 'Collections of/from',
 		proposalType: 'Polyfill',
 		support: {
@@ -776,39 +935,6 @@ export const proposals: Proposal[] = [
 			corejs: {
 				value: true,
 				link: 'https://core-js.io/docs/features/proposals/of-and-from-methods-on-collections',
-			},
-		},
-	},
-	{
-		title: 'Error stacks',
-		proposalType: '',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-error-stacks',
-			},
-		},
-	},
-	{
-		title: 'Binary AST',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-binary-ast',
-			},
-		},
-	},
-	{
-		title: 'First-class protocols',
-		proposalType: '',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-first-class-protocols',
 			},
 		},
 	},
@@ -846,17 +972,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'Block Params',
-		proposalType: '',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/samuelgoto/proposal-block-params',
-			},
-		},
-	},
-	{
 		title: '{BigInt,Number}.fromString',
 		proposalType: 'Polyfill',
 		support: {
@@ -868,17 +983,6 @@ export const proposals: Proposal[] = [
 			corejs: {
 				value: true,
 				link: 'https://core-js.io/docs/features/proposals/number-from-string',
-			},
-		},
-	},
-	{
-		title: 'Maximally minimal mixins',
-		proposalType: '',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-mixins',
 			},
 		},
 	},
@@ -913,13 +1017,283 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'Slice notation',
-		proposalType: 'Syntax',
+		title: 'Built In Modules (aka JS Standard Library)',
+		proposalType: 'Polyfill',
 		support: {
 			tc39: {
 				value: true,
 				stage: 1,
-				link: 'https://github.com/tc39/proposal-slice-notation',
+				link: 'https://github.com/tc39/proposal-built-in-modules',
+			},
+		},
+	},
+	{
+		title: 'new.initialize',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/littledan/proposal-new-initialize',
+			},
+		},
+	},
+	{
+		title: 'Array filtering',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-array-filtering',
+			},
+			corejs: {
+				value: true,
+				link: 'https://core-js.io/docs/features/proposals/array-filtering',
+			},
+		},
+	},
+	{
+		title: 'Array Equality',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-array-equality',
+			},
+		},
+	},
+	{
+		title: 'Array.prototype.unique()',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-array-unique',
+			},
+			corejs: {
+				value: true,
+				link: 'https://core-js.io/docs/features/proposals/array-deduplication',
+			},
+		},
+	},
+	{
+		title: 'String.cooked',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-string-cooked',
+			},
+			corejs: {
+				value: true,
+				link: 'https://core-js.io/docs/features/proposals/string-cooked',
+			},
+		},
+	},
+	{
+		title: 'Object pick/omit',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-object-pick-or-omit',
+			},
+		},
+	},
+	{
+		title: 'Signals',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-signals',
+			},
+		},
+	},
+	{
+		title: 'Array.zip and Array.zipKeyed',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-array-zip',
+			},
+		},
+	},
+	{
+		title: 'Bulk-add array elements',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-bulk-add-array-elements',
+			},
+		},
+	},
+	{
+		title: 'Object.getNonIndexStringProperties()',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-array-get-non-index-string-properties',
+			},
+		},
+	},
+	{
+		title: 'Reflect.{isCallable,isConstructor}',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 0,
+				link: 'https://github.com/caitp/TC39-Proposals/blob/HEAD/tc39-reflect-isconstructor-iscallable.md',
+			},
+			corejs: {
+				value: true,
+				link: 'https://core-js.io/docs/features/proposals/function-prototype-demethodize',
+			},
+		},
+	},
+	{
+		title: '{Set,Map}.prototype.toJSON',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 'Inactive',
+				link: 'https://github.com/DavidBruant/Map-Set.prototype.toJSON',
+			},
+		},
+	},
+	{
+		title: 'Builtins.typeOf() and Builtins.is()',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 'Inactive',
+				link: 'https://github.com/jasnell/proposal-istypes',
+			},
+		},
+	},
+	{
+		title: 'ArrayBuffer.prototype.transfer',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 'Inactive',
+				link: 'https://github.com/domenic/proposal-arraybuffer-transfer',
+			},
+		},
+	},
+	{
+		title: 'Symbol.thenable',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 'Inactive',
+				link: 'https://github.com/devsnek/proposal-symbol-thenable',
+			},
+		},
+	},
+	{
+		title: 'Math Extensions',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 'Inactive',
+				link: 'https://github.com/rwaldron/proposal-math-extensions',
+			},
+			other: {
+				value: true,
+				link: 'https://github.com/rwaldron/proposal-math-extensions',
+			},
+		},
+	},
+	{
+		title: 'Math.signbit: IEEE-754 sign bit',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 'Inactive',
+				link: 'https://github.com/tc39/proposal-Math.signbit',
+			},
+		},
+	},
+	{
+		title: 'Function.prototype.demethodize',
+		proposalType: 'Polyfill',
+		support: {
+			tc39: {
+				value: true,
+				stage: 0,
+				link: '',
+			},
+			corejs: {
+				value: true,
+				link: 'https://core-js.io/docs/features/proposals/function-prototype-demethodize',
+			},
+		},
+	},
+];
+export const polyfillProposals = parseProposals(polyfillPs);
+
+const unTypedPs: Proposal[] = [
+	{
+		title: 'Error stacks',
+		proposalType: '',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-error-stacks',
+			},
+		},
+	},
+	{
+		title: 'First-class protocols',
+		proposalType: '',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-first-class-protocols',
+			},
+		},
+	},
+	{
+		title: 'Block Params',
+		proposalType: '',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/samuelgoto/proposal-block-params',
+			},
+		},
+	},
+	{
+		title: 'Maximally minimal mixins',
+		proposalType: '',
+		support: {
+			tc39: {
+				value: true,
+				stage: 1,
+				link: 'https://github.com/tc39/proposal-mixins',
 			},
 		},
 	},
@@ -957,28 +1331,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'Built In Modules (aka JS Standard Library)',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-built-in-modules',
-			},
-		},
-	},
-	{
-		title: 'Date.parse uniform parsin',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-uniform-interchange-date-parsing',
-			},
-		},
-	},
-	{
 		title: 'IDL for ECMAScript',
 		proposalType: '',
 		support: {
@@ -1008,17 +1360,6 @@ export const proposals: Proposal[] = [
 				value: true,
 				stage: 1,
 				link: 'https://github.com/tc39/proposal-freeze-prototype',
-			},
-		},
-	},
-	{
-		title: 'new.initialize',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/littledan/proposal-new-initialize',
 			},
 		},
 	},
@@ -1111,21 +1452,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'Array filtering',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-array-filtering',
-			},
-			corejs: {
-				value: true,
-				link: 'https://core-js.io/docs/features/proposals/array-filtering',
-			},
-		},
-	},
-	{
 		title: 'Async initialization',
 		proposalType: '',
 		support: {
@@ -1133,17 +1459,6 @@ export const proposals: Proposal[] = [
 				value: true,
 				stage: 1,
 				link: 'https://docs.google.com/presentation/d/1DsjZAzBjn2gCrr4l0uZzCymPIWZTKM8KzcnMBF31HAg/edit#slide=id.g7d23d45064_0_196',
-			},
-		},
-	},
-	{
-		title: 'Decimal',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-decimal',
 			},
 		},
 	},
@@ -1181,17 +1496,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'Compartments',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-compartments',
-			},
-		},
-	},
-	{
 		title: 'Deep Path Properties in Record Literals',
 		proposalType: '',
 		support: {
@@ -1214,17 +1518,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'Array Equality',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-array-equality',
-			},
-		},
-	},
-	{
 		title: 'await operations',
 		proposalType: '',
 		support: {
@@ -1232,21 +1525,6 @@ export const proposals: Proposal[] = [
 				value: true,
 				stage: 1,
 				link: 'https://github.com/tc39/proposal-await.ops',
-			},
-		},
-	},
-	{
-		title: 'Array.prototype.unique()',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-array-unique',
-			},
-			corejs: {
-				value: true,
-				link: 'https://core-js.io/docs/features/proposals/array-deduplication',
 			},
 		},
 	},
@@ -1350,21 +1628,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'String.cooked',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-string-cooked',
-			},
-			corejs: {
-				value: true,
-				link: 'https://core-js.io/docs/features/proposals/string-cooked',
-			},
-		},
-	},
-	{
 		title: 'Call-this operator',
 		proposalType: '',
 		support: {
@@ -1383,17 +1646,6 @@ export const proposals: Proposal[] = [
 				value: true,
 				stage: 1,
 				link: 'https://github.com/tc39/proposal-regexp-x-mode',
-			},
-		},
-	},
-	{
-		title: 'RegExp \\R Escape',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-regexp-r-escape',
 			},
 		},
 	},
@@ -1431,17 +1683,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'RegExp Atomic Operators',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-regexp-atomic-operators',
-			},
-		},
-	},
-	{
 		title: 'Policy Maps and Sets',
 		proposalType: '',
 		support: {
@@ -1449,28 +1690,6 @@ export const proposals: Proposal[] = [
 				value: true,
 				stage: 1,
 				link: 'https://github.com/tc39/proposal-policy-map-set',
-			},
-		},
-	},
-	{
-		title: 'Function Memoization',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-function-memo',
-			},
-		},
-	},
-	{
-		title: 'Object pick/omit',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-object-pick-or-omit',
 			},
 		},
 	},
@@ -1545,17 +1764,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'Negated in and instanceof operators',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-negated-in-instanceof',
-			},
-		},
-	},
-	{
 		title: 'Locale Extensions',
 		proposalType: '',
 		support: {
@@ -1622,17 +1830,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'Signals',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-signals',
-			},
-		},
-	},
-	{
 		title: 'Concurrency Control',
 		proposalType: '',
 		support: {
@@ -1651,17 +1848,6 @@ export const proposals: Proposal[] = [
 				value: true,
 				stage: 1,
 				link: 'https://github.com/tc39/proposal-unordered-async-iterator-helpers',
-			},
-		},
-	},
-	{
-		title: 'Array.zip and Array.zipKeyed',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-array-zip',
 			},
 		},
 	},
@@ -1688,17 +1874,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'Enums',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-enum',
-			},
-		},
-	},
-	{
 		title: 'Disposable AsyncContext.Variable',
 		proposalType: '',
 		support: {
@@ -1721,28 +1896,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'Bulk-add array elements',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-bulk-add-array-elements',
-			},
-		},
-	},
-	{
-		title: 'Object.getNonIndexStringProperties()',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-array-get-non-index-string-properties',
-			},
-		},
-	},
-	{
 		title: 'Additional metaproperties',
 		proposalType: '',
 		support: {
@@ -1761,21 +1914,6 @@ export const proposals: Proposal[] = [
 				value: true,
 				stage: 0,
 				link: 'https://web.archive.org/web/20160804042547/http://wiki.ecmascript.org/doku.php?id=strawman:defensible_classes',
-			},
-		},
-	},
-	{
-		title: 'Function bind syntax (::)',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 0,
-				link: 'https://github.com/tc39/proposal-bind-operator',
-			},
-			babel: {
-				value: true,
-				link: 'https://babeljs.io/docs/babel-plugin-proposal-function-bind',
 			},
 		},
 	},
@@ -1824,21 +1962,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'Reflect.{isCallable,isConstructor}',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 0,
-				link: 'https://github.com/caitp/TC39-Proposals/blob/HEAD/tc39-reflect-isconstructor-iscallable.md',
-			},
-			corejs: {
-				value: true,
-				link: 'https://core-js.io/docs/features/proposals/function-prototype-demethodize',
-			},
-		},
-	},
-	{
 		title: 'Relationships',
 		proposalType: '',
 		support: {
@@ -1872,17 +1995,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'as destructuring patterns',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 0,
-				link: 'https://github.com/zkat/proposal-as-patterns',
-			},
-		},
-	},
-	{
 		title: 'String trim characters',
 		proposalType: '',
 		support: {
@@ -1912,17 +2024,6 @@ export const proposals: Proposal[] = [
 				value: true,
 				stage: 'Inactive',
 				link: 'https://github.com/tc39/ecma262/blob/93183b81cb03116b75019615d148b5f788e70edf/workingdocs/callconstructor.md',
-			},
-		},
-	},
-	{
-		title: '{Set,Map}.prototype.toJSON',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 'Inactive',
-				link: 'https://github.com/DavidBruant/Map-Set.prototype.toJSON',
 			},
 		},
 	},
@@ -2026,17 +2127,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'Builtins.typeOf() and Builtins.is()',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 'Inactive',
-				link: 'https://github.com/jasnell/proposal-istypes',
-			},
-		},
-	},
-	{
 		title: 'Tagged Collection Literals',
 		proposalType: '',
 		support: {
@@ -2044,17 +2134,6 @@ export const proposals: Proposal[] = [
 				value: true,
 				stage: 'Inactive',
 				link: 'https://github.com/zkat/proposal-collection-literals',
-			},
-		},
-	},
-	{
-		title: 'Date.parse fallback semantics',
-		proposalType: 'Runtime',
-		support: {
-			tc39: {
-				value: true,
-				stage: 'Inactive',
-				link: 'https://github.com/tc39/proposal-date-time-string-format',
 			},
 		},
 	},
@@ -2147,17 +2226,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'from ... import',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 'Inactive',
-				link: 'https://github.com/bmeck/proposal-from-import',
-			},
-		},
-	},
-	{
 		title: 'TypedArray stride parameter',
 		proposalType: '',
 		support: {
@@ -2191,39 +2259,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'String.prototype.at',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 'Inactive',
-				link: 'https://github.com/mathiasbynens/String.prototype.at',
-			},
-		},
-	},
-	{
-		title: 'ArrayBuffer.prototype.transfer',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 'Inactive',
-				link: 'https://github.com/domenic/proposal-arraybuffer-transfer',
-			},
-		},
-	},
-	{
-		title: 'deprecated',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 'Inactive',
-				link: 'https://github.com/jasnell/proposal-deprecated',
-			},
-		},
-	},
-	{
 		title: 'Function helpers',
 		proposalType: '',
 		support: {
@@ -2235,17 +2270,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'use module',
-		proposalType: 'Syntax',
-		support: {
-			tc39: {
-				value: true,
-				stage: 'Inactive',
-				link: 'https://github.com/tc39/proposal-modules-pragma',
-			},
-		},
-	},
-	{
 		title: 'Function.pipe and flow',
 		proposalType: '',
 		support: {
@@ -2253,17 +2277,6 @@ export const proposals: Proposal[] = [
 				value: true,
 				stage: 'Inactive',
 				link: 'https://github.com/tc39/proposal-function-pipe-flow',
-			},
-		},
-	},
-	{
-		title: 'Symbol.thenable',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 'Inactive',
-				link: 'https://github.com/devsnek/proposal-symbol-thenable',
 			},
 		},
 	},
@@ -2323,21 +2336,6 @@ export const proposals: Proposal[] = [
 		},
 	},
 	{
-		title: 'Math Extensions',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 'Inactive',
-				link: 'https://github.com/rwaldron/proposal-math-extensions',
-			},
-			other: {
-				value: true,
-				link: 'https://github.com/rwaldron/proposal-math-extensions',
-			},
-		},
-	},
-	{
 		title: 'Generator arrow functions',
 		proposalType: '',
 		support: {
@@ -2345,17 +2343,6 @@ export const proposals: Proposal[] = [
 				value: true,
 				stage: 'Inactive',
 				link: 'https://github.com/tc39/proposal-generator-arrow-functions',
-			},
-		},
-	},
-	{
-		title: 'Math.signbit: IEEE-754 sign bit',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 'Inactive',
-				link: 'https://github.com/tc39/proposal-Math.signbit',
 			},
 		},
 	},
@@ -2381,31 +2368,6 @@ export const proposals: Proposal[] = [
 			},
 		},
 	},
-	{
-		title: 'Function.prototype.demethodize',
-		proposalType: 'Polyfill',
-		support: {
-			corejs: {
-				value: true,
-				link: 'https://core-js.io/docs/features/proposals/function-prototype-demethodize',
-			},
-		},
-	},
 ];
 
-export const parseProposals = (proposals: Proposal[]): Page[] => {
-	return proposals.map((proposal) => {
-		return {
-			frontmatter: {
-				...proposal,
-				support: {
-					...proposal.support,
-					jsp: {
-						value: false,
-					},
-				},
-			},
-			url: null,
-		};
-	});
-};
+export const unTypedProposals = parseProposals(unTypedPs);

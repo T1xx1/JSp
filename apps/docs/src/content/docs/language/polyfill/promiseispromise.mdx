@@ -1,0 +1,55 @@
+---
+title: Promise isPromise
+lastUpdated: 2026-02-19
+proposalType: Polyfill
+support:
+  tc39:
+    value: true
+    stage: 2
+    link: https://github.com/tc39/proposal-native-promise-predicate
+  mdn:
+    value: false
+  corejs:
+    value: false
+  babel:
+    value: false
+  civet:
+    value: false
+  jsp:
+    value: true
+    integration: Custom
+---
+
+Static method that checks whether a value is a thenable — that is, any object with a `.then` method, following the [Promises/A+](https://promisesaplus.com/) specification.
+
+### `Promise.isPromise(value)`
+
+Returns `true` if `value` is a thenable. Because it follows Promises/A+, it returns `true` for any object or function with a `.then` method, not strictly native `Promise` instances.
+
+The return type is a TypeScript type predicate, so the type of `value` is automatically narrowed to `PromiseLike<unknown>` inside a truthy branch.
+
+```ts
+Promise.isPromise(Promise.resolve(1))   // → true
+Promise.isPromise(fetch("/api/data"))   // → true
+Promise.isPromise({ then: () => {} })   // → true  (thenable)
+
+Promise.isPromise(null)                 // → false
+Promise.isPromise(undefined)            // → false
+Promise.isPromise(42)                   // → false
+Promise.isPromise({ then: "not a fn" }) // → false
+```
+
+Type narrowing in practice:
+
+```ts
+async function resolve(value: unknown) {
+  if (Promise.isPromise(value)) {
+    return await value; // TypeScript knows value is PromiseLike<unknown>
+  }
+  return value;
+}
+```
+
+## Note on strict `instanceof` checks
+
+`Promise.isPromise` is intentionally **not** equivalent to `value instanceof Promise`. Use `instanceof` if you need to confirm a native `Promise`; use `Promise.isPromise` when you want to accept any thenable, such as when working with third-party promise libraries or cross-realm values where `instanceof` can give false negatives.

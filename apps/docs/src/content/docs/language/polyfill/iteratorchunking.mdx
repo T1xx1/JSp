@@ -1,0 +1,69 @@
+---
+title: Iterator chunking
+lastUpdated: 2026-02-19
+proposalType: Polyfill
+support:
+  tc39:
+    value: true
+    stage: 2.7
+    link: https://github.com/tc39/proposal-iterator-chunking
+  mdn:
+    value: false
+  corejs:
+    value: true
+    link: https://core-js.io/docs/features/proposals/iterator-chunking
+  babel:
+    value: false
+  civet:
+    value: false
+  jsp:
+    value: true
+    integration: Custom
+---
+
+import Support from '../support.astro';
+
+<Support frontmatter={frontmatter} />
+
+Overlapping/non-overlapping streams of configurable size.
+
+### `Iterator.prototype.chunks(chunkSize)`
+
+Splits the iterator into non-overlapping arrays of length `chunkSize`. If the iterator's length is not evenly divisible, the final chunk contains the remaining elements.
+
+```ts
+[...[1, 2, 3, 4, 5].values().chunks(2)]
+// → [[1, 2], [3, 4], [5]]
+
+[...[1, 2, 3].values().chunks(3)]
+// → [[1, 2, 3]]
+
+[...[1, 2, 3].values().chunks(5)]
+// → [[1, 2, 3]]
+```
+
+### `Iterator.prototype.windows(windowSize [, undersized])`
+
+Produces a sliding window over the iterator, yielding overlapping arrays of length `windowSize`. Each step advances by one element.
+
+```ts
+[...[1, 2, 3, 4, 5].values().windows(3)]
+// → [[1, 2, 3], [2, 3, 4], [3, 4, 5]]
+
+[...[1, 2, 3, 4].values().windows(3, "allow-partial")]
+// → [[1, 2, 3], [2, 3, 4], [3, 4], [4]]
+
+// Iterator shorter than windowSize — "only-full" yields nothing
+[...[1, 2].values().windows(3)]
+// → []
+
+// Iterator shorter than windowSize — "allow-partial" yields what's there
+[...[1, 2].values().windows(3, "allow-partial")]
+// → [[1, 2]]
+```
+
+## Integration
+
+This feature is implemented with a custom polyfill.
+
+> [Source](https://github.com/t1xx1/jsp/tree/main/packages/polyfill-iterator-chunking)

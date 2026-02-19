@@ -81,19 +81,7 @@ export default defineConfig({
 						items: [
 							{
 								label: 'Overview',
-								items: [
-									'language',
-									'language/features',
-									'language/subset',
-									'language/proposals',
-									'language/customplugins',
-								],
-							},
-							{
-								label: 'Syntax',
-								autogenerate: {
-									directory: 'language/syntax',
-								},
+								items: ['language', 'language/features', 'language/subset', 'language/proposals'],
 							},
 							{
 								label: 'Polyfills',
@@ -102,10 +90,21 @@ export default defineConfig({
 								},
 							},
 							{
+								label: 'Syntax',
+								autogenerate: {
+									directory: 'language/syntax',
+								},
+							},
+							{
 								label: 'Runtime',
 								autogenerate: {
 									directory: 'language/runtime',
 								},
+							},
+							{
+								label: 'Other',
+								items: ['language/proposalsbytype', 'language/customplugins'],
+								collapsed: true,
 							},
 						],
 					},

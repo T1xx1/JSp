@@ -7,19 +7,19 @@ import type { CompleteConfig } from '../config/index.js';
 import type { SourceMap } from './compile.js';
 
 export const emit = (filename: string, data: string, config: CompleteConfig) => {
-	const emitPath = join(cwd(), config.compiler.emitDir, relative(config.rootDir, filename));
+	const emitPath = join(cwd(), config.compiler.emitDir, filename);
 
 	mkdirSync(dirname(emitPath), { recursive: true });
 
 	writeFileSync(emitPath, data, 'utf8');
 };
 
-export const getEmitFilename = (filename: string, config: CompleteConfig) => {
-	return filename.replace('.jsp', config.compiler.emitLang === 'TypeScript' ? '.ts' : '.js');
+export const getCodeEmitFilename = (filename: string, config: CompleteConfig) => {
+	return relative(config.rootDir, filename).replace('.jsp', config.compiler.emitLang === 'TypeScript' ? '.ts' : '.js');
 };
 
 export const emitCode = (filename: string, outCode: string, config: CompleteConfig) => {
-	emit(getEmitFilename(filename, config), outCode, config);
+	emit(getCodeEmitFilename(filename, config), outCode, config);
 };
 export const emitSourceMap = (
 	filename: string,
@@ -27,10 +27,10 @@ export const emitSourceMap = (
 	config: CompleteConfig,
 ) => {
 	emit(
-		`${getEmitFilename(filename, config)}.map`,
+		`${getCodeEmitFilename(filename, config)}.map`,
 		JSON.stringify({
 			version: outSourceMap.version,
-			file: getEmitFilename(parse(filename).base, config).replaceAll('\\', '/'),
+			file: getCodeEmitFilename(parse(filename).base, config).replaceAll('\\', '/'),
 			sourceRoot: '',
 			sources: [join('../', filename).replaceAll('\\', '/')],
 			names: [],

@@ -1,4 +1,7 @@
-import { transformSync, type ParseResult } from '@babel/core';
+import { join, relative } from 'node:path';
+
+import { transformSync, type ParseResult, type NodePath } from '@babel/core';
+import { type Program } from '@babel/types';
 import pluginSubset from '@jsplang/plugin-subset';
 /* @ts-expect-error */
 import pluginProposalAsyncDoExpressions from '@babel/plugin-proposal-async-do-expressions';
@@ -22,8 +25,7 @@ import pluginTransformTypeofNullOperator from '@jsplang/plugin-transform-typeof-
 import { transpile } from 'typescript';
 
 import { tsconfig, type CompleteConfig } from '../config/index.js';
-import { tryCatchSync } from '../polyfills/index.js';
-import { panic } from '../utils/index.js';
+import { panic, tryCatchSync } from '../utils/index.js';
 
 import { parseTs, type Diagnostic } from './parse.js';
 
@@ -128,6 +130,27 @@ export const compile = (filename: string, jspCode: string, config: CompleteConfi
 					},
 				],
 				pluginProposalExportDefaultFrom,
+
+				/* polyfills */
+				function ({ types: t }) {
+					return {
+						visitor: {
+							Program: {
+								exit(path: NodePath<Program>) {
+									const jspDir = './_jsp/index';
+									const relativeDir = '../'.repeat(
+										relative(config.rootDir, filename).split('\\').length - 1,
+									);
+
+									path.unshiftContainer(
+										'body',
+										t.importDeclaration([], t.stringLiteral(join(relativeDir, jspDir))),
+									);
+								},
+							},
+						},
+					};
+				},
 			],
 		}) as unknown as BabelResult;
 	});

@@ -1,0 +1,70 @@
+---
+title: Object property count
+aliases:
+  - Object.keysLength
+  - Object.getOwnPropertyNamesLength
+  - Object.getOwnPropertySymbolsLength
+lastUpdated: 2026-02-19
+proposalType: Polyfill
+support:
+  tc39:
+    value: true
+    stage: 1
+    link: https://github.com/tc39/proposal-object-property-count
+  mdn:
+    value: false
+  corejs:
+    value: false
+  babel:
+    value: false
+  civet:
+    value: false
+  jsp:
+    value: true
+    integration: Custom
+---
+
+:::note
+This feature implements the [Object.keysLength TC39 stage 2 proposal](https://github.com/tc39/proposal-object-keys-length) too.
+:::
+
+Easily retrieve the length of an object's keys, own property names, and own property symbols.
+
+:::caution
+The TC39 proposal is meant to remove the necessity to allocate an array every time when calling `Object.keys(object).length`.
+This polyfill doesn't solve this problem but only provides a quick future-compatible method to access.
+:::
+
+---
+
+### `Object.keysLength(object)`
+
+Returns the number of an object's enumerable own string-keyed properties. Equivalent to `Object.keys(object).length`.
+
+```ts
+Object.keysLength({ a: 1, b: 2, c: 3 }) // → 3
+Object.keysLength({})                    // → 0
+```
+
+### `Object.getOwnPropertyNamesLength(object)`
+
+Returns the number of an object's own string-keyed properties, including non-enumerable ones. Equivalent to `Object.getOwnPropertyNames(object).length`.
+
+```ts
+const obj = Object.defineProperty({}, "hidden", { value: 1, enumerable: false });
+Object.keysLength(obj)                    // → 0 (non-enumerable excluded)
+Object.getOwnPropertyNamesLength(obj)     // → 1 (non-enumerable included)
+```
+
+### `Object.getOwnPropertySymbolsLength(object)`
+
+Returns the number of an object's own symbol-keyed properties. Equivalent to `Object.getOwnPropertySymbols(object).length`.
+
+```ts
+const sym1 = Symbol("a");
+const sym2 = Symbol("b");
+const obj = { [sym1]: 1, [sym2]: 2, c: 3 };
+
+Object.getOwnPropertySymbolsLength(obj) // → 2 (only symbols counted)
+Object.keysLength(obj)                  // → 1 (only string keys counted)
+```

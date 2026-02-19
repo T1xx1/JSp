@@ -8,6 +8,7 @@ import { type CompleteConfig } from '../config/index.js';
 import { compile, type Out } from './compile.js';
 import { emitCode, emitSourceMap } from './emit.js';
 import { getInputs } from './inputs.js';
+import { emitPolyfills } from './polyfill.js';
 
 export const build = async (config: CompleteConfig) => {
 	const filenames = getInputs(config);
@@ -37,6 +38,8 @@ export const build = async (config: CompleteConfig) => {
 		emitCode(filename, out.code, config);
 	}
 
+	emitPolyfills(config);
+
 	if (errors === 0) {
 		console.log(chalk.green('JS+ compiled successfully'));
 	} else {
@@ -48,7 +51,7 @@ export const printDiagnostics = async (filename: string, jspCode: string, out: O
 	const sourceMapper = out.sourceMap === null ? null : await new SourceMapConsumer(out.sourceMap);
 
 	for (const error of out.diagnostics) {
-		const loc =
+		const startLoc =
 			sourceMapper === null
 				? null
 				: sourceMapper.originalPositionFor({
@@ -56,22 +59,29 @@ export const printDiagnostics = async (filename: string, jspCode: string, out: O
 						line: error.loc.startLine + 1,
 						column: error.loc.startCharacter,
 					});
-		/* only line index starts at 1 */
-		if (loc && loc.line) {
-			loc.line -= 1;
-		}
+		const endLoc =
+			sourceMapper === null
+				? null
+				: sourceMapper.originalPositionFor({
+						/* line index starts at 1 */
+						line: error.loc.endLine + 1,
+						column: error.loc.endCharacter,
+					});
 
-		if (loc !== null && (loc.source === null || loc.line === null || loc.column === null)) {
-			continue;
+		/* line index starts at 1 */
+		if (startLoc?.line) {
+			startLoc.line -= 1;
+		}
+		if (endLoc?.line) {
+			endLoc.line -= 1;
 		}
 
 		const range = {
-			startLine: loc?.line ?? error.loc.startLine,
-			startCharacter: loc?.column ?? error.loc.startCharacter,
-			length: error.loc.endCharacter - error.loc.startCharacter,
+			startLine: startLoc?.line ?? error.loc.startLine,
+			startCharacter: startLoc?.column ?? error.loc.startCharacter,
+			length:
+				(endLoc?.column ?? error.loc.endCharacter) - (startLoc?.column ?? error.loc.startCharacter),
 		};
-
-		const line = jspCode.split('\n')[range.startLine]!;
 
 		printDiagnostic(
 			filename,
@@ -81,13 +91,13 @@ export const printDiagnostics = async (filename: string, jspCode: string, out: O
 				.replace('unknown: ', '')
 				.replace(/ \(\d+:\d+\)/, '')
 				.split('\n')[0]!,
-			line,
 			{
 				/* natural language */
 				startLine: range.startLine + 1,
 				startCharacter: range.startCharacter + 1,
 				length: range.length,
 			},
+			jspCode.split('\n')[range.startLine] ?? null,
 		);
 	}
 
@@ -99,19 +109,21 @@ const printDiagnostic = (
 	type: 'Warning' | 'Error',
 	category: string,
 	message: string,
-	code: string,
 	range: {
 		startLine: number;
 		startCharacter: number;
 		length: number;
 	},
+	code: null | string,
 ) => {
 	console.log(
 		`${chalk.blue(filename)}:${chalk.yellow(range.startLine)}:${chalk.yellow(range.startCharacter)} • ${type === 'Error' ? chalk.red(category + type) : chalk.yellow(category + type)} • ${message}`,
 	);
-	console.log(`${chalk.bgWhite.black(range.startLine)} ${code}`);
-	console.log(
-		`${chalk.bgWhite(' '.repeat(range.startLine.toString().length))} ${' '.repeat(range.startCharacter - 1)}${chalk.red('~'.repeat(range.length))}`,
-	);
+	if (code !== null) {
+		console.log(`${chalk.bgWhite.black(range.startLine)} ${code}`);
+		console.log(
+			`${chalk.bgWhite(' '.repeat(range.startLine.toString().length))} ${' '.repeat(range.startCharacter - 1)}${chalk.red('~'.repeat(range.length))}`,
+		);
+	}
 	console.log();
 };
