@@ -1,12 +1,19 @@
 declare global {
 	interface Math {
 		/**
-		 * Clamps a number between a minimum and maximum value.
+		 * Constrains a number to stay within a given range.
+		 * @throws {RangeError} If min is greater than max.
+		 * 
+		 * @see https://jsplang.vercel.app/language/polyfill/mathclamp
 		 */
-		clamp: (value: number, min: number, max: number) => number;
+		clamp(value: number, min: number, max: number): number;
 	}
 }
 
-Math.clamp = (value, min, max) => {
-	return Math.min(Math.max(value, min), max);
+Math.clamp = function clamp(value, min, max) {
+	if (min > max) {
+		throw new RangeError(`min (${min}) must not be greater than max (${max})`);
+	}
+
+	return Math.min(Math.max(min, value), max);
 };
