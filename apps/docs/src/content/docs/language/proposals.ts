@@ -722,21 +722,6 @@ const polyfillPs: Proposal[] = [
 		},
 	},
 	{
-		title: 'Iterator chunking',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 2.7,
-				link: 'https://github.com/tc39/proposal-iterator-chunking',
-			},
-			corejs: {
-				value: true,
-				link: 'https://core-js.io/docs/features/proposals/iterator-chunking',
-			},
-		},
-	},
-	{
 		title: 'Await dictionaries (Promise.allKeyed)',
 		proposalType: 'Polyfill',
 		support: {
