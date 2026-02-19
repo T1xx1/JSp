@@ -84,15 +84,15 @@ export default defineConfig({
 								items: ['language', 'language/features', 'language/subset', 'language/proposals'],
 							},
 							{
-								label: 'Syntax',
-								autogenerate: {
-									directory: 'language/syntax',
-								},
-							},
-							{
 								label: 'Polyfills',
 								autogenerate: {
 									directory: 'language/polyfill',
+								},
+							},
+							{
+								label: 'Syntax',
+								autogenerate: {
+									directory: 'language/syntax',
 								},
 							},
 							{

@@ -7,10 +7,10 @@ import { polyfillProposals, syntaxProposals, runtimeProposals } from './proposal
 
 import Table from './table.astro';
 
-## Runtime proposals
+## Polyfill proposals
 
 <Table
-	pages={runtimeProposals.toSorted((a, b) => {
+	pages={polyfillProposals.toSorted((a, b) => {
     	const stageA = a.frontmatter.support.tc39?.stage === 'Inactive' ? -1 : a.frontmatter.support.tc39?.stage;
     	const stageB = b.frontmatter.support.tc39?.stage === 'Inactive' ? -1 : b.frontmatter.support.tc39?.stage;
 
@@ -51,10 +51,10 @@ import Table from './table.astro';
 
 />
 
-## Polyfill proposals
+## Runtime proposals
 
 <Table
-	pages={polyfillProposals.toSorted((a, b) => {
+	pages={runtimeProposals.toSorted((a, b) => {
     	const stageA = a.frontmatter.support.tc39?.stage === 'Inactive' ? -1 : a.frontmatter.support.tc39?.stage;
     	const stageB = b.frontmatter.support.tc39?.stage === 'Inactive' ? -1 : b.frontmatter.support.tc39?.stage;
 
