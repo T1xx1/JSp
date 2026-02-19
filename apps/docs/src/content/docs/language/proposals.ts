@@ -925,17 +925,6 @@ const polyfillPs: Proposal[] = [
 		},
 	},
 	{
-		title: 'Object.propertyCount',
-		proposalType: 'Polyfill',
-		support: {
-			tc39: {
-				value: true,
-				stage: 1,
-				link: 'https://github.com/tc39/proposal-object-property-count',
-			},
-		},
-	},
-	{
 		title: 'Observable',
 		proposalType: 'Polyfill',
 		support: {
