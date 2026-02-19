@@ -12,7 +12,7 @@ const polyfillsDir = join('./_jsp', 'polyfills');
 const emitPackage = (packageName: string, filename: string, config: CompleteConfig) => {
 	const filenamePath = join(polyfillsDir, filename);
 	const packagePath = createRequire(import.meta.url).resolve(packageName);
-	const packageRaw = `${readFileSync(packagePath, 'utf8')}export {};`;
+	const packageRaw = `${readFileSync(packagePath, 'utf8')};export {};`;
 
 	emit(filenamePath, packageRaw, config);
 };
