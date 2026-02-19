@@ -1,3 +1,5 @@
+import { join, relative } from 'node:path';
+
 import { transformSync, type ParseResult, type NodePath } from '@babel/core';
 import { type Program } from '@babel/types';
 import pluginSubset from '@jsplang/plugin-subset';
@@ -135,9 +137,14 @@ export const compile = (filename: string, jspCode: string, config: CompleteConfi
 						visitor: {
 							Program: {
 								exit(path: NodePath<Program>) {
+									const jspDir = './_jsp/index';
+									const relativeDir = '../'.repeat(
+										relative(config.rootDir, filename).split('\\').length - 1,
+									);
+
 									path.unshiftContainer(
 										'body',
-										t.importDeclaration([], t.stringLiteral('./_jsp/index')),
+										t.importDeclaration([], t.stringLiteral(join(relativeDir, jspDir))),
 									);
 								},
 							},
