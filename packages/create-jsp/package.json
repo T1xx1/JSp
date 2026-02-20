@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"type": "module",
 	"bin": {
-		"create-jsp": "./src/out/index.js"
+		"create-jsp": "./src/index.js"
 	},
 	"scripts": {
 		"dev": "tsc -w",
