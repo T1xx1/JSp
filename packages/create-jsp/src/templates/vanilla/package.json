@@ -5,6 +5,6 @@
 		"exe": "jsp exe ./src/index.jsp"
 	},
 	"devDependencies": {
-		"@jsplang/jsp": "0.1.0"
+		"@jsplang/jsp": "^0.1.0"
 	}
 }
