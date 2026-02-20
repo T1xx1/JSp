@@ -15,13 +15,13 @@ const packageJson = JSON.parse(
 	readFileSync(join(fileURLToPath(import.meta.url), '../../../package.json'), 'utf8'),
 );
 
-const cli = new Command();
+const shell = new Command();
 
-cli.name('JS+').version('0.1.0');
+shell.name('JS+').version('0.1.0');
 
-cli.command('init').description('init JS+ config').action(initConfig);
+shell.command('init').description('init JS+ config').action(initConfig);
 
-cli
+shell
 	.command('info')
 	.description('log JS+ versions')
 	.action(() => {
@@ -38,7 +38,7 @@ cli
 
 /*  */
 
-cli
+shell
 	.command('compile')
 	.description('compile JS+ file')
 	.argument('<filename>', 'JS+ file to compile')
@@ -51,11 +51,11 @@ cli
 		await build(mergeConfig(config));
 	});
 
-cli
+shell
 	.command('build')
 	.description('compile JS+ files')
 	.action(async () => {
 		await build(getCompleteConfig());
 	});
 
-cli.parse();
+shell.parse();
