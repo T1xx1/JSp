@@ -1,5 +1,5 @@
 {
-	"name": "@jsplang/plugin-template",
+	"name": "@jsplang/template-plugin-transform",
 	"version": "0.1.0",
 	"type": "module",
 	"scripts": {
