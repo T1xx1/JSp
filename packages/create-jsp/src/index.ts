@@ -18,34 +18,49 @@ const CWD = IS_DEV ? join(SCRIPT_ROOT, '..', '..', '..', '..', '..', '..', 'Sand
 
 const PACKAGE_MANAGER = (env['npm_config_user_agent'] ?? 'npm').split('/')[0]!;
 
+const canCancel = <T>(prompt: T | symbol) => {
+	if (prompts.isCancel(prompt)) {
+		prompts.cancel('Cancelled');
+
+		exit(0);
+	}
+
+	return prompt as T;
+};
+
 const main = async () => {
 	/* 1. name */
-	const name = (await prompts.text({
-		message: 'Insert project name:',
-		placeholder: 'jsp-project',
-		defaultValue: 'jsp-project',
-	})) as string;
+	const name = canCancel(
+		await prompts.text({
+			message: 'Insert project name:',
+			placeholder: 'jsp-project',
+			defaultValue: 'jsp-project',
+		}),
+	);
 
 	const targetDir = join(CWD, name);
 
 	/* non-empty directory */
 	if (existsSync(targetDir) && readdirSync(targetDir).length > 0) {
-		const overwrite = (await prompts.select({
-			message: `Directory ${name} is not empty`,
-			options: [
-				{
-					label: 'Overwrite',
-					value: true,
-				},
-				{
-					label: 'Cancel',
-					value: false,
-				},
-			],
-		})) as boolean;
+		const overwrite = canCancel(
+			await prompts.select({
+				message: `Directory ${name} is not empty`,
+				options: [
+					{
+						label: 'Overwrite',
+						value: true,
+					},
+					{
+						label: 'Cancel',
+						value: false,
+					},
+				],
+			}),
+		);
 
 		if (!overwrite) {
 			prompts.cancel('Cancelled');
+
 			exit(0);
 		}
 
@@ -56,15 +71,17 @@ const main = async () => {
 
 	/* 2. template */
 	const template = 'vanilla';
-	/* const template = (await prompts.select({
-		message: 'Select project template:',
-		options: [
-			{
-				label: chalk.hex('#31C433')('Vanilla'),
-				value: 'vanilla',
-			},
-		],
-	})) as string; */
+	/* const template = canCancel(
+		await prompts.select({
+			message: 'Select project template:',
+			options: [
+				{
+					label: chalk.hex('#31C433')('Vanilla'),
+					value: 'vanilla',
+				},
+			],
+		}),
+	); */
 
 	const templateDir = join(TEMPLATES_ROOT, template);
 
@@ -86,9 +103,11 @@ const main = async () => {
 
 	prompts.log.step(chalk.gray('Project scaffolded'));
 
-	const installDeps = (await prompts.confirm({
-		message: 'Install dependencies?',
-	})) as boolean;
+	const installDeps = canCancel(
+		await prompts.confirm({
+			message: 'Install dependencies?',
+		}),
+	);
 
 	if (installDeps) {
 		prompts.log.step(chalk.gray('Installing dependencies...'));

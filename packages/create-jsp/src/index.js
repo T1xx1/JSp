@@ -11,9 +11,16 @@ const TEMPLATES_ROOT = join(SCRIPT_ROOT, '..', 'templates');
 const IS_DEV = argv.includes('--dev');
 const CWD = IS_DEV ? join(SCRIPT_ROOT, '..', '..', '..', '..', '..', '..', 'Sandbox') : cwd();
 const PACKAGE_MANAGER = (env['npm_config_user_agent'] ?? 'npm').split('/')[0];
+const canCancel = (prompt) => {
+    if (prompts.isCancel(prompt)) {
+        prompts.cancel('Cancelled');
+        exit(0);
+    }
+    return prompt;
+};
 const main = async () => {
     /* 1. name */
-    const name = (await prompts.text({
+    const name = canCancel(await prompts.text({
         message: 'Insert project name:',
         placeholder: 'jsp-project',
         defaultValue: 'jsp-project',
@@ -21,7 +28,7 @@ const main = async () => {
     const targetDir = join(CWD, name);
     /* non-empty directory */
     if (existsSync(targetDir) && readdirSync(targetDir).length > 0) {
-        const overwrite = (await prompts.select({
+        const overwrite = canCancel(await prompts.select({
             message: `Directory ${name} is not empty`,
             options: [
                 {
@@ -43,15 +50,17 @@ const main = async () => {
     mkdirSync(targetDir);
     /* 2. template */
     const template = 'vanilla';
-    /* const template = (await prompts.select({
-        message: 'Select project template:',
-        options: [
-            {
-                label: chalk.hex('#31C433')('Vanilla'),
-                value: 'vanilla',
-            },
-        ],
-    })) as string; */
+    /* const template = canCancel(
+        await prompts.select({
+            message: 'Select project template:',
+            options: [
+                {
+                    label: chalk.hex('#31C433')('Vanilla'),
+                    value: 'vanilla',
+                },
+            ],
+        }),
+    ); */
     const templateDir = join(TEMPLATES_ROOT, template);
     /* scaffold */
     prompts.log.step(chalk.gray('Scaffolding project...'));
@@ -64,7 +73,7 @@ const main = async () => {
     }
     writeFileSync(join(targetDir, 'package.json'), JSON.stringify(packageJson, null, '\t'), 'utf8');
     prompts.log.step(chalk.gray('Project scaffolded'));
-    const installDeps = (await prompts.confirm({
+    const installDeps = canCancel(await prompts.confirm({
         message: 'Install dependencies?',
     }));
     if (installDeps) {
