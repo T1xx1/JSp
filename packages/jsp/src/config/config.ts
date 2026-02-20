@@ -16,7 +16,7 @@ export type Config = {
 	};
 };
 export const initialConfig = {
-	$schema: './node_modules/jsp/config.json',
+	$schema: './node_modules/@jsplang/jsp/config.json',
 };
 
 /**

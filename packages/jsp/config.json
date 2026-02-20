@@ -7,8 +7,8 @@
 	"properties": {
 		"$schema": {
 			"type": "string",
-			"description": "JSON $schema. Defaults to './node_modules/jsp/config.json'",
-			"default": "./node_modules/jsp/config.json"
+			"description": "JSON $schema. Defaults to './node_modules/@jsplang/jsp/config.json'",
+			"default": "./node_modules/@jsplang/jsp/config.json"
 		},
 		"rootDir": {
 			"type": "string",
