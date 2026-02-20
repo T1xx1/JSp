@@ -1,7 +1,8 @@
 {
 	"name": "jsp-project",
 	"scripts": {
-		"build": "jsp build"
+		"build": "jsp build",
+		"exe": "jsp exe ./src/index.jsp"
 	},
 	"devDependencies": {
 		"@jsplang/jsp": "0.1.0"

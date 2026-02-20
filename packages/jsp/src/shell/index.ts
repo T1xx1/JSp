@@ -52,6 +52,19 @@ shell
 	});
 
 shell
+	.command('exe')
+	.description('compile and execute JS+ file')
+	.argument('<filename>', 'JS+ file to compile and execute')
+	.action(async (filename) => {
+		const config: Config = {
+			rootDir: './',
+			include: [filename],
+		};
+
+		await build(mergeConfig(config));
+	});
+
+shell
 	.command('build')
 	.description('compile JS+ files')
 	.action(async () => {
