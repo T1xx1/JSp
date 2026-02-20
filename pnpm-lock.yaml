@@ -167,25 +167,6 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/plugin-template:
-    dependencies:
-      '@babel/core':
-        specifier: ^7.28.5
-        version: 7.28.5
-    devDependencies:
-      '@babel/types':
-        specifier: ^7.29.0
-        version: 7.29.0
-      '@jsplang/tester':
-        specifier: workspace:*
-        version: link:../tester
-      '@types/babel__core':
-        specifier: ^7.20.5
-        version: 7.20.5
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
   packages/plugin-transform-chained-comparisons:
     dependencies:
       '@babel/core':
@@ -274,6 +255,31 @@ importers:
         version: 5.9.3
 
   packages/polyfill-random-namespace:
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/template-plugin-transform:
+    dependencies:
+      '@babel/core':
+        specifier: ^7.28.5
+        version: 7.29.0
+    devDependencies:
+      '@babel/types':
+        specifier: ^7.29.0
+        version: 7.29.0
+      '@jsplang/tester':
+        specifier: workspace:*
+        version: link:../tester
+      '@types/babel__core':
+        specifier: ^7.20.5
+        version: 7.20.5
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/template-polyfill:
     devDependencies:
       typescript:
         specifier: ^5.9.3
