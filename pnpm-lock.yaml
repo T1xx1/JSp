@@ -66,6 +66,23 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/create-jsp:
+    devDependencies:
+      '@clack/prompts':
+        specifier: ^1.0.1
+        version: 1.0.1
+      '@types/node':
+        specifier: ^25.2.3
+        version: 25.2.3
+      chalk:
+        specifier: ^5.6.2
+        version: 5.6.2
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/create-jsp/src/templates/vanilla: {}
+
   packages/jsp:
     dependencies:
       '@babel/core':
@@ -602,6 +619,12 @@ packages:
   '@capsizecss/unpack@4.0.0':
     resolution: {integrity: sha512-VERIM64vtTP1C4mxQ5thVT9fK0apjPFobqybMtA1UdUujWka24ERHbRHFGmpbbhp73MhV+KSsHQH9C6uOTdEQA==}
     engines: {node: '>=18'}
+
+  '@clack/core@1.0.1':
+    resolution: {integrity: sha512-WKeyK3NOBwDOzagPR5H08rFk9D/WuN705yEbuZvKqlkmoLM2woKtXb10OO2k1NoSU4SFG947i2/SCYh+2u5e4g==}
+
+  '@clack/prompts@1.0.1':
+    resolution: {integrity: sha512-/42G73JkuYdyWZ6m8d/CJtBrGl1Hegyc7Fy78m5Ob+jF85TOUmLR5XLce/U3LxYAw0kJ8CT5aI99RIvPHcGp/Q==}
 
   '@ctrl/tinycolor@4.2.0':
     resolution: {integrity: sha512-kzyuwOAQnXJNLS9PSyrk0CWk35nWJW/zl/6KvnTBMFK65gm7U1/Z5BqjxeapjZCIhQcM/DsrEmcbRwDyXyXK4A==}
@@ -4504,6 +4527,17 @@ snapshots:
     dependencies:
       fontkitten: 1.0.2
 
+  '@clack/core@1.0.1':
+    dependencies:
+      picocolors: 1.1.1
+      sisteransi: 1.0.5
+
+  '@clack/prompts@1.0.1':
+    dependencies:
+      '@clack/core': 1.0.1
+      picocolors: 1.1.1
+      sisteransi: 1.0.5
+
   '@ctrl/tinycolor@4.2.0': {}
 
   '@emnapi/runtime@1.8.1':
@@ -5260,7 +5294,7 @@ snapshots:
 
   '@types/sax@1.2.7':
     dependencies:
-      '@types/node': 17.0.45
+      '@types/node': 25.2.3
 
   '@types/trusted-types@2.0.7': {}
 

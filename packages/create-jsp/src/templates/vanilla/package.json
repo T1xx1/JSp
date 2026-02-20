@@ -1,0 +1,9 @@
+{
+	"name": "jsp-project",
+	"scripts": {
+		"build": "jsp build"
+	},
+	"devDependencies": {
+		"@jsplang/jsp": "0.1.0"
+	}
+}
