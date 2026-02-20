@@ -1,3 +1,4 @@
+import { spawnSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -8,12 +9,18 @@ import { Command } from 'commander';
 import { build } from '../compiler/index.js';
 import { getCompleteConfig, initConfig, mergeConfig, type Config } from '../config/index.js';
 
+import { getRuntime } from './utils.js';
+
 const rootPackageJson = JSON.parse(
 	readFileSync(join(fileURLToPath(import.meta.url), '../../../../../package.json'), 'utf8'),
 );
 const packageJson = JSON.parse(
 	readFileSync(join(fileURLToPath(import.meta.url), '../../../package.json'), 'utf8'),
 );
+
+const RUNTIME = getRuntime();
+
+/*  */
 
 const shell = new Command();
 
@@ -62,6 +69,8 @@ shell
 		};
 
 		await build(mergeConfig(config));
+
+		spawnSync(RUNTIME, [filename]);
 	});
 
 shell
