@@ -16,6 +16,6 @@ export const recursiveCopySync = (sourceDir: string, targetDir: string): void =>
 			continue;
 		}
 
-		copyFileSync(targetEntityPath, sourceEntityPath);
+		copyFileSync(sourceEntityPath, targetEntityPath);
 	}
 };
