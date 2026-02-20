@@ -3,7 +3,7 @@ import { createRequire } from 'node:module';
 import { join, normalize } from 'node:path';
 import { cwd } from 'node:process';
 
-import { exit, panic, tryCatchSync } from '../utils/index.js';
+import { panic, printExitDiagnostic, tryCatchSync } from '../utils/index.js';
 
 export type Config = {
 	rootDir?: string;
@@ -57,7 +57,7 @@ export const getConfig = (): Config => {
 		});
 
 		if (error || !data) {
-			throw exit('Cannot parse JS+ config');
+			throw printExitDiagnostic('Error', 'Cannot parse JS+ config');
 		}
 
 		return data;
@@ -70,7 +70,7 @@ export const getConfig = (): Config => {
 		});
 
 		if (error || !data) {
-			throw exit('Cannot require JS+ config');
+			throw printExitDiagnostic('Error', 'Cannot require JS+ config');
 		}
 
 		return data;
@@ -80,7 +80,7 @@ export const getConfig = (): Config => {
 };
 export const initConfig = () => {
 	if (existsConfig() !== false) {
-		throw exit('JS+ config is already initialized');
+		throw printExitDiagnostic('Error', 'JS+ config is already initialized');
 	}
 
 	let configPath: string;
@@ -133,10 +133,10 @@ export const parseConfig = (config: CompleteConfig): void => {
 	const emitDir = normalize(config.compiler.emitDir);
 
 	if (config.include.includes(emitDir)) {
-		throw exit('`compiler.emitDir` cannot be included in `include`');
+		throw printExitDiagnostic('Error', '`compiler.emitDir` cannot be included in `include`');
 	}
 	if (emitDir === normalize(config.rootDir)) {
-		throw exit('`compiler.emitDir` cannot be the root directory');
+		throw printExitDiagnostic('Error', '`compiler.emitDir` cannot be the root directory');
 	}
 };
 /**
