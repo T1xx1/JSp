@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { argv, cwd, env, exit } from 'node:process';
 import { fileURLToPath } from 'node:url';
@@ -27,7 +27,7 @@ const main = async () => {
     }));
     const targetDir = join(CWD, name);
     /* non-empty directory */
-    if (existsSync(targetDir) && readdirSync(targetDir).length > 0) {
+    if (existsSync(targetDir)) {
         const overwrite = canCancel(await prompts.select({
             message: `Directory ${name} is not empty`,
             options: [
