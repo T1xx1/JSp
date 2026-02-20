@@ -1,0 +1,21 @@
+{
+	"name": "@jsplang/create-jsp",
+	"version": "0.1.0",
+	"type": "module",
+	"bin": {
+		"create-jsp": "./src/index.js"
+	},
+	"scripts": {
+		"dev": "tsc -w",
+		"build": "tsc",
+		"exe": "node ./src/index.ts --dev"
+	},
+	"dependencies": {
+		"@clack/prompts": "^1.0.1",
+		"chalk": "^5.6.2"
+	},
+	"devDependencies": {
+		"@types/node": "^25.2.3",
+		"typescript": "^5.9.3"
+	}
+}
