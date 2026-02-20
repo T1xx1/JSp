@@ -1,4 +1,4 @@
-import { lstatSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { copyFileSync, lstatSync, mkdirSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 export const recursiveCopySync = (sourceDir: string, targetDir: string): void => {
@@ -16,6 +16,6 @@ export const recursiveCopySync = (sourceDir: string, targetDir: string): void =>
 			continue;
 		}
 
-		writeFileSync(targetEntityPath, readFileSync(sourceEntityPath, 'utf8'), 'utf8');
+		copyFileSync(targetEntityPath, sourceEntityPath);
 	}
 };
