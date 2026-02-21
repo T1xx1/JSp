@@ -3,18 +3,15 @@
 	"compilerOptions": {
 		/* parser */
 		"skipLibCheck": true,
-		"strict": true /* TypeScript */,
+		"strict": true,
 		"module": "NodeNext",
-		"moduleResolution": "NodeNext",
-		"moduleDetection": "force",
+		"moduleDetection": "force" /* force ESM */ ,
 		"resolveJsonModule": true /* JSON */,
 		/* type checking */
 		"exactOptionalPropertyTypes": true,
 		"noUncheckedIndexedAccess": true,
 		"noUncheckedSideEffectImports": true,
 		/* linter */
-		"allowUnreachableCode": false,
-		"allowUnusedLabels": false,
 		"noImplicitOverride": true,
 		"noPropertyAccessFromIndexSignature": true,
 		"noUnusedLocals": true,
