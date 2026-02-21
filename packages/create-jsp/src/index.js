@@ -66,7 +66,8 @@ const main = async () => {
     prompts.log.step(chalk.gray('Scaffolding project...'));
     recursiveCopySync(templateDir, targetDir);
     /* package.json */
-    const packageJson = JSON.parse(readFileSync(join(templateDir, 'package.json'), 'utf8'));
+    const packageJson = JSON.parse(readFileSync(join(templateDir, '_package.json'), 'utf8'));
+    rmSync(join(targetDir, '_package.json'));
     packageJson.name = name;
     if (IS_DEV) {
         packageJson.devDependencies['@jsplang/jsp'] = 'link:../../Dev/JSp/packages/jsp';
