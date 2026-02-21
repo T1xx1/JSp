@@ -9,13 +9,13 @@ import { Command } from 'commander';
 import { build } from '../compiler/index.js';
 import { getCompleteConfig } from '../config/index.js';
 
-import { getRuntime } from './utils.js';
+import { getRuntime, type PackageJson } from './utils.js';
 
 const SCRIPT_ROOT = fileURLToPath(import.meta.url);
 
 const SCRIPT_PACKAGE_JSON = JSON.parse(
 	readFileSync(join(SCRIPT_ROOT, '..', '..', '..', 'package.json'), 'utf8'),
-);
+) as PackageJson;
 
 const RUNTIME = getRuntime();
 
