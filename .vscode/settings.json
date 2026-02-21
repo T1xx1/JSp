@@ -1,0 +1,7 @@
+{
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+	"prettier.printWidth": 100,
+	"prettier.useTabs": true,
+	"prettier.singleQuote": true
+}

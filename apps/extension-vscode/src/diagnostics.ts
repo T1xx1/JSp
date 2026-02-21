@@ -1,3 +1,5 @@
+import { compile } from '@jsplang/jsp/compiler';
+import { completeConfig } from '@jsplang/jsp/config';
 import {
 	Diagnostic,
 	DiagnosticSeverity,
@@ -5,9 +7,6 @@ import {
 	type DiagnosticCollection,
 	type TextDocument,
 } from 'vscode';
-
-import { compile } from '@jsplang/jsp/compiler';
-import { completeConfig } from '@jsplang/jsp/config';
 
 export const analyze = (document: TextDocument, diagnosticsCollection: DiagnosticCollection) => {
 	if (document.languageId !== 'jsp') {

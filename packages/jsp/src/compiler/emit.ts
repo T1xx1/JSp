@@ -15,7 +15,10 @@ export const emit = (filename: string, data: string, config: CompleteConfig) => 
 };
 
 export const getCodeEmitFilename = (filename: string, config: CompleteConfig) => {
-	return relative(config.rootDir, filename).replace('.jsp', config.compiler.emitLang === 'TypeScript' ? '.ts' : '.js');
+	return relative(config.rootDir, filename).replace(
+		'.jsp',
+		config.compiler.emitLang === 'TypeScript' ? '.ts' : '.js',
+	);
 };
 
 export const emitCode = (filename: string, outCode: string, config: CompleteConfig) => {

@@ -1,0 +1,11 @@
+{
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
+	"ignorePatterns": ["*.mdx"],
+	"useTabs": true,
+	"singleQuote": true,
+	"experimentalSortImports": {
+		"sortSideEffects": true,
+		"groups": [["builtin", "subpath"], "external", "internal", "parent", ["sibling", "index"]]
+	},
+	"experimentalSortPackageJson": true
+}

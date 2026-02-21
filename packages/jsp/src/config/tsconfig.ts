@@ -1,28 +1,19 @@
-import {
-	ModuleDetectionKind,
-	ModuleKind,
-	ModuleResolutionKind,
-	ScriptTarget,
-	type CompilerOptions,
-} from 'typescript';
+import { ModuleDetectionKind, ModuleKind, ScriptTarget, type CompilerOptions } from 'typescript';
 
 export const tsconfig = {
 	compilerOptions: {
 		/* parser */
 		skipLibCheck: true,
-		strict: true /* TypeScript */,
-		module: ModuleKind.ESNext,
-		moduleResolution: ModuleResolutionKind.Bundler,
-		moduleDetection: ModuleDetectionKind.Force,
+		strict: true,
+		module: ModuleKind.NodeNext,
+		moduleDetection: ModuleDetectionKind.Force /* force ESM */,
 		resolveJsonModule: true /* JSON */,
 		/* type checking */
-		exactOptionalPropertyTypes: true,
 		lib: ['lib.dom.d.ts', 'lib.esnext.d.ts'],
+		exactOptionalPropertyTypes: true,
 		noUncheckedIndexedAccess: true,
 		noUncheckedSideEffectImports: true,
 		/* linter */
-		allowUnreachableCode: false,
-		allowUnusedLabels: false,
 		noImplicitOverride: true,
 		noPropertyAccessFromIndexSignature: true,
 		noUnusedLocals: true,

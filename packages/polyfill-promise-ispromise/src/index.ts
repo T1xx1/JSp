@@ -3,7 +3,7 @@ declare global {
 		/**
 		 * Returns true if the given value is a thenable (Promises/A+ compatible).
 		 * Note: this checks for duck-typed thenables, not strictly Promise instances.
-		 * 
+		 *
 		 * @see https://jsplang.vercel.app/language/polyfill/promiseispromise
 		 */
 		isPromise(value: unknown): value is PromiseLike<unknown>;

@@ -1,10 +1,10 @@
 import { join, relative } from 'node:path';
 
 import { transformSync, type ParseResult, type NodePath } from '@babel/core';
-import { type Program } from '@babel/types';
-import pluginSubset from '@jsplang/plugin-subset';
 /* @ts-expect-error */
 import pluginProposalAsyncDoExpressions from '@babel/plugin-proposal-async-do-expressions';
+/* @ts-expect-error */
+import pluginProposalDecorators from '@babel/plugin-proposal-decorators';
 /* @ts-expect-error */
 import pluginProposalDiscardBinding from '@babel/plugin-proposal-discard-binding';
 /* @ts-expect-error */
@@ -12,13 +12,13 @@ import pluginProposalDoExpressions from '@babel/plugin-proposal-do-expressions';
 /* @ts-expect-error */
 import pluginProposalExportDefaultFrom from '@babel/plugin-proposal-export-default-from';
 /* @ts-expect-error */
-import pluginProposalDecorators from '@babel/plugin-proposal-decorators';
-/* @ts-expect-error */
 import pluginProposalPipelineOperator from '@babel/plugin-proposal-pipeline-operator';
 /* @ts-expect-error */
 import pluginProposalThrowExpressions from '@babel/plugin-proposal-throw-expressions';
 /* @ts-expect-error */
 import pluginSyntaxTypeScript from '@babel/plugin-syntax-typescript';
+import { type Program } from '@babel/types';
+import pluginSubset from '@jsplang/plugin-subset';
 import pluginTransformChainedComparisons from '@jsplang/plugin-transform-chained-comparisons';
 import pluginTransformNegativeArraySubscript from '@jsplang/plugin-transform-negative-array-subscript';
 import pluginTransformTypeofNullOperator from '@jsplang/plugin-transform-typeof-null-operator';

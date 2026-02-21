@@ -6,14 +6,12 @@
 		"strict": true,
 		"module": "ESNext",
 		"moduleResolution": "bundler",
-		"moduleDetection": "force",
+		"moduleDetection": "force" /* force ESM */ ,
 		/* type checking */
 		"exactOptionalPropertyTypes": true,
 		"noUncheckedIndexedAccess": true,
 		"noUncheckedSideEffectImports": true,
 		/* linter */
-		"allowUnreachableCode": false,
-		"allowUnusedLabels": false,
 		"noImplicitOverride": true,
 		"noPropertyAccessFromIndexSignature": true,
 		"noUnusedLocals": true,

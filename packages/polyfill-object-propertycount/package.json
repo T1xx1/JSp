@@ -2,14 +2,14 @@
 	"name": "@jsplang/polyfill-object-propertycount",
 	"version": "0.1.0",
 	"type": "module",
-	"scripts": {
-		"dev": "tsc -w",
-		"build": "tsc"
-	},
 	"exports": {
 		".": {
 			"default": "./src/index.ts"
 		}
+	},
+	"scripts": {
+		"dev": "tsc -w",
+		"build": "tsc"
 	},
 	"devDependencies": {
 		"typescript": "^5.9.3"

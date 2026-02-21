@@ -1,13 +1,27 @@
 {
 	"name": "extension-vscode",
-	"version": "0.1.0",
 	"displayName": "JS+",
+	"version": "0.1.0",
 	"description": "JS+ for VS Code",
-	"icon": "./assets/icon.png",
-	"publisher": "jsplang",
-	"engines": {
-		"vscode": "^1.109.0"
+	"categories": [
+		"Programming Languages"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/t1xx1/jsp",
+		"directory": "apps/extension-vscode"
 	},
+	"publisher": "jsplang",
+	"files": [
+		"assets",
+		"dist",
+		"syntaxes",
+		"language-configuration.json",
+		"LICENSE",
+		"package.json",
+		"README.md"
+	],
+	"main": "./dist/extension.js",
 	"scripts": {
 		"dev": "node esbuild.mjs --dev",
 		"build": "pnpm bundle && pnpm package",
@@ -21,27 +35,6 @@
 		"esbuild": "^0.27.3",
 		"typescript": "^5.9.3"
 	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/t1xx1/jsp",
-		"directory": "apps/extension-vscode"
-	},
-	"main": "./dist/extension.js",
-	"files": [
-		"assets",
-		"dist",
-		"syntaxes",
-		"language-configuration.json",
-		"LICENSE",
-		"package.json",
-		"README.md"
-	],
-	"activationEvents": [
-		"onStartupFinished"
-	],
-	"categories": [
-		"Programming Languages"
-	],
 	"contributes": {
 		"languages": [
 			{
@@ -104,14 +97,20 @@
 				}
 			],
 			"[jsp]": {
-				"editor.fontLigatures": true,
 				"editor.detectIndentation": false,
 				"editor.insertSpaces": false,
 				"editor.formatOnSave": true,
 				"prettier.printWidth": 100,
-				"prettier.singleQuote": true,
-				"prettier.useTabs": true
+				"prettier.useTabs": true,
+				"prettier.singleQuote": true
 			}
 		}
+	},
+	"activationEvents": [
+		"onStartupFinished"
+	],
+	"icon": "./assets/icon.png",
+	"engines": {
+		"vscode": "^1.109.0"
 	}
 }

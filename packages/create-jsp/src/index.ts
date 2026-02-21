@@ -91,7 +91,8 @@ const main = async () => {
 	recursiveCopySync(templateDir, targetDir);
 
 	/* package.json */
-	const packageJson = JSON.parse(readFileSync(join(templateDir, 'package.json'), 'utf8'));
+	const packageJson = JSON.parse(readFileSync(join(templateDir, '_package.json'), 'utf8'));
+	rmSync(join(targetDir, '_package.json'));
 
 	packageJson.name = name;
 

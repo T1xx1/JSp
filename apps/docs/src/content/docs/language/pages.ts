@@ -1,11 +1,10 @@
-import type { Page } from './types';
-
 import {
 	polyfillProposals,
 	runtimeProposals,
 	syntaxProposals,
 	unTypedProposals,
 } from './proposals';
+import type { Page } from './types';
 
 export const runtimePages = Object.values<Page>(
 	import.meta.glob('./runtime/*.mdx', { eager: true }),
