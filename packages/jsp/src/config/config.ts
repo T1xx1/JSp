@@ -15,9 +15,6 @@ export type Config = {
 		emitSourceMaps?: boolean;
 	};
 };
-export const initialConfig = {
-	$schema: './node_modules/@jsplang/jsp/config.json',
-};
 
 /**
  * Checks if a JS+ config exists in the current working directory.
