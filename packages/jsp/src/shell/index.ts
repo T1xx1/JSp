@@ -7,15 +7,17 @@ import chalk from 'chalk';
 import { Command } from 'commander';
 
 import { build } from '../compiler/index.js';
-import { getCompleteConfig, mergeConfig, type Config } from '../config/index.js';
+import { getCompleteConfig } from '../config/index.js';
 
 import { getRuntime } from './utils.js';
 
-const rootPackageJson = JSON.parse(
-	readFileSync(join(fileURLToPath(import.meta.url), '../../../../../package.json'), 'utf8'),
+const SCRIPT_ROOT = fileURLToPath(import.meta.url);
+
+const ROOT_PACKAGE_JSON = JSON.parse(
+	readFileSync(join(SCRIPT_ROOT, '..', '..', '..', '..', '..', 'package.json'), 'utf8'),
 );
-const packageJson = JSON.parse(
-	readFileSync(join(fileURLToPath(import.meta.url), '../../../package.json'), 'utf8'),
+const SCRIPT_PACKAGE_JSON = JSON.parse(
+	readFileSync(join(SCRIPT_ROOT, '..', '..', '..', 'package.json'), 'utf8'),
 );
 
 const RUNTIME = getRuntime();
@@ -24,21 +26,24 @@ const RUNTIME = getRuntime();
 
 const shell = new Command();
 
-shell.name('JS+').version('0.1.0');
+shell
+	.name('JS+')
+	.version(SCRIPT_PACKAGE_JSON.version, '-v, --version', 'log JS+ version')
+	.helpOption('-h, --help', 'log help information');
 
 shell
 	.command('info')
-	.description('log JS+ versions')
+	.description('log JS+ bindings')
 	.action(() => {
-		console.log(`${chalk.hex('#31C433')('JS+')}        ${packageJson.version}`);
+		console.log(`${chalk.hex('#31C433')('JS+')}        ${SCRIPT_PACKAGE_JSON.version}`);
 		console.log(
-			`${chalk.hex('#F9DC3E')('Babel')}      ${packageJson.dependencies['@babel/core'].replaceAll('^', '')}`,
+			`${chalk.hex('#F9DC3E')('Babel')}      ${SCRIPT_PACKAGE_JSON.dependencies['@babel/core'].replaceAll('^', '')}`,
 		);
 		console.log(
-			`${chalk.hex('#3178C6')('TypeScript')} ${packageJson.devDependencies['typescript'].replaceAll('^', '')}`,
+			`${chalk.hex('#3178C6')('TypeScript')} ${SCRIPT_PACKAGE_JSON.devDependencies['typescript'].replaceAll('^', '')}`,
 		);
 		console.log(`${chalk.hex('#F0DB4F')('JavaScript')} ESNext ESM`);
-		console.log(`${chalk.hex('#84B464')('Node')}       ${rootPackageJson.engines.node}`);
+		console.log(`${chalk.hex('#84B464')('Node')}       ${ROOT_PACKAGE_JSON.engines.node}`);
 	});
 
 /*  */
@@ -48,12 +53,11 @@ shell
 	.description('compile JS+ file')
 	.argument('<filename>', 'JS+ file to compile')
 	.action(async (filename) => {
-		const config: Config = {
-			rootDir: './',
-			include: [filename],
-		};
+		const config = getCompleteConfig();
 
-		await build(mergeConfig(config));
+		config.include = [filename];
+
+		await build(config);
 	});
 
 shell
@@ -61,12 +65,11 @@ shell
 	.description('compile and execute JS+ file')
 	.argument('<filename>', 'JS+ file to compile and execute')
 	.action(async (filename) => {
-		const config: Config = {
-			rootDir: './',
-			include: [filename],
-		};
+		const config = getCompleteConfig();
 
-		await build(mergeConfig(config));
+		config.include = [filename];
+
+		await build(config);
 
 		spawnSync(RUNTIME, [filename]);
 	});
@@ -77,5 +80,7 @@ shell
 	.action(async () => {
 		await build(getCompleteConfig());
 	});
+
+/*  */
 
 shell.parse();
