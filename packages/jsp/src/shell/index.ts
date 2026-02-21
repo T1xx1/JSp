@@ -9,16 +9,13 @@ import { Command } from 'commander';
 import { build } from '../compiler/index.js';
 import { getCompleteConfig } from '../config/index.js';
 
-import { getRuntime } from './utils.js';
+import { getRuntime, type PackageJson } from './utils.js';
 
 const SCRIPT_ROOT = fileURLToPath(import.meta.url);
 
-const ROOT_PACKAGE_JSON = JSON.parse(
-	readFileSync(join(SCRIPT_ROOT, '..', '..', '..', '..', '..', 'package.json'), 'utf8'),
-);
 const SCRIPT_PACKAGE_JSON = JSON.parse(
 	readFileSync(join(SCRIPT_ROOT, '..', '..', '..', 'package.json'), 'utf8'),
-);
+) as PackageJson;
 
 const RUNTIME = getRuntime();
 
@@ -43,7 +40,7 @@ shell
 			`${chalk.hex('#3178C6')('TypeScript')} ${SCRIPT_PACKAGE_JSON.devDependencies['typescript'].replaceAll('^', '')}`,
 		);
 		console.log(`${chalk.hex('#F0DB4F')('JavaScript')} ESNext ESM`);
-		console.log(`${chalk.hex('#84B464')('Node')}       ${ROOT_PACKAGE_JSON.engines.node}`);
+		console.log(`${chalk.hex('#84B464')('Node')}       ${SCRIPT_PACKAGE_JSON.engines.node}`);
 	});
 
 /*  */
