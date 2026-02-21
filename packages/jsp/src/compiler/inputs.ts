@@ -2,7 +2,7 @@ import { globSync } from 'node:fs';
 import { join, normalize } from 'node:path';
 
 import type { CompleteConfig } from '../config/index.js';
-import { exit } from '../utils/index.js';
+import { printExitDiagnostic } from '../utils/index.js';
 
 /**
  * Get JS+ inputs in the current working directory.
@@ -25,7 +25,10 @@ export const getInputs = (config: CompleteConfig): string[] => {
 	).filter((f) => f.endsWith('.jsp'));
 
 	if (inputs.length === 0) {
-		throw exit('No JS+ inputs defined with current `include`/`exclude` configuration');
+		throw printExitDiagnostic(
+			'Error',
+			'No JS+ inputs defined with current `include`/`exclude` configuration',
+		);
 	}
 
 	return inputs;

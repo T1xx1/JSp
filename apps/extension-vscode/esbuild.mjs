@@ -1,4 +1,5 @@
 import { rmSync } from 'node:fs';
+import { exit } from 'node:process';
 
 import esbuild from 'esbuild';
 
@@ -30,5 +31,5 @@ try {
 	await main();
 } catch (e) {
 	console.error(e);
-	process.exit(1);
+	exit(1);
 }
