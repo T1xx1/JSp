@@ -1,9 +1,5 @@
 {
 	"name": "@jsplang/monorepo",
-	"engines": {
-		"node": ">=24"
-	},
-	"packageManager": "pnpm@10.29.3",
 	"scripts": {
 		"dev": "turbo dev",
 		"build": "turbo build",
@@ -23,5 +19,9 @@
 		"oxfmt": "^0.34.0",
 		"oxlint": "^1.49.0",
 		"turbo": "^2.8.8"
-	}
+	},
+	"engines": {
+		"node": ">=24"
+	},
+	"packageManager": "pnpm@10.29.3"
 }

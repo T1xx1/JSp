@@ -1,21 +1,18 @@
 {
 	"name": "@jsplang/tester",
-	"type": "module",
-	"scripts": {
-		"dev": "tsc -w",
-		"build": "tsc"
-	},
 	"bin": {
 		"tester": "./bin/tester.js"
 	},
+	"type": "module",
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
 			"default": "./dist/index.js"
 		}
 	},
-	"peerDependencies": {
-		"@babel/core": "^7.28.5"
+	"scripts": {
+		"dev": "tsc -w",
+		"build": "tsc"
 	},
 	"devDependencies": {
 		"@babel/plugin-transform-typescript": "^7.28.6",
@@ -23,5 +20,8 @@
 		"@types/node": "^25.2.3",
 		"typescript": "^5.9.3",
 		"vitest": "^4.0.18"
+	},
+	"peerDependencies": {
+		"@babel/core": "^7.28.5"
 	}
 }

@@ -1,10 +1,10 @@
 {
 	"name": "@jsplang/create-jsp",
 	"version": "0.1.0",
-	"type": "module",
 	"bin": {
 		"create-jsp": "./src/index.js"
 	},
+	"type": "module",
 	"scripts": {
 		"dev": "tsc -w",
 		"build": "tsc",
