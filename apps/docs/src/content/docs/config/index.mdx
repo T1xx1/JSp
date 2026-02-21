@@ -19,7 +19,7 @@ For `.json` configs you can use the following `$schema` for IntelliSense:
 ```jsonc
 /* .config/jsp.json or jsp.config.json */
 {
-	"$schema": "https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/config.json",
+	"$schema": "https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/$schema.json",
 }
 ```
 
@@ -27,11 +27,11 @@ If JS+ is installed as a dependency, you can also fetch it directly from the pac
 ```jsonc
 /* .config/jsp.json or jsp.config.json */
 {
-	"$schema": "./node_modules/@jsplang/jsp/config.json",
+	"$schema": "./node_modules/@jsplang/jsp/$schema.json",
 }
 ```
 
-> [Source](https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/config.json)
+> [Source](https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/$schema.json)
 
 For `.ts` configs you can import the `Config` type for type safety:
 
