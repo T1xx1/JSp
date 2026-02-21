@@ -9,6 +9,8 @@
 		"build": "turbo build",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
+		"format": "oxfmt",
+		"format:check": "oxfmt --check",
 		"docs:dev": "turbo dev --filter=@jsplang/docs...",
 		"docs:build": "turbo build --filter=@jsplang/docs...",
 		"extension-vscode:dev": "turbo dev --filter=extension-vscode... --filter=!@jsplang/tester",
@@ -18,6 +20,7 @@
 		"jsp:test": "turbo test --filter=@jsplang/jsp..."
 	},
 	"devDependencies": {
+		"oxfmt": "^0.34.0",
 		"oxlint": "^1.49.0",
 		"turbo": "^2.8.8"
 	}
