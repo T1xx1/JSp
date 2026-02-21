@@ -7,7 +7,7 @@ import chalk from 'chalk';
 import { Command } from 'commander';
 
 import { build } from '../compiler/index.js';
-import { getCompleteConfig, initConfig, mergeConfig, type Config } from '../config/index.js';
+import { getCompleteConfig, mergeConfig, type Config } from '../config/index.js';
 
 import { getRuntime } from './utils.js';
 
@@ -25,8 +25,6 @@ const RUNTIME = getRuntime();
 const shell = new Command();
 
 shell.name('JS+').version('0.1.0');
-
-shell.command('init').description('init JS+ config').action(initConfig);
 
 shell
 	.command('info')

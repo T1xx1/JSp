@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { join, normalize } from 'node:path';
 import { cwd } from 'node:process';
@@ -77,21 +77,6 @@ export const getConfig = (): Config => {
 	}
 
 	throw panic('MLA2Z3XNHX', 'Hit invalid code');
-};
-export const initConfig = () => {
-	if (existsConfig() !== false) {
-		throw printExitDiagnostic('Error', 'JS+ config is already initialized');
-	}
-
-	let configPath: string;
-
-	if (existsSync(join(cwd(), '.config'))) {
-		configPath = join(cwd(), '.config/jsp.json');
-	} else {
-		configPath = join(cwd(), 'jsp.config.json');
-	}
-
-	writeFileSync(configPath, JSON.stringify(initialConfig, null, '\t'), 'utf8');
 };
 
 /* complete config */
