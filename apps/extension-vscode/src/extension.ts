@@ -1,27 +1,9 @@
-import * as vscode from 'vscode';
+import { type ExtensionContext } from 'vscode';
 
-import { analyze } from './diagnostics.js';
+import { initDiagnosticsProvider } from './language/diagnostics.js';
 
-export function activate(ctx: vscode.ExtensionContext): void {
-	/* diagnostics */
-	const diagnosticsCollection = vscode.languages.createDiagnosticCollection('jsp');
-	ctx.subscriptions.push(diagnosticsCollection);
-
-	if (vscode.window.activeTextEditor) {
-		analyze(vscode.window.activeTextEditor.document, diagnosticsCollection);
-	}
-
-	/* init diagnostics */
-	vscode.workspace.textDocuments.forEach((document: vscode.TextDocument) => {
-		analyze(document, diagnosticsCollection);
-	});
-
-	/* diagnostics listener */
-	ctx.subscriptions.push(
-		vscode.workspace.onDidChangeTextDocument((e: vscode.TextDocumentChangeEvent) => {
-			analyze(e.document, diagnosticsCollection);
-		}),
-	);
+export function activate(ctx: ExtensionContext): void {
+	initDiagnosticsProvider(ctx);
 }
 
 export function deactivate(): void {}
