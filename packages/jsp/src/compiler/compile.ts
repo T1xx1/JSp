@@ -47,10 +47,10 @@ export type BabelResult = {
 	code: string;
 };
 export type BabelSyntaxError = {
-	code: 'BABEL_PARSE_ERROR';
-	reasonCode: 'UnexpectedToken';
+	code?: 'BABEL_PARSE_ERROR';
+	reasonCode?: 'UnexpectedToken';
 	message: string;
-	loc: {
+	loc?: {
 		line: number;
 		column: number;
 	};
@@ -172,30 +172,26 @@ export const compile = (filename: string, jspCode: string, config: CompleteConfi
 				code: null,
 			};
 		}
-
-		if (syntaxError.code === 'BABEL_PARSE_ERROR' && syntaxError.reasonCode === 'UnexpectedToken') {
-			return {
-				sourceMap: null,
-				diagnostics: [
-					{
-						type: 'Error',
-						category: 'Syntax',
-						message: syntaxError.message,
-						loc: {
-							/* line index start at 1 */
-							startLine: syntaxError.loc.line - 1,
-							startCharacter: syntaxError.loc.column,
-							endLine: syntaxError.loc.line - 1,
-							/* 1 length error */
-							endCharacter: syntaxError.loc.column + 1,
-						},
+		
+		return {
+			sourceMap: null,
+			diagnostics: [
+				{
+					type: 'Error',
+					category: 'Syntax',
+					message: syntaxError.message,
+					loc: {
+						/* line index start at 1 */
+						startLine: syntaxError.loc?.line ?? 1 - 1,
+						startCharacter: syntaxError.loc?.column ?? 0,
+						endLine: syntaxError.loc?.line ?? 1 - 1,
+						/* 1 length error */
+						endCharacter: syntaxError.loc?.column ?? 0 + 1,
 					},
-				],
-				code: null,
-			};
-		}
-
-		throw panic('ML42CWWWLS', syntaxError.message);
+				},
+			],
+			code: null,
+		};
 	}
 
 	if (!ts || !ts.ast || !ts.map || ts.code === null) {
