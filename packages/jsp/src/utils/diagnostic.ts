@@ -43,7 +43,7 @@ export const printCodeDiagnostic = (
 	code: string,
 ): void => {
 	console.log(
-		`${chalk.blue(filename)}:${chalk.yellow(range.startLine)}:${range.startCharacter} • ${colorDiagnostic(type, category + type)} • ${message}`,
+		`${chalk.blue(filename)}:${chalk.yellow(range.startLine)}:${chalk.yellow(range.startCharacter)} • ${colorDiagnostic(type, category + type)} • ${message}`,
 	);
 	console.log(`${chalk.bgWhite.black(range.startLine)} ${code}`);
 	console.log(
