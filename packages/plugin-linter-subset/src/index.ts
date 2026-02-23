@@ -55,7 +55,7 @@ export default function ({ types: t }: { types: typeof types }) {
 						type: 'Error',
 						category: 'Semantic',
 						message:
-							'`require()` is a deprecated artifact. Use `import` or `createRequire()` instead.',
+							'`require()` is CommonJS. Use ESM `import`s instead.',
 						loc: {
 							line: path.node.loc?.start.line!,
 							column: path.node.loc?.start.column!,
@@ -103,6 +103,25 @@ export default function ({ types: t }: { types: typeof types }) {
 						type: 'Error',
 						category: 'Semantic',
 						message: '`document.all` is a deprecated artifact',
+						loc: {
+							line: path.node.loc?.start.line!,
+							column: path.node.loc?.start.column!,
+						},
+					});
+				}
+
+				/* module.exports */
+				if (
+					t.isIdentifier(path.node.object) &&
+					path.node.object.name === 'module' &&
+					t.isIdentifier(path.node.property) &&
+					path.node.property.name === 'exports'
+				) {
+					/* @ts-expect-error */
+					state.file.ast.errors.push({
+						type: 'Error',
+						category: 'Semantic',
+						message: '`module.exports` is CommonJS. Use ESM `export`s instead.',
 						loc: {
 							line: path.node.loc?.start.line!,
 							column: path.node.loc?.start.column!,
