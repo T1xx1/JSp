@@ -1,4 +1,10 @@
-import { languages, FoldingRange, type ExtensionContext, type TextDocument } from 'vscode';
+import {
+	languages,
+	FoldingRange,
+	FoldingRangeKind,
+	type ExtensionContext,
+	type TextDocument,
+} from 'vscode';
 
 const provideFoldingRanges = (document: TextDocument): FoldingRange[] => {
 	if (document.languageId !== 'jsp') {
@@ -22,7 +28,7 @@ const provideFoldingRanges = (document: TextDocument): FoldingRange[] => {
 		if (/\}/.test(line)) {
 			const start = stack.pop()!;
 
-			ranges.push(new FoldingRange(start, i));
+			ranges.push(new FoldingRange(start, i, FoldingRangeKind.Region));
 		}
 	}
 
