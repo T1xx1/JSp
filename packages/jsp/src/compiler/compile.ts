@@ -19,7 +19,7 @@ import pluginProposalThrowExpressions from '@babel/plugin-proposal-throw-express
 import pluginSyntaxTypeScript from '@babel/plugin-syntax-typescript';
 import { type Program } from '@babel/types';
 import pluginLinterProposals from '@jsplang/plugin-linter-proposals';
-import pluginSubset from '@jsplang/plugin-linter-subset';
+import pluginLinterSubset from '@jsplang/plugin-linter-subset';
 import pluginTransformChainedComparisons from '@jsplang/plugin-transform-chained-comparisons';
 import pluginTransformNegativeArraySubscript from '@jsplang/plugin-transform-negative-array-subscript';
 import pluginTransformTypeofNullOperator from '@jsplang/plugin-transform-typeof-null-operator';
@@ -104,8 +104,8 @@ export const compile = (filename: string, jspCode: string, config: CompleteConfi
 				pluginTransformNegativeArraySubscript,
 				pluginTransformTypeofNullOperator,
 
-				/* subset */
-				pluginSubset,
+				/* subset linting */
+				pluginLinterSubset,
 
 				/* transform TC39 proposals sorted by scope */
 				pluginProposalThrowExpressions,
