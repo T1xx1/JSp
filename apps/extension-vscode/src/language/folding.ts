@@ -11,18 +11,18 @@ const provideFoldingRanges = (document: TextDocument): FoldingRange[] => {
 	for (let i = 0; i < document.lineCount; i++) {
 		const line = document.lineAt(i).text;
 
+		if (/\{/.test(line) && /\}/.test(line)) {
+			continue;
+		}
+
 		if (/\{/.test(line)) {
 			stack.push(i);
 		}
 
-		if (/\}/.test(line) && stack[stack.length - 1] !== i) {
+		if (/\}/.test(line)) {
 			const start = stack.pop()!;
 
-			const end = i;
-
-			if (end > start) {
-				ranges.push(new FoldingRange(start, end));
-			}
+			ranges.push(new FoldingRange(start, i));
 		}
 	}
 
