@@ -1,11 +1,9 @@
 import { type ExtensionContext } from 'vscode';
 
-import { initDiagnosticsProvider } from './language/diagnostics.js';
-import { initFoldingProvider } from './language/folding.js';
+import { initLanguageFeatures } from './language/index.js';
 
 export function activate(ctx: ExtensionContext): void {
-	initDiagnosticsProvider(ctx);
-	initFoldingProvider(ctx);
+	initLanguageFeatures(ctx);
 }
 
 export function deactivate(): void {}
