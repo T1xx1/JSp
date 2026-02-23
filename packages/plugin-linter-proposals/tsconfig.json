@@ -1,0 +1,27 @@
+{
+	"include": ["./src/**/*.ts"],
+	"compilerOptions": {
+		/* parser */
+		"skipLibCheck": true,
+		"strict": true,
+		"module": "NodeNext",
+		"moduleDetection": "force" /* force ESM */ ,
+		"resolveJsonModule": true /* JSON */,
+		/* type checking */
+		"exactOptionalPropertyTypes": true,
+		"noUncheckedIndexedAccess": true,
+		"noUncheckedSideEffectImports": true,
+		/* linter */
+		"noImplicitOverride": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"verbatimModuleSyntax": true,
+		/* compiler */
+		"target": "ESNext",
+		"sourceMap": true,
+		"declaration": true,
+		"declarationMap": true,
+		"outDir": "./dist"
+	}
+}
