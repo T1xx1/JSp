@@ -1,5 +1,6 @@
 import { types, type NodePath, type PluginPass } from '@babel/core';
 import {
+	identifier,
 	type ArrayPattern,
 	type CallExpression,
 	type Identifier,
@@ -24,7 +25,16 @@ export default function ({ types: t }: { types: typeof types }) {
 						},
 					});
 				}
-				if (path.node.elements.join('').includes('_')) {
+				if (
+					path.node.elements
+						.filter((identifier) => {
+							if (t.isIdentifier(identifier)) {
+								return identifier.name;
+							}
+						})
+						.join('')
+						.includes('_')
+				) {
 					/* @ts-expect-error */
 					state.file.ast.errors.push({
 						type: 'Error',
