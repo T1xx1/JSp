@@ -18,6 +18,7 @@ import pluginProposalThrowExpressions from '@babel/plugin-proposal-throw-express
 /* @ts-expect-error */
 import pluginSyntaxTypeScript from '@babel/plugin-syntax-typescript';
 import { type Program } from '@babel/types';
+import pluginLinterProposals from '@jsplang/plugin-linter-proposals';
 import pluginSubset from '@jsplang/plugin-subset';
 import pluginTransformChainedComparisons from '@jsplang/plugin-transform-chained-comparisons';
 import pluginTransformNegativeArraySubscript from '@jsplang/plugin-transform-negative-array-subscript';
@@ -130,6 +131,9 @@ export const compile = (filename: string, jspCode: string, config: CompleteConfi
 					},
 				],
 				pluginProposalExportDefaultFrom,
+
+				/* proposals linting */
+				pluginLinterProposals,
 
 				/* polyfills */
 				function ({ types: t }) {
