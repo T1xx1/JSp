@@ -31,8 +31,8 @@ export default function ({ types: t }: { types: typeof types }) {
 							category: 'Semantic',
 							message: 'JS+ is typechecked by default',
 							loc: {
-								line: path.node.loc?.start.line!,
-								column: path.node.loc?.start.column!,
+								line: comment.loc?.start.line!,
+								column: comment.loc?.start.column!,
 							},
 						});
 					}
@@ -43,8 +43,8 @@ export default function ({ types: t }: { types: typeof types }) {
 							category: 'Semantic',
 							message: 'JS+ is typechecked by default',
 							loc: {
-								line: path.node.loc?.start.line!,
-								column: path.node.loc?.start.column!,
+								line: comment.loc?.start.line!,
+								column: comment.loc?.start.column!,
 							},
 						});
 					}
@@ -55,8 +55,8 @@ export default function ({ types: t }: { types: typeof types }) {
 							category: 'Semantic',
 							message: '`@ts-ignore` is a deprecated artifact. Use `@ts-expect-error` instead',
 							loc: {
-								line: path.node.loc?.start.line!,
-								column: path.node.loc?.start.column!,
+								line: comment.loc?.start.line!,
+								column: comment.loc?.start.column!,
 							},
 						});
 					}
