@@ -23,6 +23,12 @@ import pluginLinterSubset from '@jsplang/plugin-lint-subset';
 import pluginTransformChainedComparisons from '@jsplang/plugin-transform-chained-comparisons';
 import pluginTransformNegativeArraySubscript from '@jsplang/plugin-transform-negative-array-subscript';
 import pluginTransformTypeofNullOperator from '@jsplang/plugin-transform-typeof-null-operator';
+import polyfillIteratorChunkingLint from '@jsplang/polyfill-iterator-chunking/lint';
+import polyfillMathClampLint from '@jsplang/polyfill-math-clamp/lint';
+import polyfillObjectPropertyCountLint from '@jsplang/polyfill-object-propertycount/lint';
+import polyfillPromiseAllKeyedLint from '@jsplang/polyfill-promise-allkeyed/lint';
+import polyfillPromiseIsPromiseLint from '@jsplang/polyfill-promise-ispromise/lint';
+import polyfillRandomNamespaceLint from '@jsplang/polyfill-random-namespace/lint';
 import { transpile } from 'typescript';
 
 import { tsconfig, type CompleteConfig } from '../config/index.js';
@@ -107,6 +113,9 @@ export const compile = (filename: string, jspCode: string, config: CompleteConfi
 				/* subset linting */
 				pluginLinterSubset,
 
+				/* proposals linting */
+				pluginLinterProposals,
+
 				/* transform TC39 proposals sorted by scope */
 				pluginProposalThrowExpressions,
 				pluginProposalDoExpressions,
@@ -132,8 +141,13 @@ export const compile = (filename: string, jspCode: string, config: CompleteConfi
 				],
 				pluginProposalExportDefaultFrom,
 
-				/* proposals linting */
-				pluginLinterProposals,
+				/* polyfills linting */
+				polyfillIteratorChunkingLint,
+				polyfillMathClampLint,
+				polyfillObjectPropertyCountLint,
+				polyfillPromiseAllKeyedLint,
+				polyfillPromiseIsPromiseLint,
+				polyfillRandomNamespaceLint,
 
 				/* polyfills */
 				function ({ types: t }) {
@@ -176,7 +190,7 @@ export const compile = (filename: string, jspCode: string, config: CompleteConfi
 				code: null,
 			};
 		}
-		
+
 		return {
 			sourceMap: null,
 			diagnostics: [
