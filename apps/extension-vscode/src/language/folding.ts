@@ -15,20 +15,37 @@ const provideFoldingRanges = (document: TextDocument): FoldingRange[] => {
 	const stack: number[] = [];
 
 	for (let i = 0; i < document.lineCount; i++) {
-		const line = document.lineAt(i).text;
-
-		if (/\{/.test(line) && /\}/.test(line)) {
-			continue;
-		}
-
-		if (/\{/.test(line)) {
+		const openFold = () => {
 			stack.push(i);
-		}
-
-		if (/\}/.test(line)) {
+		};
+		const closeFold = () => {
 			const start = stack.pop()!;
 
-			ranges.push(new FoldingRange(start, i, FoldingRangeKind.Region));
+			ranges.push(new FoldingRange(start, i - 1, FoldingRangeKind.Region));
+		};
+
+		const line = document.lineAt(i).text;
+
+		const openBracket = line.indexOf('{');
+		const closeBracket = line.indexOf('}');
+
+		/* { */
+		if (openBracket !== -1 && closeBracket === -1) {
+			openFold();
+		}
+		/* { } / } { */
+		if (openBracket !== -1 && closeBracket !== -1) {
+			if (openBracket < closeBracket) {
+				openFold();
+				closeFold();
+			} else {
+				closeFold();
+				openFold();
+			}
+		}
+		/* } */
+		if (openBracket === -1 && closeBracket !== -1) {
+			closeFold();
 		}
 	}
 
