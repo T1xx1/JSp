@@ -1,10 +1,42 @@
 import { types, type NodePath, type PluginPass } from '@babel/core';
-import type { CallExpression, VariableDeclarator } from '@babel/types';
+import {
+	type ArrayPattern,
+	type CallExpression,
+	type Identifier,
+	type VariableDeclarator,
+} from '@babel/types';
 
 export default function ({ types: t }: { types: typeof types }) {
 	return {
 		name: '@jsplang/plugin-linter-proposals',
 		visitor: {
+			ArrayPattern(path: NodePath<ArrayPattern>, state: PluginPass) {
+				/* discard bindings */
+				if (path.node.elements.includes(null)) {
+					/* @ts-expect-error */
+					state.file.ast.errors.push({
+						type: 'Error',
+						category: 'Semantic',
+						message: 'Prefer `void` discard binding over empty identifiers',
+						loc: {
+							line: path.node.loc?.start.line!,
+							column: path.node.loc?.start.column!,
+						},
+					});
+				}
+				if (path.node.elements.join('').includes('_')) {
+					/* @ts-expect-error */
+					state.file.ast.errors.push({
+						type: 'Error',
+						category: 'Semantic',
+						message: 'Prefer `void` discard binding over underscored identifiers',
+						loc: {
+							line: path.node.loc?.start.line!,
+							column: path.node.loc?.start.column!,
+						},
+					});
+				}
+			},
 			CallExpression(path: NodePath<CallExpression>, state: PluginPass) {
 				/* async do expressions */
 				if (
@@ -16,6 +48,21 @@ export default function ({ types: t }: { types: typeof types }) {
 						type: 'Error',
 						category: 'Semantic',
 						message: 'Prefer `async do` expressions over IIFEs',
+						loc: {
+							line: path.node.loc?.start.line!,
+							column: path.node.loc?.start.column!,
+						},
+					});
+				}
+			},
+			Identifier(path: NodePath<Identifier>, state: PluginPass) {
+				/* discard bindings */
+				if (path.node.name.includes('_')) {
+					/* @ts-expect-error */
+					state.file.ast.errors.push({
+						type: 'Error',
+						category: 'Semantic',
+						message: 'Prefer `void` discard binding over underscored identifiers',
 						loc: {
 							line: path.node.loc?.start.line!,
 							column: path.node.loc?.start.column!,
