@@ -40,7 +40,7 @@ export default function ({ types: t }: { types: typeof types }) {
 					state.file.ast.errors.push({
 						type: 'Error',
 						category: 'Semantic',
-						message: '`isNaN()` is a deprecated artifact. Use `Number.isNaN()` instead.',
+						message: '`isNaN()` is a deprecated artifact. Use `Number.isNaN()` instead',
 						loc: {
 							line: path.node.loc?.start.line!,
 							column: path.node.loc?.start.column!,
@@ -50,17 +50,15 @@ export default function ({ types: t }: { types: typeof types }) {
 
 				/* require() */
 				if (t.isIdentifier(path.node.callee) && path.node.callee.name === 'require') {
-					/* @ts-expect-error */
-					state.file.ast.errors.push({
+					throw {
 						type: 'Error',
-						category: 'Semantic',
-						message:
-							'`require()` is CommonJS. Use ESM `import`s instead.',
+						category: 'Syntax',
+						message: '`JS+ does not support CommonJS. Use ESM `import`s instead',
 						loc: {
 							line: path.node.loc?.start.line!,
 							column: path.node.loc?.start.column!,
 						},
-					});
+					};
 				}
 			},
 			ClassPrivateProperty(path: NodePath<ClassPrivateProperty>, state: PluginPass) {
@@ -69,7 +67,7 @@ export default function ({ types: t }: { types: typeof types }) {
 				state.file.ast.errors.push({
 					type: 'Error',
 					category: 'Semantic',
-					message: 'Prefer TypeScript `private` keyword over JavaScript # modifier',
+					message: "Don't use JavaScript # private modifier. Prefer TypeScript `private` keyword instead",
 					loc: {
 						line: path.node.loc?.start.line!,
 						column: path.node.loc?.start.column!,
@@ -83,7 +81,7 @@ export default function ({ types: t }: { types: typeof types }) {
 					state.file.ast.errors.push({
 						type: 'Error',
 						category: 'Semantic',
-						message: '`Date` is a deprecated artifact. Use `Temporal` instead.',
+						message: '`Date` is a deprecated artifact. Use `Temporal` instead',
 						loc: {
 							line: path.node.loc?.start.line!,
 							column: path.node.loc?.start.column!,
@@ -98,16 +96,15 @@ export default function ({ types: t }: { types: typeof types }) {
 					t.isIdentifier(path.node.property) &&
 					path.node.property.name === 'all'
 				) {
-					/* @ts-expect-error */
-					state.file.ast.errors.push({
+					throw {
 						type: 'Error',
-						category: 'Semantic',
+						category: 'Syntax',
 						message: '`document.all` is a deprecated artifact',
 						loc: {
 							line: path.node.loc?.start.line!,
 							column: path.node.loc?.start.column!,
 						},
-					});
+					};
 				}
 
 				/* module.exports */
@@ -117,16 +114,15 @@ export default function ({ types: t }: { types: typeof types }) {
 					t.isIdentifier(path.node.property) &&
 					path.node.property.name === 'exports'
 				) {
-					/* @ts-expect-error */
-					state.file.ast.errors.push({
+					throw {
 						type: 'Error',
-						category: 'Semantic',
-						message: '`module.exports` is CommonJS. Use ESM `export`s instead.',
+						category: 'Syntax',
+						message: 'JS+ does not support CommonJS. Use ESM `export`s instead',
 						loc: {
 							line: path.node.loc?.start.line!,
 							column: path.node.loc?.start.column!,
 						},
-					});
+					};
 				}
 			},
 			Identifier(path: NodePath<Identifier>, state: PluginPass) {
@@ -152,7 +148,8 @@ export default function ({ types: t }: { types: typeof types }) {
 					state.file.ast.errors.push({
 						type: 'Error',
 						category: 'Semantic',
-						message: 'Prefer `parseInt()` or `parseFloat()` over `+` implicit coercion',
+						message:
+							"Don't implicitly coerce strings with `+`. Use `parseInt()` or `parseFloat()` instead",
 						loc: {
 							line: path.node.loc?.start.line!,
 							column: path.node.loc?.start.column!,
