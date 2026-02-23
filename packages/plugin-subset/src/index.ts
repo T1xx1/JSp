@@ -7,7 +7,6 @@ import type {
 	MemberExpression,
 	SourceLocation,
 	UnaryExpression,
-	VariableDeclarator,
 } from '@babel/types';
 
 export type State = PluginPass & {
@@ -139,17 +138,6 @@ export default function ({ types: t }: { types: typeof types }) {
 						type: 'Error',
 						category: 'Semantic',
 						message: "`-0` doesn't make sense. Use `0` instead",
-						loc: loc(path.node.loc),
-					});
-				}
-			},
-			VariableDeclarator(path: NodePath<VariableDeclarator>, state: State) {
-				/* variable declaration with ternaries */
-				if (t.isConditionalExpression(path.node.init)) {
-					state.file.ast.errors.push({
-						type: 'Error',
-						category: 'Semantic',
-						message: 'Prefer `do` expressions over ternaries for variable declarations',
 						loc: loc(path.node.loc),
 					});
 				}
