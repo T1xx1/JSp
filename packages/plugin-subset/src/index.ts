@@ -81,24 +81,6 @@ export default function ({ types: t }: { types: typeof types }) {
 				});
 			},
 			MemberExpression(path: NodePath<MemberExpression>, state: State) {
-				/* .at() and .with() */
-				if (t.isIdentifier(path.node.property) && path.node.property.name === 'at') {
-					state.file.ast.errors.push({
-						type: 'Error',
-						category: 'Semantic',
-						message: 'Prefer negative array subscripts over `.at()`',
-						loc: loc(path.node.loc),
-					});
-				}
-				if (t.isIdentifier(path.node.property) && path.node.property.name === 'with') {
-					state.file.ast.errors.push({
-						type: 'Error',
-						category: 'Semantic',
-						message: 'Prefer negative array subscripts over `.with()`',
-						loc: loc(path.node.loc),
-					});
-				}
-
 				/* Date */
 				if (t.isIdentifier(path.node.object) && path.node.object.name === 'Date') {
 					state.file.ast.errors.push({
