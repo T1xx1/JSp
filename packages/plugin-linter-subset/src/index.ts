@@ -34,6 +34,20 @@ export default function ({ types: t }: { types: typeof types }) {
 				}
 			},
 			CallExpression(path: NodePath<CallExpression>, state: PluginPass) {
+				/* isNaN() */
+				if (t.isIdentifier(path.node.callee) && path.node.callee.name === 'isNaN') {
+					/* @ts-expect-error */
+					state.file.ast.errors.push({
+						type: 'Error',
+						category: 'Semantic',
+						message: '`isNaN()` is a deprecated artifact. Use `Number.isNaN()` instead.',
+						loc: {
+							line: path.node.loc?.start.line!,
+							column: path.node.loc?.start.column!,
+						},
+					});
+				}
+
 				/* require() */
 				if (t.isIdentifier(path.node.callee) && path.node.callee.name === 'require') {
 					/* @ts-expect-error */
