@@ -1,6 +1,5 @@
 import { types, type NodePath, type PluginPass } from '@babel/core';
 import {
-	identifier,
 	type ArrayPattern,
 	type CallExpression,
 	type Identifier,
