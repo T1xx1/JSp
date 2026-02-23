@@ -324,7 +324,20 @@ importers:
         version: 5.9.3
 
   packages/template-polyfill:
+    dependencies:
+      '@babel/core':
+        specifier: ^7.28.5
+        version: 7.29.0
     devDependencies:
+      '@babel/types':
+        specifier: ^7.29.0
+        version: 7.29.0
+      '@jsplang/tester':
+        specifier: workspace:*
+        version: link:../tester
+      '@types/babel__core':
+        specifier: ^7.20.5
+        version: 7.20.5
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
