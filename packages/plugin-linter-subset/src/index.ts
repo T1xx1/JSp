@@ -5,6 +5,8 @@ import type {
 	ClassPrivateProperty,
 	Identifier,
 	MemberExpression,
+	Program,
+	SourceLocation,
 	UnaryExpression,
 } from '@babel/types';
 
@@ -12,6 +14,42 @@ export default function ({ types: t }: { types: typeof types }) {
 	return {
 		name: '@jsplang/plugin-linter-subset',
 		visitor: {
+			Program(path: NodePath<Program>, state: PluginPass) {
+				const allComments =
+					/* @ts-expect-error */
+					path.hub.file.ast.comments ??
+					([] as {
+						value: string;
+						loc: SourceLocation;
+					}[]);
+
+				for (const comment of allComments) {
+					if (comment.value.includes('@ts-check')) {
+						/* @ts-expect-error */
+						state.file.ast.errors.push({
+							type: 'Error',
+							category: 'Semantic',
+							message: 'JS+ is typechecked by TypeScript by default',
+							loc: {
+								line: path.node.loc?.start.line!,
+								column: path.node.loc?.start.column!,
+							},
+						});
+					}
+					if (comment.value.includes('@ts-ignore')) {
+						/* @ts-expect-error */
+						state.file.ast.errors.push({
+							type: 'Error',
+							category: 'Semantic',
+							message: '`@ts-ignore` is a deprecated artifact. Use `@ts-expect-error` instead',
+							loc: {
+								line: path.node.loc?.start.line!,
+								column: path.node.loc?.start.column!,
+							},
+						});
+					}
+				}
+			},
 			BinaryExpression(path: NodePath<BinaryExpression>, state: PluginPass) {
 				/* 0/0 */
 				if (
@@ -67,7 +105,8 @@ export default function ({ types: t }: { types: typeof types }) {
 				state.file.ast.errors.push({
 					type: 'Error',
 					category: 'Semantic',
-					message: "Don't use JavaScript # private modifier. Prefer TypeScript `private` keyword instead",
+					message:
+						"Don't use JavaScript # private modifier. Prefer TypeScript `private` keyword instead",
 					loc: {
 						line: path.node.loc?.start.line!,
 						column: path.node.loc?.start.column!,
