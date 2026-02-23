@@ -5,7 +5,7 @@
 		"skipLibCheck": true,
 		"strict": true,
 		"module": "NodeNext",
-		"moduleDetection": "force" /* force ESM */ ,
+		"moduleDetection": "force" /* force ESM */,
 		"resolveJsonModule": true /* JSON */,
 		/* type checking */
 		"exactOptionalPropertyTypes": true,

@@ -7,8 +7,8 @@
 			"default": "./src/index.ts"
 		},
 		"./lint": {
-			"default": "./dist/lint.js",
-			"types": "./dist/lint.d.ts"
+			"types": "./dist/lint.d.ts",
+			"default": "./dist/lint.js"
 		}
 	},
 	"scripts": {
