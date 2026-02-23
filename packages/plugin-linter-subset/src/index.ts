@@ -29,7 +29,19 @@ export default function ({ types: t }: { types: typeof types }) {
 						state.file.ast.errors.push({
 							type: 'Error',
 							category: 'Semantic',
-							message: 'JS+ is typechecked by TypeScript by default',
+							message: 'JS+ is typechecked by default',
+							loc: {
+								line: path.node.loc?.start.line!,
+								column: path.node.loc?.start.column!,
+							},
+						});
+					}
+					if (comment.value.includes('@ts-nocheck')) {
+						/* @ts-expect-error */
+						state.file.ast.errors.push({
+							type: 'Error',
+							category: 'Semantic',
+							message: 'JS+ is typechecked by default',
 							loc: {
 								line: path.node.loc?.start.line!,
 								column: path.node.loc?.start.column!,
