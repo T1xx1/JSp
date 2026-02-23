@@ -39,7 +39,7 @@ export const loc = (
 
 export default function ({ types: t }: { types: typeof types }) {
 	return {
-		name: '@jsplang/plugin-linter',
+		name: '@jsplang/plugin-linter-subset',
 		visitor: {
 			BinaryExpression(path: NodePath<BinaryExpression>, state: State) {
 				/* 0/0 */

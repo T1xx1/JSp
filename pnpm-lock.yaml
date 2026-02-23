@@ -120,9 +120,9 @@ importers:
       '@jsplang/plugin-linter-proposals':
         specifier: workspace:*
         version: link:../plugin-linter-proposals
-      '@jsplang/plugin-subset':
+      '@jsplang/plugin-linter-subset':
         specifier: workspace:*
-        version: link:../plugin-subset
+        version: link:../plugin-linter-subset
       '@jsplang/plugin-transform-chained-comparisons':
         specifier: workspace:*
         version: link:../plugin-transform-chained-comparisons
@@ -192,11 +192,11 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/plugin-subset:
+  packages/plugin-linter-subset:
     dependencies:
       '@babel/core':
         specifier: ^7.28.5
-        version: 7.28.5
+        version: 7.29.0
     devDependencies:
       '@babel/types':
         specifier: ^7.29.0
