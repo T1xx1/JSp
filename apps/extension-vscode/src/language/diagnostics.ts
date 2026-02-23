@@ -21,7 +21,7 @@ const getDiagnosticSeverity = (type: JspDiagnostic['type']): DiagnosticSeverity 
 	}
 };
 
-export const analyzeDiagnostics = (
+const analyzeDiagnostics = (
 	document: TextDocument,
 	diagnosticsCollection: DiagnosticCollection,
 ) => {
