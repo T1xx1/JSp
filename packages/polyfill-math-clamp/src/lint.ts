@@ -19,6 +19,8 @@ export default function ({ types: t }: { types: typeof types }) {
 							t.isIdentifier(arg.callee.object) &&
 							arg.callee.object.name === 'Math' &&
 							t.isIdentifier(arg.callee.property) &&
+							/* @ts-expect-error */
+							arg.callee.property.name !== path.node.callee.property.name &&
 							['max', 'min'].includes(arg.callee.property.name)
 						);
 					})
