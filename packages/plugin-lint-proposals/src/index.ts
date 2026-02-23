@@ -67,7 +67,7 @@ export default function ({ types: t }: { types: typeof types }) {
 			},
 			Identifier(path: NodePath<Identifier>, state: PluginPass) {
 				/* discard bindings */
-				if (path.node.name.includes('_')) {
+				if (path.node.name.startsWith('_')) {
 					/* @ts-expect-error */
 					state.file.ast.errors.push({
 						type: 'Error',
