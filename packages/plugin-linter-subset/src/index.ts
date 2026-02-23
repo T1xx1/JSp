@@ -5,43 +5,14 @@ import type {
 	ClassPrivateProperty,
 	Identifier,
 	MemberExpression,
-	SourceLocation,
 	UnaryExpression,
 } from '@babel/types';
-
-export type State = PluginPass & {
-	file: {
-		ast: {
-			errors: {
-				type: 'Warning' | 'Error';
-				category: 'Semantic';
-				message: string;
-				loc: {
-					line: number;
-					column: number;
-				};
-			}[];
-		};
-	};
-};
-
-export const loc = (
-	l: undefined | null | SourceLocation,
-): {
-	line: number;
-	column: number;
-} => {
-	return {
-		line: l?.start.line!,
-		column: l?.start.column!,
-	};
-};
 
 export default function ({ types: t }: { types: typeof types }) {
 	return {
 		name: '@jsplang/plugin-linter-subset',
 		visitor: {
-			BinaryExpression(path: NodePath<BinaryExpression>, state: State) {
+			BinaryExpression(path: NodePath<BinaryExpression>, state: PluginPass) {
 				/* 0/0 */
 				if (
 					path.node.operator === '/' &&
@@ -50,43 +21,59 @@ export default function ({ types: t }: { types: typeof types }) {
 					t.isNumericLiteral(path.node.right) &&
 					path.node.right.value === 0
 				) {
+					/* @ts-expect-error */
 					state.file.ast.errors.push({
 						type: 'Error',
 						category: 'Semantic',
 						message: "`0/0` doesn't make sense",
-						loc: loc(path.node.loc),
+						loc: {
+							line: path.node.loc?.start.line!,
+							column: path.node.loc?.start.column!,
+						},
 					});
 				}
 			},
-			CallExpression(path: NodePath<CallExpression>, state: State) {
+			CallExpression(path: NodePath<CallExpression>, state: PluginPass) {
 				/* require() */
 				if (t.isIdentifier(path.node.callee) && path.node.callee.name === 'require') {
+					/* @ts-expect-error */
 					state.file.ast.errors.push({
 						type: 'Error',
 						category: 'Semantic',
 						message:
 							'`require()` is a deprecated artifact. Use `import` or `createRequire()` instead.',
-						loc: loc(path.node.loc),
+						loc: {
+							line: path.node.loc?.start.line!,
+							column: path.node.loc?.start.column!,
+						},
 					});
 				}
 			},
-			ClassPrivateProperty(path: NodePath<ClassPrivateProperty>, state: State) {
-				/* # modifier */
+			ClassPrivateProperty(path: NodePath<ClassPrivateProperty>, state: PluginPass) {
+				/* # private modifier */
+				/* @ts-expect-error */
 				state.file.ast.errors.push({
 					type: 'Error',
 					category: 'Semantic',
 					message: 'Prefer TypeScript `private` keyword over JavaScript # modifier',
-					loc: loc(path.node.loc),
+					loc: {
+						line: path.node.loc?.start.line!,
+						column: path.node.loc?.start.column!,
+					},
 				});
 			},
-			MemberExpression(path: NodePath<MemberExpression>, state: State) {
+			MemberExpression(path: NodePath<MemberExpression>, state: PluginPass) {
 				/* Date */
 				if (t.isIdentifier(path.node.object) && path.node.object.name === 'Date') {
+					/* @ts-expect-error */
 					state.file.ast.errors.push({
-						type: 'Warning' /* temporary */,
+						type: 'Error',
 						category: 'Semantic',
 						message: '`Date` is a deprecated artifact. Use `Temporal` instead.',
-						loc: loc(path.node.loc),
+						loc: {
+							line: path.node.loc?.start.line!,
+							column: path.node.loc?.start.column!,
+						},
 					});
 				}
 
@@ -97,34 +84,46 @@ export default function ({ types: t }: { types: typeof types }) {
 					t.isIdentifier(path.node.property) &&
 					path.node.property.name === 'all'
 				) {
+					/* @ts-expect-error */
 					state.file.ast.errors.push({
 						type: 'Error',
 						category: 'Semantic',
 						message: '`document.all` is a deprecated artifact',
-						loc: loc(path.node.loc),
+						loc: {
+							line: path.node.loc?.start.line!,
+							column: path.node.loc?.start.column!,
+						},
 					});
 				}
 			},
-			Identifier(path: NodePath<Identifier>, state: State) {
+			Identifier(path: NodePath<Identifier>, state: PluginPass) {
 				/* undefined */
 				if (path.node.name === 'undefined' && !t.isTSUndefinedKeyword(path.parent)) {
+					/* @ts-expect-error */
 					state.file.ast.errors.push({
 						type: 'Error',
 						category: 'Semantic',
 						message:
 							'`undefined` should not be used explicitly. For nullish initializations use `null` instead',
-						loc: loc(path.node.loc),
+						loc: {
+							line: path.node.loc?.start.line!,
+							column: path.node.loc?.start.column!,
+						},
 					});
 				}
 			},
-			UnaryExpression(path: NodePath<UnaryExpression>, state: State) {
+			UnaryExpression(path: NodePath<UnaryExpression>, state: PluginPass) {
 				/* + number coercion */
 				if (path.node.operator === '+' && t.isStringLiteral(path.node.argument)) {
+					/* @ts-expect-error */
 					state.file.ast.errors.push({
 						type: 'Error',
 						category: 'Semantic',
 						message: 'Prefer `parseInt()` or `parseFloat()` over `+` implicit coercion',
-						loc: loc(path.node.loc),
+						loc: {
+							line: path.node.loc?.start.line!,
+							column: path.node.loc?.start.column!,
+						},
 					});
 				}
 
@@ -134,11 +133,15 @@ export default function ({ types: t }: { types: typeof types }) {
 					t.isNumericLiteral(path.node.argument) &&
 					path.node.argument.value === 0
 				) {
+					/* @ts-expect-error */
 					state.file.ast.errors.push({
 						type: 'Error',
 						category: 'Semantic',
 						message: "`-0` doesn't make sense. Use `0` instead",
-						loc: loc(path.node.loc),
+						loc: {
+							line: path.node.loc?.start.line!,
+							column: path.node.loc?.start.column!,
+						},
 					});
 				}
 			},
