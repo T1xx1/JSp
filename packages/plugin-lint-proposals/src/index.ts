@@ -8,7 +8,7 @@ import {
 
 export default function ({ types: t }: { types: typeof types }) {
 	return {
-		name: '@jsplang/plugin-linter-proposals',
+		name: '@jsplang/plugin-lint-proposals',
 		visitor: {
 			ArrayPattern(path: NodePath<ArrayPattern>, state: PluginPass) {
 				/* discard bindings */

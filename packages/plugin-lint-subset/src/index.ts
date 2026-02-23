@@ -12,7 +12,7 @@ import type {
 
 export default function ({ types: t }: { types: typeof types }) {
 	return {
-		name: '@jsplang/plugin-linter-subset',
+		name: '@jsplang/plugin-lint-subset',
 		visitor: {
 			Program(path: NodePath<Program>, state: PluginPass) {
 				const allComments =

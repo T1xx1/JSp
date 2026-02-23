@@ -18,8 +18,8 @@ import pluginProposalThrowExpressions from '@babel/plugin-proposal-throw-express
 /* @ts-expect-error */
 import pluginSyntaxTypeScript from '@babel/plugin-syntax-typescript';
 import { type Program } from '@babel/types';
-import pluginLinterProposals from '@jsplang/plugin-linter-proposals';
-import pluginLinterSubset from '@jsplang/plugin-linter-subset';
+import pluginLinterProposals from '@jsplang/plugin-lint-proposals';
+import pluginLinterSubset from '@jsplang/plugin-lint-subset';
 import pluginTransformChainedComparisons from '@jsplang/plugin-transform-chained-comparisons';
 import pluginTransformNegativeArraySubscript from '@jsplang/plugin-transform-negative-array-subscript';
 import pluginTransformTypeofNullOperator from '@jsplang/plugin-transform-typeof-null-operator';

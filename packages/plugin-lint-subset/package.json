@@ -1,5 +1,5 @@
 {
-	"name": "@jsplang/plugin-linter-proposals",
+	"name": "@jsplang/plugin-lint-subset",
 	"version": "0.1.0",
 	"type": "module",
 	"exports": {
