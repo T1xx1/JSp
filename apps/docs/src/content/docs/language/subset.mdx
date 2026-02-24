@@ -1,38 +1,40 @@
 ---
-title: Subset
+title: Differences from JS/TS
+aliases:
+  - Subset
+  - Breaking changes
 lastUpdated: 2026-02-12
 ---
 
 import Yb from '~/components/yb.astro';
 
-JS+ is a TypeScript superset, but with stricter harnesses regarding certain ambiguous JavaScript behaviours.
+JS+ is a TypeScript superset. By default all TypeScript syntax is valid in JS+, expect for the following exceptions:
 
-:::caution
-These harnesses won't block you from compiling JS+ to TypeScript or JavaScript.
-:::
+## Breaking changes
 
-## Errors
+- CommonJS is not supported. Everything is a ESM (everything is strict by default)
+- `document.all` is not allowed ([MDN](https://developer.mozilla.org/en-US/docs/Web/API/Document/all))
+- `typeof null -> 'null'` ([Typeof null operator](/language/runtime/typeofnulloperator))
+- Negative array subscripts actually index array from the end ([Negative array subscript](/language/runtime/negativearraysubscript))
+- Chained comparisons work out of the box ([Chained comparisons](/language/runtime/chainedcomparisons))
 
-### `+` number coercion
-Prefer using `parseInt()` and `parseFloat()` instead of `+` for string-number coercion.
+## Errors/Warnings
 
-### `document.all` is deprecated
-The `document.all` property is deprecated, and has strange behaviours hardcoded into JavaScript.
+These errors/warnings won't block you from compiling JS+ into TypeScript/JavaScript
 
-### Chained comparisons
-[Read more here](/language/runtime/chainedcomparisons).
-
-### Mathematical sins
-`-0`, `0/0` should not be valid things.
-
-### Negative array subscript
-[Read more here](/language/runtime/negativearraysubscript).
-
-### `typeof null` operator
-[Read more here](/language/runtime/typeofnulloperator).
-
-### `undefined`
-`undefined` by definition should neither be redefined nor used explicitly.
+- `undefined` should not be used explicitly. For nullish initializations use `null` instead
+- `-0`, `0/0` don't make sense
+- Don't implicitly coerce strings with `+`. Use `parseInt()` or `parseFloat()` instead
+- `isNaN()` is a deprecated artifact. Use `Number.isNaN()` instead
+- `Date` is a deprecated artifact. Use `Temporal` instead
+- Errors/warnings related to better syntax implementations ([Features](/language/features))
+	:::tip[Example]
+	- Prefer `do` expressions over ternaries for variable declarations ([Do expressions](/language/features/doexpressions))
+	- Prefer `void` discard binding over underscored identifiers ([Discard binding](/language/features/discardbinding))
+	:::
+- Don't use JavaScript `#` private modifier. Prefer TypeScript `private` keyword instead
+- `@ts-check` and `@ts-check` are not allowed. JS+ is typechecked by default and typechecking cannot be turned off
+- `@ts-ignore` is a deprecated artifact. Use `@ts-expect-error` instead
 
 ## Wtf
 

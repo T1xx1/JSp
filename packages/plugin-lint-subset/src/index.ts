@@ -41,7 +41,7 @@ export default function ({ types: t }: { types: typeof types }) {
 						state.file.ast.errors.push({
 							type: 'Error',
 							category: 'Semantic',
-							message: 'JS+ is typechecked by default',
+							message: 'In JS+ typechecking cannot be turned off',
 							loc: {
 								line: comment.loc?.start.line!,
 								column: comment.loc?.start.column!,
