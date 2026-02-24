@@ -5,6 +5,10 @@
 	"exports": {
 		".": {
 			"default": "./src/index.ts"
+		},
+		"./lint": {
+			"types": "./dist/lint.d.ts",
+			"default": "./dist/lint.js"
 		}
 	},
 	"scripts": {
@@ -12,6 +16,12 @@
 		"build": "tsc"
 	},
 	"devDependencies": {
+		"@babel/types": "^7.29.0",
+		"@jsplang/tester": "workspace:*",
+		"@types/babel__core": "^7.20.5",
 		"typescript": "^5.9.3"
+	},
+	"peerDependencies": {
+		"@babel/core": "^7.28.5"
 	}
 }

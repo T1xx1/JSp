@@ -6,7 +6,7 @@
 		"strict": true,
 		"module": "ESNext",
 		"moduleResolution": "bundler",
-		"moduleDetection": "force" /* force ESM */ ,
+		"moduleDetection": "force" /* force ESM */,
 		/* type checking */
 		"exactOptionalPropertyTypes": true,
 		"noUncheckedIndexedAccess": true,

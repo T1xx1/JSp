@@ -1,19 +1,17 @@
 {
-	"name": "@jsplang/polyfill-object-propertycount",
+	"name": "@jsplang/plugin-lint-subset",
 	"version": "0.1.0",
 	"type": "module",
 	"exports": {
 		".": {
-			"default": "./src/index.ts"
-		},
-		"./lint": {
-			"types": "./dist/lint.d.ts",
-			"default": "./dist/lint.js"
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
 		}
 	},
 	"scripts": {
 		"dev": "tsc -w",
-		"build": "tsc"
+		"build": "tsc",
+		"test": "tester"
 	},
 	"devDependencies": {
 		"@babel/types": "^7.29.0",
