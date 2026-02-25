@@ -49,7 +49,7 @@
 				},
 				"emitSourceMaps": {
 					"type": "boolean",
-					"description": "Emit source maps in the `emitDir`. Defaults to false",
+					"description": "Emit source maps in the `emitDir`. Defaults to `false`",
 					"default": false
 				}
 			}
