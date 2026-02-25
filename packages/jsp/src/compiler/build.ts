@@ -32,11 +32,13 @@ export const build = async (config: CompleteConfig) => {
 		}
 
 		/* emit source maps */
-		if (config.compiler.emitSourceMaps) {
+		if (config.compiler.emitEnabled && config.compiler.emitSourceMaps) {
 			emitSourceMap(filename, out.sourceMap, config);
 		}
 
-		emitCode(filename, out.code, config);
+		if (config.compiler.emitEnabled) {
+			emitCode(filename, out.code, config);
+		}
 	}
 
 	emitPolyfills(config);

@@ -36,6 +36,11 @@
 			"description": "Configuration for the compilation process",
 			"additionalProperties": false,
 			"properties": {
+				"emitEnabled": {
+					"type": "boolean",
+					"description": "Enable file emitting. Defaults to `true`",
+					"default": true
+				},
 				"emitLang": {
 					"type": "string",
 					"enum": ["JavaScript", "TypeScript"],

@@ -3,13 +3,14 @@ import { createRequire } from 'node:module';
 import { join, normalize } from 'node:path';
 import { cwd } from 'node:process';
 
-import { panic, printExitDiagnostic, tryCatchSync } from '../utils/index.js';
+import { panic, printDiagnostic, printExitDiagnostic, tryCatchSync } from '../utils/index.js';
 
 export type Config = {
 	rootDir?: string;
 	include?: string[];
 	exclude?: string[];
 	compiler?: {
+		emitEnabled?: boolean;
 		emitLang?: 'JavaScript' | 'TypeScript';
 		emitDir?: string;
 		emitSourceMaps?: boolean;
@@ -85,6 +86,7 @@ export const completeConfig: CompleteConfig = {
 	include: ['./**'],
 	exclude: [],
 	compiler: {
+		emitEnabled: true,
 		emitLang: 'TypeScript',
 		emitDir: './dist',
 		emitSourceMaps: false,
@@ -101,6 +103,7 @@ export const mergeConfig = (config: Config): CompleteConfig => {
 		include: config.include ?? completeConfig.include,
 		exclude: config.exclude ?? completeConfig.exclude,
 		compiler: {
+			emitEnabled: config.compiler?.emitEnabled ?? completeConfig.compiler.emitEnabled,
 			emitLang: config.compiler?.emitLang ?? completeConfig.compiler.emitLang,
 			emitDir: config.compiler?.emitDir ?? completeConfig.compiler.emitDir,
 			emitSourceMaps: config.compiler?.emitSourceMaps ?? completeConfig.compiler.emitSourceMaps,
@@ -111,6 +114,25 @@ export const mergeConfig = (config: Config): CompleteConfig => {
  * Parses JS+ config and throws on errors.
  */
 export const parseConfig = (config: CompleteConfig): void => {
+	if (config.compiler.emitEnabled === false && config.compiler.emitLang) {
+		printDiagnostic(
+			'Warning',
+			'`compiler.emitLang` is ignored when `compiler.emitEnabled` is disabled',
+		);
+	}
+	if (config.compiler.emitEnabled === false && config.compiler.emitDir) {
+		printDiagnostic(
+			'Warning',
+			'`compiler.emitDir` is ignored when `compiler.emitEnabled` is disabled',
+		);
+	}
+	if (config.compiler.emitEnabled === false && config.compiler.emitSourceMaps) {
+		printDiagnostic(
+			'Warning',
+			'`compiler.emitSourceMaps` is ignored when `compiler.emitEnabled` is disabled',
+		);
+	}
+
 	/* emitDir */
 	const emitDir = normalize(config.compiler.emitDir);
 
