@@ -11,8 +11,8 @@ export type Config = {
 	exclude?: string[];
 	compiler?: {
 		emitEnabled?: boolean;
-		emitLang?: 'JavaScript' | 'TypeScript';
 		emitDir?: string;
+		emitLang?: 'JavaScript' | 'TypeScript';
 		emitSourceMaps?: boolean;
 	};
 };
@@ -87,8 +87,8 @@ export const completeConfig: CompleteConfig = {
 	exclude: [],
 	compiler: {
 		emitEnabled: true,
-		emitLang: 'TypeScript',
 		emitDir: './dist',
+		emitLang: 'TypeScript',
 		emitSourceMaps: false,
 	},
 };
@@ -104,8 +104,8 @@ export const mergeConfig = (config: Config): CompleteConfig => {
 		exclude: config.exclude ?? completeConfig.exclude,
 		compiler: {
 			emitEnabled: config.compiler?.emitEnabled ?? completeConfig.compiler.emitEnabled,
-			emitLang: config.compiler?.emitLang ?? completeConfig.compiler.emitLang,
 			emitDir: config.compiler?.emitDir ?? completeConfig.compiler.emitDir,
+			emitLang: config.compiler?.emitLang ?? completeConfig.compiler.emitLang,
 			emitSourceMaps: config.compiler?.emitSourceMaps ?? completeConfig.compiler.emitSourceMaps,
 		},
 	};
@@ -114,16 +114,16 @@ export const mergeConfig = (config: Config): CompleteConfig => {
  * Parses JS+ config and throws on errors.
  */
 export const parseConfig = (config: CompleteConfig): void => {
-	if (config.compiler.emitEnabled === false && config.compiler.emitLang) {
-		printDiagnostic(
-			'Warning',
-			'`compiler.emitLang` is ignored when `compiler.emitEnabled` is disabled',
-		);
-	}
 	if (config.compiler.emitEnabled === false && config.compiler.emitDir) {
 		printDiagnostic(
 			'Warning',
 			'`compiler.emitDir` is ignored when `compiler.emitEnabled` is disabled',
+		);
+	}
+	if (config.compiler.emitEnabled === false && config.compiler.emitLang) {
+		printDiagnostic(
+			'Warning',
+			'`compiler.emitLang` is ignored when `compiler.emitEnabled` is disabled',
 		);
 	}
 	if (config.compiler.emitEnabled === false && config.compiler.emitSourceMaps) {

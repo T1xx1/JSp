@@ -41,16 +41,16 @@
 					"description": "Enable file emitting. Defaults to `true`",
 					"default": true
 				},
+				"emitDir": {
+					"type": "string",
+					"description": "Directory to compile JS+ into. Defaults to './dist'",
+					"default": "./dist"
+				},
 				"emitLang": {
 					"type": "string",
 					"enum": ["JavaScript", "TypeScript"],
 					"description": "Language to compile JS+ into. Defaults to 'JavaScript'",
 					"default": "TypeScript"
-				},
-				"emitDir": {
-					"type": "string",
-					"description": "Directory to compile JS+ into. Defaults to './dist'",
-					"default": "./dist"
 				},
 				"emitSourceMaps": {
 					"type": "boolean",
