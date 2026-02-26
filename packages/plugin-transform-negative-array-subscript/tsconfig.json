@@ -19,9 +19,7 @@
 		"verbatimModuleSyntax": true,
 		/* compiler */
 		"target": "ESNext",
-		"sourceMap": true,
 		"declaration": true,
-		"declarationMap": true,
 		"outDir": "./dist"
 	}
 }
