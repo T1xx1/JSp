@@ -2,7 +2,9 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join, parse, relative } from 'node:path';
 import { cwd } from 'node:process';
 
-import type { CompleteConfig } from '../config/index.js';
+import { transpile } from 'typescript';
+
+import { tsconfig, type CompleteConfig } from '../config/index.js';
 
 import type { SourceMap } from './compile.js';
 
@@ -22,6 +24,10 @@ export const getCodeEmitFilename = (filename: string, config: CompleteConfig) =>
 };
 
 export const emitCode = (filename: string, outCode: string, config: CompleteConfig) => {
+	if (config.compiler.emitEnabled && config.compiler.emitLang === 'JavaScript') {
+		outCode = transpile(outCode, tsconfig.compilerOptions);
+	}
+
 	emit(getCodeEmitFilename(filename, config), outCode, config);
 };
 export const emitSourceMap = (

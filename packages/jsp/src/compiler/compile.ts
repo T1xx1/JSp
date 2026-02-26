@@ -73,7 +73,7 @@ export type Transformation =
 	  }
 	| BabelResult;
 
-export type Out =
+export type OutTs =
 	| {
 			sourceMap: null;
 			diagnostics: Diagnostic[];
@@ -85,7 +85,10 @@ export type Out =
 			code: string;
 	  };
 
-export const compile = (filename: string, jspCode: string, config: CompleteConfig): Out => {
+/**
+ * Compile JS+ code to TypeScript code
+ */
+export const compile = (filename: string, jspCode: string, config: CompleteConfig): OutTs => {
 	const { data: ts, error: syntaxError } = tryCatchSync<BabelResult, BabelSyntaxError>(() => {
 		return transformSync(jspCode, {
 			filename,
@@ -241,14 +244,9 @@ export const compile = (filename: string, jspCode: string, config: CompleteConfi
 		});
 	const tsDiagnostics = parseTs(filename, ts.code);
 
-	const code =
-		config.compiler.emitLang === 'TypeScript'
-			? ts.code
-			: transpile(ts.code, tsconfig.compilerOptions);
-
 	return {
 		sourceMap: ts.map,
 		diagnostics: [...babelDiagnostics, ...tsDiagnostics],
-		code,
+		code: ts.code,
 	};
 };

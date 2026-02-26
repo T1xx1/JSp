@@ -6,7 +6,7 @@ import { SourceMapConsumer } from 'source-map';
 import { type CompleteConfig } from '../config/index.js';
 import { printCodeDiagnostic } from '../utils/diagnostic.js';
 
-import { compile, type Out } from './compile.js';
+import { compile, type OutTs } from './compile.js';
 import { emitCode, emitSourceMap } from './emit.js';
 import { getInputs } from './inputs.js';
 import { emitPolyfills } from './polyfill.js';
@@ -19,25 +19,25 @@ export const build = async (config: CompleteConfig) => {
 	for (const filename of filenames) {
 		const jspCode = readFileSync(filename, 'utf8');
 
-		const out = compile(filename, jspCode, config);
+		const outTs = compile(filename, jspCode, config);
 
-		if (out.diagnostics.length > 0) {
-			errors += out.diagnostics.length;
+		if (outTs.diagnostics.length > 0) {
+			errors += outTs.diagnostics.length;
 
-			await printCodeDiagnostics(filename, jspCode, out);
+			await printCodeDiagnostics(filename, jspCode, outTs);
 		}
 
-		if (out.code === null) {
+		if (outTs.code === null) {
 			continue;
 		}
 
 		/* emit source maps */
 		if (config.compiler.emitEnabled && config.compiler.emitSourceMaps) {
-			emitSourceMap(filename, out.sourceMap, config);
+			emitSourceMap(filename, outTs.sourceMap, config);
 		}
 
 		if (config.compiler.emitEnabled) {
-			emitCode(filename, out.code, config);
+			emitCode(filename, outTs.code, config);
 		}
 	}
 
@@ -50,10 +50,10 @@ export const build = async (config: CompleteConfig) => {
 	}
 };
 
-export const printCodeDiagnostics = async (filename: string, jspCode: string, out: Out) => {
-	const sourceMapper = out.sourceMap === null ? null : await new SourceMapConsumer(out.sourceMap);
+export const printCodeDiagnostics = async (filename: string, jspCode: string, outTs: OutTs) => {
+	const sourceMapper = outTs.sourceMap === null ? null : await new SourceMapConsumer(outTs.sourceMap);
 
-	for (const error of out.diagnostics) {
+	for (const error of outTs.diagnostics) {
 		const startLoc =
 			sourceMapper === null
 				? null

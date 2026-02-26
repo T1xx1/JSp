@@ -31,11 +31,11 @@ const analyzeDiagnostics = (
 
 	diagnosticsCollection.set(document.uri, []);
 
-	const out = compile(document.fileName, document.getText(), completeConfig);
+	const outTs = compile(document.fileName, document.getText(), completeConfig);
 
 	diagnosticsCollection.set(
 		document.uri,
-		out.diagnostics.map((error) => {
+		outTs.diagnostics.map((error) => {
 			return new Diagnostic(
 				new Range(
 					error.loc.startLine,
