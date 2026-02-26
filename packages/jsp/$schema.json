@@ -38,7 +38,7 @@
 			"properties": {
 				"emitEnabled": {
 					"type": "boolean",
-					"description": "Enable file emitting. Defaults to `true`",
+					"description": "Enable file emitting. Defaults to `true`. If set to `false` the JS+ will only act as a syntax and type checker",
 					"default": true
 				},
 				"emitDir": {
