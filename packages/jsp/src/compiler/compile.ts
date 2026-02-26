@@ -162,10 +162,10 @@ export const compile = (filename: string, jspCode: string, config: Config): OutT
 										relative(config.rootDir, filename).split('\\').length - 1,
 									);
 
-									path.unshiftContainer(
+									/* path.unshiftContainer(
 										'body',
 										t.importDeclaration([], t.stringLiteral(join(relativeDir, jspDir))),
-									);
+									); */
 								},
 							},
 						},

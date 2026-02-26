@@ -1,0 +1,23 @@
+{
+	"name": "@jsplang/vite-plugin-jsp",
+	"version": "0.1.0",
+	"type": "module",
+	"scripts": {
+		"dev": "tsc -w",
+		"build": "tsc"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"peerDependencies": {
+		"@jsplang/jsp": "^0.1.0",
+		"typescript": "^5.9.3",
+		"vite": "^7.3.1"
+	},
+	"devDependencies": {
+		"@jsplang/jsp": "workspace:*"
+	}
+}

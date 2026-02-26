@@ -13,7 +13,9 @@
 		"extension-vscode:build": "turbo build --filter=extension-vscode... --filter=!@jsplang/tester",
 		"jsp:dev": "turbo dev --filter=@jsplang/jsp... --filter=!@jsplang/tester",
 		"jsp:build": "turbo build --filter=@jsplang/jsp... --filter=!@jsplang/tester",
-		"jsp:test": "turbo test --filter=@jsplang/jsp..."
+		"jsp:test": "turbo test --filter=@jsplang/jsp...",
+		"vite-plugin-jsp:dev": "turbo dev --filter=@jsplang/vite-plugin-jsp... --filter=!@jsplang/tester",
+		"vite-plugin-jsp:build": "turbo build --filter=@jsplang/vite-plugin-jsp... --filter=!@jsplang/tester"
 	},
 	"devDependencies": {
 		"oxfmt": "^0.34.0",
