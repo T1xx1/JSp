@@ -1,9 +1,9 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { join, normalize } from 'node:path';
 import { cwd } from 'node:process';
 
-import { panic, printExitDiagnostic, tryCatchSync } from '../utils/index.js';
+import { printExitDiagnostic, tryCatchSync } from '../utils/index.js';
 
 /* prettier-ignore */
 export type UserConfig = {

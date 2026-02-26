@@ -29,9 +29,8 @@ import polyfillObjectPropertyCountLint from '@jsplang/polyfill-object-propertyco
 import polyfillPromiseAllKeyedLint from '@jsplang/polyfill-promise-allkeyed/lint';
 import polyfillPromiseIsPromiseLint from '@jsplang/polyfill-promise-ispromise/lint';
 import polyfillRandomNamespaceLint from '@jsplang/polyfill-random-namespace/lint';
-import { transpile } from 'typescript';
 
-import { tsconfig, type Config } from '../config/index.js';
+import type { Config } from '../config/index.js';
 import { panic, tryCatchSync } from '../utils/index.js';
 
 import { parseTs, type Diagnostic } from './parse.js';
