@@ -89,9 +89,7 @@
 					"base": "tsconfig",
 					"color": "#31C433",
 					"fileNames": [
-						".config/jsp.json",
 						".config/jsp.ts",
-						"jsp.config.json",
 						"jsp.config.ts"
 					]
 				}

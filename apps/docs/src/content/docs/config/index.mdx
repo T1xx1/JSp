@@ -5,43 +5,20 @@ lastUpdated: 2026-02-04
 
 You can configure some aspects of JS+.
 
-JS+ will automatically try to resolve a config in the `.config` folder or in the root folder of your project. You can use both `.json` or `.ts` extension.
+JS+ will automatically try to resolve a config in the `.config` folder or in the root folder of your project.
 
 If multiple configs are found, JS+ will only consider the most relevant one, following this order:
 
-1. `.config/jsp.json`
-2. `.config/jsp.ts`
-3. `jsp.config.json`
-4. `jsp.config.ts`
-
-For `.json` configs you can use the following `$schema` for IntelliSense:
-
-```jsonc
-/* .config/jsp.json or jsp.config.json */
-{
-	"$schema": "https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/$schema.json",
-}
-```
-
-If JS+ is installed as a dependency, you can also fetch it directly from the package:
-```jsonc
-/* .config/jsp.json or jsp.config.json */
-{
-	"$schema": "./node_modules/@jsplang/jsp/$schema.json",
-}
-```
-
-> [Source](https://raw.githubusercontent.com/t1xx1/jsp/refs/heads/main/packages/jsp/$schema.json)
-
-For `.ts` configs you can import the `Config` type for type safety:
+1. `.config/jsp.ts`
+2. `jsp.config.ts`
 
 ```ts
 /* .config/jsp.ts or jsp.config.ts */
-import type { Config } from '@jsplang/jsp/config';
+import type { UserConfig } from '@jsplang/jsp/config';
 
 export default {
 	/* ... */
-} satisfies Config;
+} satisfies UserConfig;
 ```
 
 > [Source](https://github.com/t1xx1/jsp/blob/main/packages/jsp/src/config/config.ts)

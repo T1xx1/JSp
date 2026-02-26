@@ -23,14 +23,8 @@ export type UserConfig = {
  * @returns `false` or the user config path
  */
 export const existsUserConfig = (): false | string => {
-	if (existsSync(join(cwd(), 'config/jsp.json'))) {
-		return join(cwd(), 'config/jsp.json');
-	}
 	if (existsSync(join(cwd(), 'config/jsp.ts'))) {
 		return join(cwd(), 'config/jsp.ts');
-	}
-	if (existsSync(join(cwd(), 'jsp.config.json'))) {
-		return join(cwd(), 'jsp.config.json');
 	}
 	if (existsSync(join(cwd(), 'jsp.config.ts'))) {
 		return join(cwd(), 'jsp.config.ts');
@@ -49,33 +43,15 @@ export const getUserConfig = (): UserConfig => {
 		return {};
 	}
 
-	/* `.json` config */
-	if (userConfigPath.endsWith('.json')) {
-		const { data, error } = tryCatchSync(() => {
-			return JSON.parse(readFileSync(userConfigPath, 'utf8')) as UserConfig;
-		});
+	const { data, error } = tryCatchSync(() => {
+		return createRequire(import.meta.url)(userConfigPath) as UserConfig;
+	});
 
-		if (error || !data) {
-			throw printExitDiagnostic('Error', 'Cannot parse config');
-		}
-
-		return data;
+	if (error || !data) {
+		throw printExitDiagnostic('Error', 'Cannot import config');
 	}
 
-	/* `.ts` config */
-	if (userConfigPath.endsWith('.ts')) {
-		const { data, error } = tryCatchSync(() => {
-			return createRequire(import.meta.url)(userConfigPath) as UserConfig;
-		});
-
-		if (error || !data) {
-			throw printExitDiagnostic('Error', 'Cannot import config');
-		}
-
-		return data;
-	}
-
-	throw panic('MLA2Z3XNHX', 'Invalid case hit');
+	return data;
 };
 
 /* prettier-ignore */
