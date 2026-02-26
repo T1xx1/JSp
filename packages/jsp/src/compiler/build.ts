@@ -31,13 +31,11 @@ export const build = async (config: Config) => {
 			continue;
 		}
 
-		/* emit source maps */
-		if (config.compiler.emitEnabled && config.compiler.emitSourceMaps) {
-			emitSourceMap(filename, outTs.sourceMap, config);
-		}
-
-		if (config.compiler.emitEnabled) {
+		if (config.compiler.emitCode) {
 			emitCode(filename, outTs.code, config);
+		}
+		if (config.compiler.emitSourceMaps) {
+			emitSourceMap(filename, outTs.sourceMap, config);
 		}
 	}
 

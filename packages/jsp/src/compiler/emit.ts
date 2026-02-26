@@ -19,12 +19,12 @@ export const emit = (filename: string, data: string, config: Config) => {
 export const getCodeEmitFilename = (filename: string, config: Config) => {
 	return relative(config.rootDir, filename).replace(
 		'.jsp',
-		config.compiler.emitLang === 'TypeScript' ? '.ts' : '.js',
+		config.compiler.emitCodeLang === 'TypeScript' ? '.ts' : '.js',
 	);
 };
 
 export const emitCode = (filename: string, outCode: string, config: Config) => {
-	if (config.compiler.emitEnabled && config.compiler.emitLang === 'JavaScript') {
+	if (config.compiler.emitCodeLang === 'JavaScript') {
 		outCode = transpile(outCode, tsconfig.compilerOptions);
 	}
 

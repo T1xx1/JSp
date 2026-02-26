@@ -73,32 +73,36 @@ The `node_modules` and [`emitDir`](#emitdir) folders are excluded by default
 
 Configuration for the compilation process
 
-#### `emitEnabled`
+#### `emitDir`
 
-Enable file emitting
+Directory to compile JS+ files into
+
+Default: `./dist`
+
+:::note
+The emit directory cannot be the [`rootDir`](#rootdir) nor in [`include`](#include).
+:::
+
+#### `emitCode`
+
+Emit transpiled JS+
 
 Default: `true`
 
 When set to `false` the JS+ will only act as a syntax and type checker
 
-#### `emitLang`
+#### `emitCodeLang`
 
 Language to compile JS+ into. Can be `JavaScript` or `TypeScript`
 
 Default: `TypeScript`
 
-#### `emitDir`
-
-directory to compile JS+ files into
-
-Default: `./dist`
-
-:::note
-The emit directory cannot be the [`rootDir`](#rootdir) nor included in [`include`](#include).
-:::
-
 #### `emitSourceMaps`
 
-Emit source maps in the [`emitDir`](#emitdir)
+Emit source maps
 
 Default: `false`
+
+:::note
+Cannot emit source maps if [`emitCode`](#emitcode) is `false`
+:::

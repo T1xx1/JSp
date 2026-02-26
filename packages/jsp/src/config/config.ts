@@ -3,16 +3,17 @@ import { createRequire } from 'node:module';
 import { join, normalize } from 'node:path';
 import { cwd } from 'node:process';
 
-import { panic, printDiagnostic, printExitDiagnostic, tryCatchSync } from '../utils/index.js';
+import { panic, printExitDiagnostic, tryCatchSync } from '../utils/index.js';
 
+/* prettier-ignore */
 export type UserConfig = {
 	rootDir?: string;
 	include?: string[];
 	exclude?: string[];
 	compiler?: {
-		emitEnabled?: boolean;
 		emitDir?: string;
-		emitLang?: 'JavaScript' | 'TypeScript';
+		emitCode: boolean;
+		emitCodeLang?: 'JavaScript' | 'TypeScript';
 		emitSourceMaps?: boolean;
 	};
 };
@@ -77,6 +78,7 @@ export const getUserConfig = (): UserConfig => {
 	throw panic('MLA2Z3XNHX', 'Invalid case hit');
 };
 
+/* prettier-ignore */
 export type Config = Required<UserConfig> & {
 	compiler: Required<UserConfig['compiler']>;
 };
@@ -86,71 +88,58 @@ export const defaultConfig: Config = {
 	include: ['./**'],
 	exclude: [],
 	compiler: {
-		emitEnabled: true,
 		emitDir: './dist',
-		emitLang: 'TypeScript',
+		emitCode: true,
+		emitCodeLang: 'TypeScript',
 		emitSourceMaps: false,
 	},
 };
 
 /**
- * Merge missing user config properties with the default config
+ * Parse and merge missing user config properties with the default config
  */
 export const mergeConfig = (userConfig: UserConfig): Config => {
-	return {
+	const config: Partial<Record<keyof Config, any>> & {
+		compiler: Partial<Record<keyof Config['compiler'], any>>;
+	} = {
 		rootDir: userConfig.rootDir ?? defaultConfig.rootDir,
 		include: userConfig.include ?? defaultConfig.include,
 		exclude: userConfig.exclude ?? defaultConfig.exclude,
-		compiler: {
-			emitEnabled: userConfig.compiler?.emitEnabled ?? defaultConfig.compiler.emitEnabled,
-			emitDir: userConfig.compiler?.emitDir ?? defaultConfig.compiler.emitDir,
-			emitLang: userConfig.compiler?.emitLang ?? defaultConfig.compiler.emitLang,
-			emitSourceMaps: userConfig.compiler?.emitSourceMaps ?? defaultConfig.compiler.emitSourceMaps,
-		},
+		compiler: {},
 	};
-};
-
-/**
- * Parses JS+ config and throws on errors
- */
-export const parseConfig = (config: Config): void => {
-	if (config.compiler.emitEnabled === false && config.compiler.emitDir) {
-		printDiagnostic(
-			'Warning',
-			'`compiler.emitDir` is ignored when `compiler.emitEnabled` is disabled',
-		);
-	}
-	if (config.compiler.emitEnabled === false && config.compiler.emitLang) {
-		printDiagnostic(
-			'Warning',
-			'`compiler.emitLang` is ignored when `compiler.emitEnabled` is disabled',
-		);
-	}
-	if (config.compiler.emitEnabled === false && config.compiler.emitSourceMaps) {
-		printDiagnostic(
-			'Warning',
-			'`compiler.emitSourceMaps` is ignored when `compiler.emitEnabled` is disabled',
-		);
-	}
 
 	/* emitDir */
-	const emitDir = normalize(config.compiler.emitDir);
+	const emitDir = userConfig.compiler?.emitDir ?? defaultConfig.compiler.emitDir;
+	const normalizedEmitDir = normalize(emitDir);
 
-	if (config.include.includes(emitDir)) {
-		throw printExitDiagnostic('Error', '`compiler.emitDir` cannot be included in `include`');
+	if (config.include.includes(normalizedEmitDir)) {
+		throw printExitDiagnostic('Error', '`compiler.emitDir` cannot be in `include`');
 	}
-	if (emitDir === normalize(config.rootDir)) {
-		throw printExitDiagnostic('Error', '`compiler.emitDir` cannot be the root directory');
+	if (normalizedEmitDir === normalize(config.rootDir)) {
+		throw printExitDiagnostic('Error', '`compiler.emitDir` cannot be the `rootDir`');
 	}
+
+	config.compiler.emitDir = emitDir;
+
+	config.compiler.emitCodeLang =
+		userConfig.compiler?.emitCodeLang ?? defaultConfig.compiler.emitCodeLang;
+
+	/* emitSourceMaps */
+	const emitSourceMaps =
+		userConfig.compiler?.emitSourceMaps ?? defaultConfig.compiler.emitSourceMaps;
+
+	if (config.compiler.emitCode === false && emitSourceMaps === true) {
+		throw printExitDiagnostic('Error', 'Cannot emit source maps if `compiler.emitCode` is `false`');
+	}
+
+	config.compiler.emitSourceMaps = emitSourceMaps;
+
+	return config as Config;
 };
 
 /**
  * Get the config in the project directory
  */
 export const getConfig = (): Config => {
-	const userConfig = mergeConfig(getUserConfig());
-
-	parseConfig(userConfig);
-
-	return userConfig;
+	return mergeConfig(getUserConfig());
 };
