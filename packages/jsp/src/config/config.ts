@@ -5,7 +5,7 @@ import { cwd } from 'node:process';
 
 import { panic, printDiagnostic, printExitDiagnostic, tryCatchSync } from '../utils/index.js';
 
-export type Config = {
+export type UserConfig = {
 	rootDir?: string;
 	include?: string[];
 	exclude?: string[];
@@ -18,10 +18,10 @@ export type Config = {
 };
 
 /**
- * Checks if a JS+ config exists in the current working directory.
- * @returns `false` or the config path
+ * Checks if a user config exists in the project directory
+ * @returns `false` or the user config path
  */
-export const existsConfig = (): false | string => {
+export const existsUserConfig = (): false | string => {
 	if (existsSync(join(cwd(), 'config/jsp.json'))) {
 		return join(cwd(), 'config/jsp.json');
 	}
@@ -38,50 +38,50 @@ export const existsConfig = (): false | string => {
 	return false;
 };
 /**
- * Get the JS+ config in the current working directory.
- * @returns `{}` or the JS+ config
+ * Get the user config in the project directory
+ * @returns `{}` or the user config
  */
-export const getConfig = (): Config => {
-	let configPath = existsConfig();
+export const getUserConfig = (): UserConfig => {
+	let userConfigPath = existsUserConfig();
 
-	if (configPath === false) {
+	if (userConfigPath === false) {
 		return {};
 	}
 
 	/* `.json` config */
-	if (configPath.endsWith('.json')) {
+	if (userConfigPath.endsWith('.json')) {
 		const { data, error } = tryCatchSync(() => {
-			return JSON.parse(readFileSync(configPath, 'utf8')) as Config;
+			return JSON.parse(readFileSync(userConfigPath, 'utf8')) as UserConfig;
 		});
 
 		if (error || !data) {
-			throw printExitDiagnostic('Error', 'Cannot parse JS+ config');
+			throw printExitDiagnostic('Error', 'Cannot parse config');
 		}
 
 		return data;
 	}
 
 	/* `.ts` config */
-	if (configPath.endsWith('.ts')) {
+	if (userConfigPath.endsWith('.ts')) {
 		const { data, error } = tryCatchSync(() => {
-			return createRequire(import.meta.url)(configPath) as Config;
+			return createRequire(import.meta.url)(userConfigPath) as UserConfig;
 		});
 
 		if (error || !data) {
-			throw printExitDiagnostic('Error', 'Cannot require JS+ config');
+			throw printExitDiagnostic('Error', 'Cannot import config');
 		}
 
 		return data;
 	}
 
-	throw panic('MLA2Z3XNHX', 'Hit invalid code');
+	throw panic('MLA2Z3XNHX', 'Invalid case hit');
 };
 
-/* complete config */
-export type CompleteConfig = Required<Config> & {
-	compiler: Required<Config['compiler']>;
+export type Config = Required<UserConfig> & {
+	compiler: Required<UserConfig['compiler']>;
 };
-export const completeConfig: CompleteConfig = {
+
+export const defaultConfig: Config = {
 	rootDir: './src',
 	include: ['./**'],
 	exclude: [],
@@ -94,26 +94,26 @@ export const completeConfig: CompleteConfig = {
 };
 
 /**
- * Merge missing JS+ config properties with the default JS+ config properties.
- * @returns JS+ config with all properties
+ * Merge missing user config properties with the default config
  */
-export const mergeConfig = (config: Config): CompleteConfig => {
+export const mergeConfig = (userConfig: UserConfig): Config => {
 	return {
-		rootDir: config.rootDir ?? completeConfig.rootDir,
-		include: config.include ?? completeConfig.include,
-		exclude: config.exclude ?? completeConfig.exclude,
+		rootDir: userConfig.rootDir ?? defaultConfig.rootDir,
+		include: userConfig.include ?? defaultConfig.include,
+		exclude: userConfig.exclude ?? defaultConfig.exclude,
 		compiler: {
-			emitEnabled: config.compiler?.emitEnabled ?? completeConfig.compiler.emitEnabled,
-			emitDir: config.compiler?.emitDir ?? completeConfig.compiler.emitDir,
-			emitLang: config.compiler?.emitLang ?? completeConfig.compiler.emitLang,
-			emitSourceMaps: config.compiler?.emitSourceMaps ?? completeConfig.compiler.emitSourceMaps,
+			emitEnabled: userConfig.compiler?.emitEnabled ?? defaultConfig.compiler.emitEnabled,
+			emitDir: userConfig.compiler?.emitDir ?? defaultConfig.compiler.emitDir,
+			emitLang: userConfig.compiler?.emitLang ?? defaultConfig.compiler.emitLang,
+			emitSourceMaps: userConfig.compiler?.emitSourceMaps ?? defaultConfig.compiler.emitSourceMaps,
 		},
 	};
 };
+
 /**
- * Parses JS+ config and throws on errors.
+ * Parses JS+ config and throws on errors
  */
-export const parseConfig = (config: CompleteConfig): void => {
+export const parseConfig = (config: Config): void => {
 	if (config.compiler.emitEnabled === false && config.compiler.emitDir) {
 		printDiagnostic(
 			'Warning',
@@ -143,14 +143,14 @@ export const parseConfig = (config: CompleteConfig): void => {
 		throw printExitDiagnostic('Error', '`compiler.emitDir` cannot be the root directory');
 	}
 };
+
 /**
- * Get the JS+ complete config in the current working directory.
- * `@returns` The JS+ complete config with all properties populated
+ * Get the config in the project directory
  */
-export const getCompleteConfig = (): CompleteConfig => {
-	const completeConfig = mergeConfig(getConfig());
+export const getConfig = (): Config => {
+	const userConfig = mergeConfig(getUserConfig());
 
-	parseConfig(completeConfig);
+	parseConfig(userConfig);
 
-	return completeConfig;
+	return userConfig;
 };

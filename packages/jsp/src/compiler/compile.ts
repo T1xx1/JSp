@@ -31,7 +31,7 @@ import polyfillPromiseIsPromiseLint from '@jsplang/polyfill-promise-ispromise/li
 import polyfillRandomNamespaceLint from '@jsplang/polyfill-random-namespace/lint';
 import { transpile } from 'typescript';
 
-import { tsconfig, type CompleteConfig } from '../config/index.js';
+import { tsconfig, type Config } from '../config/index.js';
 import { panic, tryCatchSync } from '../utils/index.js';
 
 import { parseTs, type Diagnostic } from './parse.js';
@@ -88,7 +88,7 @@ export type OutTs =
 /**
  * Compile JS+ code to TypeScript code
  */
-export const compile = (filename: string, jspCode: string, config: CompleteConfig): OutTs => {
+export const compile = (filename: string, jspCode: string, config: Config): OutTs => {
 	const { data: ts, error: syntaxError } = tryCatchSync<BabelResult, BabelSyntaxError>(() => {
 		return transformSync(jspCode, {
 			filename,

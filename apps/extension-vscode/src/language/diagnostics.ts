@@ -1,5 +1,5 @@
 import { compile, type Diagnostic as JspDiagnostic } from '@jsplang/jsp/compiler';
-import { completeConfig } from '@jsplang/jsp/config';
+import { defaultConfig } from '@jsplang/jsp/config';
 import {
 	languages,
 	workspace,
@@ -31,7 +31,7 @@ const analyzeDiagnostics = (
 
 	diagnosticsCollection.set(document.uri, []);
 
-	const outTs = compile(document.fileName, document.getText(), completeConfig);
+	const outTs = compile(document.fileName, document.getText(), defaultConfig);
 
 	diagnosticsCollection.set(
 		document.uri,

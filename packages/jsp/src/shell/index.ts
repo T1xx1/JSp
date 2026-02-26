@@ -7,7 +7,7 @@ import chalk from 'chalk';
 import { Command } from 'commander';
 
 import { build } from '../compiler/index.js';
-import { getCompleteConfig } from '../config/index.js';
+import { getConfig } from '../config/index.js';
 
 import { getRuntime, type PackageJson } from './utils.js';
 
@@ -50,7 +50,7 @@ shell
 	.description('compile JS+ file')
 	.argument('<filename>', 'JS+ file to compile')
 	.action(async (filename) => {
-		const config = getCompleteConfig();
+		const config = getConfig();
 
 		config.include = [filename];
 
@@ -62,7 +62,7 @@ shell
 	.description('compile and execute JS+ file')
 	.argument('<filename>', 'JS+ file to compile and execute')
 	.action(async (filename) => {
-		const config = getCompleteConfig();
+		const config = getConfig();
 
 		config.include = [filename];
 
@@ -75,7 +75,7 @@ shell
 	.command('build')
 	.description('compile JS+ files')
 	.action(async () => {
-		await build(getCompleteConfig());
+		await build(getConfig());
 	});
 
 /*  */

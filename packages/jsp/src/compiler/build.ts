@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import chalk from 'chalk';
 import { SourceMapConsumer } from 'source-map';
 
-import { type CompleteConfig } from '../config/index.js';
+import { type Config } from '../config/index.js';
 import { printCodeDiagnostic } from '../utils/diagnostic.js';
 
 import { compile, type OutTs } from './compile.js';
@@ -11,7 +11,7 @@ import { emitCode, emitSourceMap } from './emit.js';
 import { getInputs } from './inputs.js';
 import { emitPolyfills } from './polyfill.js';
 
-export const build = async (config: CompleteConfig) => {
+export const build = async (config: Config) => {
 	const filenames = getInputs(config);
 
 	let errors = 0;
@@ -51,7 +51,8 @@ export const build = async (config: CompleteConfig) => {
 };
 
 export const printCodeDiagnostics = async (filename: string, jspCode: string, outTs: OutTs) => {
-	const sourceMapper = outTs.sourceMap === null ? null : await new SourceMapConsumer(outTs.sourceMap);
+	const sourceMapper =
+		outTs.sourceMap === null ? null : await new SourceMapConsumer(outTs.sourceMap);
 
 	for (const error of outTs.diagnostics) {
 		const startLoc =
