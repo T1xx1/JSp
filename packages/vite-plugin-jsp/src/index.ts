@@ -1,9 +1,8 @@
-import { compile } from '@jsplang/jsp/compiler';
-import { getConfig } from '@jsplang/jsp/config';
+import { compile, getCompleteConfig } from '@jsplang/jsp/compiler';
 import { transformWithEsbuild, type Plugin } from 'vite';
 
 export default function (): Plugin<any> {
-	const config = getConfig();
+	const config = getCompleteConfig();
 
 	return {
 		name: '@jsplang/vite-plugin-jsp',

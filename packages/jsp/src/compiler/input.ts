@@ -1,14 +1,13 @@
 import { globSync } from 'node:fs';
 import { join, normalize } from 'node:path';
 
-import type { Config } from '../config/index.js';
-import { printExitDiagnostic } from '../utils/index.js';
+import { printExitDiagnostic, type CompleteConfig } from './_.js';
 
 /**
  * Get JS+ inputs in the current working directory.
  * @returns JS+ filenames
  */
-export const getInputs = (config: Config): string[] => {
+export const getInputs = (config: CompleteConfig): string[] => {
 	const inputs = globSync(
 		config.include.map((filename) => {
 			return join(config.rootDir, normalize(filename));

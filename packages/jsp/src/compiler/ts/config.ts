@@ -1,6 +1,6 @@
 import { ModuleDetectionKind, ModuleKind, ScriptTarget, type CompilerOptions } from 'typescript';
 
-export const tsconfig = {
+export const config = {
 	compilerOptions: {
 		/* parser */
 		skipLibCheck: true,

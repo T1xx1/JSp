@@ -14,11 +14,11 @@ If multiple configs are found, JS+ will only consider the most relevant one, fol
 
 ```ts
 /* .config/jsp.ts or jsp.config.ts */
-import type { UserConfig } from '@jsplang/jsp/config';
+import type { Config } from '@jsplang/jsp/config';
 
 export default {
 	/* ... */
-} satisfies UserConfig;
+} satisfies Config;
 ```
 
 > [Source](https://github.com/t1xx1/jsp/blob/main/packages/jsp/src/config/config.ts)

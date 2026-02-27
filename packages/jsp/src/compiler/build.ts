@@ -3,15 +3,18 @@ import { readFileSync } from 'node:fs';
 import chalk from 'chalk';
 import { SourceMapConsumer } from 'source-map';
 
-import { type Config } from '../config/index.js';
-import { printCodeDiagnostic } from '../utils/diagnostic.js';
+import {
+	compile,
+	emitInterals,
+	emitSourceMap,
+	emitSrcCode,
+	getInputs,
+	printCodeDiagnostic,
+	type CompleteConfig,
+	type OutTs,
+} from './_.js';
 
-import { compile, type OutTs } from './compile.js';
-import { emitCode, emitSourceMap } from './emit.js';
-import { getInputs } from './inputs.js';
-import { emitPolyfills } from './polyfill.js';
-
-export const build = async (config: Config) => {
+export const build = async (config: CompleteConfig) => {
 	const filenames = getInputs(config);
 
 	let errors = 0;
@@ -32,18 +35,16 @@ export const build = async (config: Config) => {
 		}
 
 		if (config.compiler.emitCode) {
-			emitCode(filename, outTs.code, config);
+			emitSrcCode(filename, outTs.code, config);
 		}
 		if (config.compiler.emitSourceMaps) {
 			emitSourceMap(filename, outTs.sourceMap, config);
 		}
 	}
 
-	emitPolyfills(config);
+	emitInterals(config);
 
-	if (errors === 0) {
-		console.log(chalk.green('JS+ compiled successfully'));
-	} else {
+	if (errors > 0) {
 		console.log(chalk.red(`Found ${errors} error${errors > 1 ? 's' : ''}`));
 	}
 };

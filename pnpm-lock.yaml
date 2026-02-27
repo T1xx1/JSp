@@ -126,12 +126,6 @@ importers:
       '@babel/plugin-syntax-typescript':
         specifier: ^7.28.6
         version: 7.28.6(@babel/core@7.29.0)
-      '@jsplang/plugin-lint-proposals':
-        specifier: workspace:*
-        version: link:../plugin-lint-proposals
-      '@jsplang/plugin-lint-subset':
-        specifier: workspace:*
-        version: link:../plugin-lint-subset
       '@jsplang/plugin-transform-chained-comparisons':
         specifier: workspace:*
         version: link:../plugin-transform-chained-comparisons
@@ -178,44 +172,6 @@ importers:
       '@types/node':
         specifier: ^25.2.3
         version: 25.2.3
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
-  packages/plugin-lint-proposals:
-    dependencies:
-      '@babel/core':
-        specifier: ^7.28.5
-        version: 7.29.0
-    devDependencies:
-      '@babel/types':
-        specifier: ^7.29.0
-        version: 7.29.0
-      '@jsplang/tester':
-        specifier: workspace:*
-        version: link:../tester
-      '@types/babel__core':
-        specifier: ^7.20.5
-        version: 7.20.5
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
-  packages/plugin-lint-subset:
-    dependencies:
-      '@babel/core':
-        specifier: ^7.28.5
-        version: 7.29.0
-    devDependencies:
-      '@babel/types':
-        specifier: ^7.29.0
-        version: 7.29.0
-      '@jsplang/tester':
-        specifier: workspace:*
-        version: link:../tester
-      '@types/babel__core':
-        specifier: ^7.20.5
-        version: 7.20.5
       typescript:
         specifier: ^5.9.3
         version: 5.9.3

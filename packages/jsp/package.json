@@ -2,17 +2,13 @@
 	"name": "@jsplang/jsp",
 	"version": "0.1.0",
 	"bin": {
-		"jsp": "./bin/jsp.js"
+		"jsp": "./bin/jsp"
 	},
 	"type": "module",
 	"exports": {
 		"./compiler": {
-			"types": "./dist/compiler/index.d.ts",
-			"default": "./dist/compiler/index.js"
-		},
-		"./config": {
-			"types": "./dist/config/index.d.ts",
-			"default": "./dist/config/index.js"
+			"types": "./dist/compiler.d.ts",
+			"default": "./dist/compiler.js"
 		}
 	},
 	"scripts": {
@@ -29,8 +25,6 @@
 		"@babel/plugin-proposal-pipeline-operator": "^7.28.6",
 		"@babel/plugin-proposal-throw-expressions": "^7.27.1",
 		"@babel/plugin-syntax-typescript": "^7.28.6",
-		"@jsplang/plugin-lint-proposals": "workspace:*",
-		"@jsplang/plugin-lint-subset": "workspace:*",
 		"@jsplang/plugin-transform-chained-comparisons": "workspace:*",
 		"@jsplang/plugin-transform-negative-array-subscript": "workspace:*",
 		"@jsplang/plugin-transform-typeof-null-operator": "workspace:*",

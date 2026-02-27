@@ -43,6 +43,7 @@ Promise.allSettledKeyed = function (promises) {
 			[K in keyof typeof promises]: PromiseSettledResult<Awaited<(typeof promises)[K]>>;
 		};
 		keys.forEach((k, i) => {
+			/* @ts-expect-error */
 			result[k as keyof typeof promises] = results[i];
 		});
 		return result;

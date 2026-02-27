@@ -1,6 +1,4 @@
-import { join, relative } from 'node:path';
-
-import { transformSync, type ParseResult, type NodePath } from '@babel/core';
+import { transformSync } from '@babel/core';
 /* @ts-expect-error */
 import pluginProposalAsyncDoExpressions from '@babel/plugin-proposal-async-do-expressions';
 /* @ts-expect-error */
@@ -17,9 +15,6 @@ import pluginProposalPipelineOperator from '@babel/plugin-proposal-pipeline-oper
 import pluginProposalThrowExpressions from '@babel/plugin-proposal-throw-expressions';
 /* @ts-expect-error */
 import pluginSyntaxTypeScript from '@babel/plugin-syntax-typescript';
-import { type Program } from '@babel/types';
-import pluginLinterProposals from '@jsplang/plugin-lint-proposals';
-import pluginLinterSubset from '@jsplang/plugin-lint-subset';
 import pluginTransformChainedComparisons from '@jsplang/plugin-transform-chained-comparisons';
 import pluginTransformNegativeArraySubscript from '@jsplang/plugin-transform-negative-array-subscript';
 import pluginTransformTypeofNullOperator from '@jsplang/plugin-transform-typeof-null-operator';
@@ -30,75 +25,46 @@ import polyfillPromiseAllKeyedLint from '@jsplang/polyfill-promise-allkeyed/lint
 import polyfillPromiseIsPromiseLint from '@jsplang/polyfill-promise-ispromise/lint';
 import polyfillRandomNamespaceLint from '@jsplang/polyfill-random-namespace/lint';
 
-import type { Config } from '../config/index.js';
-import { panic, tryCatchSync } from '../utils/index.js';
+import {
+	Babel,
+	Ts,
+	panic,
+	lintProposalsVisitor,
+	lintSubsetVisitor,
+	transformInternalVisitor,
+	tryCatchSync,
+	type CompleteConfig,
+	type Diagnostic,
+	type SourceMap,
+	type SyntaxError,
+} from './_.js';
 
-import { parseTs, type Diagnostic } from './parse.js';
-
-export type SourceMap = {
-	version: number;
-	file: string;
-	names: string[];
-	sourceRoot: string;
-	sources: string[];
-	sourcesContent: string[];
-	mappings: string;
-	ignoreList: string[];
-};
-export type BabelResult = {
-	map: SourceMap;
-	ast: ParseResult & {
-		errors: Exclude<ParseResult['errors'], null>;
-	};
+/* prettier-ignore */
+export type OutTs = {
+	sourceMap: null;
+	diagnostics: SyntaxError[];
+	code: null;
+} | {
+	sourceMap: SourceMap;
+	diagnostics: Diagnostic[];
 	code: string;
 };
-export type BabelSyntaxError = {
-	code?: 'BABEL_PARSE_ERROR';
-	reasonCode?: 'UnexpectedToken';
-	message: string;
-	loc?: {
-		line: number;
-		column: number;
-	};
-};
-
-export type Transformation =
-	| {
-			map: null;
-			ast: {
-				errors: BabelSyntaxError[];
-			};
-			code: null;
-	  }
-	| BabelResult;
-
-export type OutTs =
-	| {
-			sourceMap: null;
-			diagnostics: Diagnostic[];
-			code: null;
-	  }
-	| {
-			sourceMap: SourceMap;
-			diagnostics: Diagnostic[];
-			code: string;
-	  };
 
 /**
  * Compile JS+ code to TypeScript code
  */
-export const compile = (filename: string, jspCode: string, config: Config): OutTs => {
-	const { data: ts, error: syntaxError } = tryCatchSync<BabelResult, BabelSyntaxError>(() => {
+export const compile = (filename: string, jspCode: string, config: CompleteConfig): OutTs => {
+	const { data: ts, error: syntaxError } = tryCatchSync<Babel.Result, Babel.SyntaxError>(() => {
 		return transformSync(jspCode, {
 			filename,
 			parserOpts: {
 				errorRecovery: true,
 				sourceType: 'module',
 			},
-			/* ast */
-			ast: true,
 			/* source maps */
 			sourceMaps: true,
+			/* ast */
+			ast: true,
 			/* code gen */
 			compact: false,
 			retainLines: true,
@@ -113,10 +79,10 @@ export const compile = (filename: string, jspCode: string, config: Config): OutT
 				pluginTransformTypeofNullOperator,
 
 				/* subset linting */
-				pluginLinterSubset,
+				lintSubsetVisitor,
 
 				/* proposals linting */
-				pluginLinterProposals,
+				lintProposalsVisitor,
 
 				/* transform TC39 proposals sorted by scope */
 				pluginProposalThrowExpressions,
@@ -151,44 +117,25 @@ export const compile = (filename: string, jspCode: string, config: Config): OutT
 				polyfillPromiseIsPromiseLint,
 				polyfillRandomNamespaceLint,
 
-				/* polyfills */
+				/* internal */
 				function ({ types: t }) {
-					return {
-						visitor: {
-							Program: {
-								exit(path: NodePath<Program>) {
-									const jspDir = './_jsp/index';
-									const relativeDir = '../'.repeat(
-										relative(config.rootDir, filename).split('\\').length - 1,
-									);
-
-									/* path.unshiftContainer(
-										'body',
-										t.importDeclaration([], t.stringLiteral(join(relativeDir, jspDir))),
-									); */
-								},
-							},
-						},
-					};
+					return transformInternalVisitor(filename, config, t);
 				},
 			],
-		}) as unknown as BabelResult;
+		}) as unknown as Babel.Result;
 	});
 
 	if (syntaxError) {
 		/* @ts-expect-error */
 		if (syntaxError.jspDiagnostic) {
+			const se = syntaxError as unknown as Babel.IntegratedJspSyntaxError;
+
+			/* @ts-expect-error */
+			delete se.jspDiagnostic;
+
 			return {
 				sourceMap: null,
-				diagnostics: [
-					{
-						type: 'Error',
-						category: 'Syntax',
-						message: syntaxError.message,
-						/* @ts-expect-error */
-						loc: syntaxError.loc,
-					},
-				],
+				diagnostics: [se],
 				code: null,
 			};
 		}
@@ -200,14 +147,7 @@ export const compile = (filename: string, jspCode: string, config: Config): OutT
 					type: 'Error',
 					category: 'Syntax',
 					message: syntaxError.message,
-					loc: {
-						/* line index start at 1 */
-						startLine: syntaxError.loc?.line ?? 1 - 1,
-						startCharacter: syntaxError.loc?.column ?? 0,
-						endLine: syntaxError.loc?.line ?? 1 - 1,
-						/* 1 length error */
-						endCharacter: syntaxError.loc?.column ?? 0 + 1,
-					},
+					loc: Babel.convertLoc(syntaxError.loc),
 				},
 			],
 			code: null,
@@ -219,32 +159,33 @@ export const compile = (filename: string, jspCode: string, config: Config): OutT
 	}
 
 	const babelDiagnostics = ts.ast.errors
-		.filter((error) => {
+		.filter((diagnostic) => {
 			const ignoreReasonCodes = ['DeclarationMissingInitializer'];
 
-			return !ignoreReasonCodes.includes(error.reasonCode);
+			return !ignoreReasonCodes.includes(diagnostic.reasonCode);
 		})
-		.map((error) => {
+		.map((diagnostic) => {
+			/* @ts-expect-error */
+			if (diagnostic.jspDiagnostic) {
+				const d = diagnostic as unknown as Babel.IntegratedJspDiagnostic;
+
+				/* @ts-expect-error */
+				delete d.jspDiagnostic;
+
+				return d;
+			}
+
 			return {
-				/* @ts-expect-error */
-				type: error.type ?? ('Error' as const),
-				/* @ts-expect-error */
-				category: error.category ?? ('Semantic' as const),
-				message: error.message,
-				loc: {
-					/* index starts at 1 */
-					startLine: error.loc.line - 1,
-					startCharacter: error.loc.column,
-					endLine: error.loc.line - 1,
-					/* 1 length error */
-					endCharacter: error.loc.column + 1,
-				},
+				type: 'Error' as const,
+				category: 'Semantic' as const,
+				message: diagnostic.message,
+				loc: Babel.convertLoc(diagnostic.loc),
 			};
 		});
-	const tsDiagnostics = parseTs(filename, ts.code);
+	const tsDiagnostics = Ts.parseCode(filename, ts.code);
 
 	return {
-		sourceMap: ts.map,
+		sourceMap: Babel.convertSourceMap(filename, ts.map, config),
 		diagnostics: [...babelDiagnostics, ...tsDiagnostics],
 		code: ts.code,
 	};

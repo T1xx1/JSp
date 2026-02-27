@@ -1,5 +1,5 @@
-import type { UserConfig } from '@jsplang/jsp/config';
+import type { Config } from '@jsplang/jsp/compiler';
 
 export default {
 	rootDir: './src',
-} satisfies UserConfig;
+} satisfies Config;

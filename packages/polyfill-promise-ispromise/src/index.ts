@@ -14,6 +14,7 @@ Promise.isPromise = function isPromise(value): value is PromiseLike<unknown> {
 	return (
 		!!value &&
 		(typeof value === 'object' || typeof value === 'function') &&
+		/* @ts-expect-error */
 		typeof (value as Record<string, unknown>).then === 'function'
 	);
 };
