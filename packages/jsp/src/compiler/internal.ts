@@ -6,11 +6,12 @@ import { type Program } from '@babel/types';
 
 import {
 	emitCode,
-	emitPolyfills,
 	getEmitLangExt,
+	getPolyfills,
 	normalizeSlashes,
 	printExitDiagnostic,
 	type CompleteConfig,
+	type VirtualFileSystem,
 } from './_.js';
 
 export function transformInternalVisitor(
@@ -23,14 +24,15 @@ export function transformInternalVisitor(
 			Program: {
 				exit(path: NodePath<Program>) {
 					const jspDir = './_jsp/_';
-					const relativeDir = '../'.repeat(
+
+					const relativePath = '../'.repeat(
 						relative(config.rootDir, filename).split('\\').length - 1,
 					);
 
-					path.unshiftContainer(
-						'body',
-						t.importDeclaration([], t.stringLiteral(normalizeSlashes(join(relativeDir, jspDir)))),
-					);
+					const importPath =
+						relativePath === '' ? jspDir : normalizeSlashes(join(relativePath, jspDir));
+
+					path.unshiftContainer('body', t.importDeclaration([], t.stringLiteral(importPath)));
 				},
 			},
 		},
@@ -39,16 +41,29 @@ export function transformInternalVisitor(
 
 /*  */
 
-export const internalDir = '_jsp';
+const internalDir = './_jsp';
 
-const internalIndex = `import './polyfills/_';`;
+const internalEntrypoint = `import './polyfills/_';\n`;
 
-export const emitInterals = (config: CompleteConfig) => {
+export const getInternals = (config: CompleteConfig): VirtualFileSystem => {
+	const internals: VirtualFileSystem = [
+		/* _jsp/_ */
+		[join(internalDir, '_' + getEmitLangExt(config)), internalEntrypoint],
+		/* _jsp/polyfills */
+		...getPolyfills(config),
+	];
+
+	return internals;
+};
+
+export const emitInterals = (config: CompleteConfig): void => {
 	if (existsSync(join(config.rootDir, internalDir))) {
 		throw printExitDiagnostic('Error', '`_jsp` is a reserved folder name');
 	}
 
-	emitCode(join(internalDir, '_' + getEmitLangExt(config)), internalIndex, config);
+	const internals = getInternals(config);
 
-	emitPolyfills(config);
+	for (const [internalFilename, internalCode] of internals) {
+		emitCode(internalFilename, internalCode, config);
+	}
 };

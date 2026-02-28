@@ -21,3 +21,4 @@ export * from './proposals.js';
 export * from './runtime.js';
 export * from './sourcemap.js';
 export * from './subset.js';
+export * from './virtual.js';
