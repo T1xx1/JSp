@@ -1,2 +1,1 @@
-export { compile } from './compiler/compiler.js';
-export * from './compiler/config.js';
+export * from './compiler/_.js';

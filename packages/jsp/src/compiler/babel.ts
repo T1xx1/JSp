@@ -1,10 +1,10 @@
-import { join, parse } from 'node:path';
+import { parse } from 'node:path';
 
 import type { ParseResult } from '@babel/core';
 
 import {
 	convertSrcToEmitFilename,
-	normalizeSlashes,
+	join,
 	type CompleteConfig,
 	type Diagnostic as JspDiagnostic,
 	type Loc as JspLoc,
@@ -66,9 +66,9 @@ export namespace Babel {
 	): SourceMap => {
 		return {
 			version: babelSourceMap.version,
-			file: normalizeSlashes(convertSrcToEmitFilename(parse(filename).base, config)),
+			file: convertSrcToEmitFilename(parse(filename).base, config),
 			sourceRoot: '',
-			sources: [normalizeSlashes(join('..', filename))],
+			sources: [join('..', filename)],
 			sourcesContent: [],
 			names: [],
 			mappings: babelSourceMap.mappings,

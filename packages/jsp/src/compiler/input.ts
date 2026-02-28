@@ -1,7 +1,7 @@
 import { globSync } from 'node:fs';
-import { join, normalize } from 'node:path';
+import { normalize } from 'node:path';
 
-import { printExitDiagnostic, type CompleteConfig } from './_.js';
+import { join, printExitDiagnostic, type CompleteConfig } from './_.js';
 
 /**
  * Get JS+ inputs in the current working directory.

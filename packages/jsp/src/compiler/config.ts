@@ -1,9 +1,9 @@
 import { existsSync } from 'node:fs';
 import { createRequire } from 'node:module';
-import { join, normalize } from 'node:path';
+import { normalize } from 'node:path';
 import { cwd } from 'node:process';
 
-import { printExitDiagnostic, tryCatchSync } from './_.js';
+import { join, printExitDiagnostic, tryCatchSync } from './_.js';
 
 /* prettier-ignore */
 export type Config = {

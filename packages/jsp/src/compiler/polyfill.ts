@@ -1,14 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
-import { join, relative } from 'node:path';
+import { relative } from 'node:path';
 
-import {
-	getEmitLangExt,
-	normalizeSlashes,
-	type CompleteConfig,
-	type VirtualFile,
-	type VirtualFileSystem,
-} from './_.js';
+import { join, normalizeSlashes, type VirtualFile, type VirtualFileSystem } from './_.js';
 
 const polyfillsDir = './_jsp/polyfills';
 
@@ -21,33 +15,29 @@ const polyfillPackageNames = [
 	'@jsplang/polyfill-random-namespace',
 ];
 
-export const getPolyfill = (packageName: string, config: CompleteConfig): VirtualFile => {
-	const polyfillFilename = normalizeSlashes(
-		join(polyfillsDir, packageName.replaceAll('@jsplang/polyfill-', '') + getEmitLangExt(config)),
-	);
+export const getPolyfill = (packageName: string): VirtualFile => {
+	const polyfillFilename = join(polyfillsDir, packageName.replaceAll('@jsplang/polyfill-', ''));
 
 	const polyfillCodePath = createRequire(import.meta.url).resolve(packageName);
 
 	return [polyfillFilename, readFileSync(polyfillCodePath, 'utf8')];
 };
 
-export const getPolyfills = (config: CompleteConfig): VirtualFileSystem => {
-	const polyfillsEntrypointPath = join(polyfillsDir, '_' + getEmitLangExt(config));
-
+export const getPolyfills = (): VirtualFileSystem => {
 	const polyfillCodes = polyfillPackageNames.map((polyfillPackageName) => {
-		return getPolyfill(polyfillPackageName, config);
+		return getPolyfill(polyfillPackageName);
 	});
 
 	const polyfillsEntrypoint =
 		[...new Map(polyfillCodes).keys()]
 			.map((polyfillName) => {
-				return `import '${normalizeSlashes(relative(polyfillsEntrypointPath, polyfillName))}';`;
+				return `import '${'./' + normalizeSlashes(relative(polyfillsDir, polyfillName))}';`;
 			})
 			.join('\n') + '\n';
 
 	return [
 		/* _jsp/polyfills/_ */
-		[polyfillsEntrypointPath, polyfillsEntrypoint],
+		[polyfillsDir + '/_', polyfillsEntrypoint],
 		/* polyfill codes */
 		...polyfillCodes,
 	];

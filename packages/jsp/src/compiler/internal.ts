@@ -1,5 +1,5 @@
 import { existsSync } from 'node:fs';
-import { join, relative } from 'node:path';
+import { relative } from 'node:path';
 
 import { types, type NodePath } from '@babel/core';
 import { type Program } from '@babel/types';
@@ -8,7 +8,7 @@ import {
 	emitCode,
 	getEmitLangExt,
 	getPolyfills,
-	normalizeSlashes,
+	join,
 	printExitDiagnostic,
 	type CompleteConfig,
 	type VirtualFileSystem,
@@ -29,8 +29,7 @@ export function transformInternalVisitor(
 						relative(config.rootDir, filename).split('\\').length - 1,
 					);
 
-					const importPath =
-						relativePath === '' ? jspDir : normalizeSlashes(join(relativePath, jspDir));
+					const importPath = relativePath === '' ? jspDir : join(relativePath, jspDir);
 
 					path.unshiftContainer('body', t.importDeclaration([], t.stringLiteral(importPath)));
 				},
@@ -45,12 +44,12 @@ const internalDir = './_jsp';
 
 const internalEntrypoint = `import './polyfills/_';\n`;
 
-export const getInternals = (config: CompleteConfig): VirtualFileSystem => {
+export const getInternals = (): VirtualFileSystem => {
 	const internals: VirtualFileSystem = [
 		/* _jsp/_ */
-		[join(internalDir, '_' + getEmitLangExt(config)), internalEntrypoint],
+		[internalDir + '/_', internalEntrypoint],
 		/* _jsp/polyfills */
-		...getPolyfills(config),
+		...getPolyfills(),
 	];
 
 	return internals;
@@ -61,9 +60,9 @@ export const emitInterals = (config: CompleteConfig): void => {
 		throw printExitDiagnostic('Error', '`_jsp` is a reserved folder name');
 	}
 
-	const internals = getInternals(config);
+	const internals = getInternals();
 
 	for (const [internalFilename, internalCode] of internals) {
-		emitCode(internalFilename, internalCode, config);
+		emitCode(internalFilename + getEmitLangExt(config), internalCode, config);
 	}
 };

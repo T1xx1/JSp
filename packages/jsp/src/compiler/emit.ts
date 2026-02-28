@@ -1,8 +1,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { dirname, join, relative } from 'node:path';
+import { dirname, relative } from 'node:path';
 import { cwd } from 'node:process';
 
-import { type CompleteConfig } from './_.js';
+import { join, type CompleteConfig } from './_.js';
 
 export const emit = (filename: string, content: string, config: CompleteConfig): void => {
 	const emitPath = join(cwd(), config.compiler.emitDir, filename);

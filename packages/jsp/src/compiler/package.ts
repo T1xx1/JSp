@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import { join } from './_.js';
 
 export const SCRIPT_ROOT = fileURLToPath(import.meta.url);
 
@@ -16,7 +17,7 @@ export type PackageJson = {
 	};
 };
 export const PACKAGE_JSON = JSON.parse(
-	readFileSync(join(SCRIPT_ROOT, '..', '..', '..', 'package.json'), 'utf8'),
+	readFileSync(join(SCRIPT_ROOT, '../../../package.json'), 'utf8'),
 ) as PackageJson;
 
 export const getDependencyVersion = (dependencyName: string): null | string => {
