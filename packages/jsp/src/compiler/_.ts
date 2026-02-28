@@ -2,6 +2,7 @@ export * from '../lib/_.js';
 
 export * from '../utils/_.js';
 
+export * as Js from './js/_.js';
 export * as Ts from './ts/_.js';
 
 export * from './babel.js';
@@ -14,7 +15,6 @@ export * from './emit.js';
 export * from './filename.js';
 export * from './input.js';
 export * from './internal.js';
-export * from './module.js';
 export * from './package.js';
 export * from './polyfill.js';
 export * from './proposals.js';
