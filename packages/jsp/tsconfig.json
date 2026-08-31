@@ -1,0 +1,21 @@
+{
+	"include": ["./src/**/*.ts"],
+	"compilerOptions": {
+		/* parser */
+		"rootDir": "./src",
+		"skipLibCheck": true,
+		"module": "NodeNext",
+		"moduleDetection": "force" /* force ESM */,
+		"resolveJsonModule": true /* JSON */,
+		/* type checking */
+		"types": ["node"],
+		"exactOptionalPropertyTypes": true,
+		"verbatimModuleSyntax": true,
+		/* compiler */
+		"target": "ESNext",
+		"sourceMap": true,
+		"declaration": true,
+		"declarationMap": true,
+		"outDir": "./dist"
+	}
+}

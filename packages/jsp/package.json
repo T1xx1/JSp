@@ -1,0 +1,15 @@
+{
+	"name": "@jsplang/jsp",
+	"version": "0.1.0",
+	"type": "module",
+	"scripts": {
+		"dev": "tsc -w",
+		"build": "tsc"
+	},
+	"devDependencies": {
+		"@types/node": "24.13.3",
+	},
+	"peerDependencies": {
+		"typescript": "6.0.3"
+	}
+}
