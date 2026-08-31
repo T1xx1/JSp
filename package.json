@@ -1,3 +1,19 @@
 {
-	"name": "@jsplang/monorepo"
+	"name": "@jsplang/monorepo",
+	"scripts": {},
+	"devDependencies": {
+		"turbo": "^2.10.12"
+	},
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "11.24.0",
+			"onFail": "download"
+		},
+		"runtime": {
+			"name": "node",
+			"version": "24.20.0",
+			"onFail": "download"
+		}
+	}
 }
