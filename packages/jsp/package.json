@@ -2,6 +2,20 @@
 	"name": "@jsplang/jsp",
 	"version": "0.1.0",
 	"type": "module",
+	"exports": {
+		"./tslib/browser": {
+			"import": "./dist/tslib/browser/_index.browser.ts"
+		},
+		"./tslib/server": {
+			"import": "./dist/tslib/server/_index.server.js"
+		},
+		"./tslib/d/browser": {
+			"types": "./src/tslib/d/browser.d.ts"
+		},
+		"./tslib/d/server": {
+			"types": "./src/tslib/d/server.d.ts"
+		}
+	},
 	"scripts": {
 		"dev": "tsc -w",
 		"build": "tsc"
