@@ -219,9 +219,18 @@ importers:
 
   packages/jsp:
     dependencies:
+      chalk:
+        specifier: ^6.0.0
+        version: 6.0.0
+      commander:
+        specifier: ^15.0.0
+        version: 15.0.0
       typescript:
         specifier: 6.0.3
         version: 6.0.3
+      zod:
+        specifier: ^4.5.4
+        version: 4.5.4
     devDependencies:
       '@types/node':
         specifier: 24.13.3
@@ -318,6 +327,14 @@ packages:
 
   '@types/node@24.13.3':
     resolution: {integrity: sha512-Dh8vAsV36ig5wa9OX4pXvMc9D3Veibfw2wix0CUwYODLD8nkj9UsLjASr49nPg+2eKzxhBV+v7L8pXvT4e639Q==}
+
+  chalk@6.0.0:
+    resolution: {integrity: sha512-2uNTXIuTTxk7ciZgAU1BQcgnchcG0xXnrs6jzkQfj9SsRa9M2s5zE8WT96hS6KmG4MzWHSrvH43DF1m4XRkrFg==}
+    engines: {node: '>=22'}
+
+  commander@15.0.0:
+    resolution: {integrity: sha512-z67u4ZhzCL/Tydu1lJARtEZYWbWaN7oYLHbsuzocr6y4N6WZAagG3RQ4FW61V1/0+jImpj293XfrcYnd1qxtPg==}
+    engines: {node: '>=22.12.0'}
 
   node@runtime:24.20.0:
     resolution:
@@ -463,6 +480,9 @@ packages:
   undici-types@7.18.2:
     resolution: {integrity: sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==}
 
+  zod@4.5.4:
+    resolution: {integrity: sha512-sC95tT5iHHH9gtpj6A81kh+NEaRAUFN+qlUPDUbRfOMvNf5QCBqsb3WgvnpVtK5Y+4UfA6KqufotuTvMGiTlsA==}
+
 snapshots:
 
   '@biomejs/biome@2.5.11':
@@ -522,6 +542,10 @@ snapshots:
     dependencies:
       undici-types: 7.18.2
 
+  chalk@6.0.0: {}
+
+  commander@15.0.0: {}
+
   node@runtime:24.20.0: {}
 
   turbo@2.10.12:
@@ -536,3 +560,5 @@ snapshots:
   typescript@6.0.3: {}
 
   undici-types@7.18.2: {}
+
+  zod@4.5.4: {}
