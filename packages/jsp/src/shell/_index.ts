@@ -4,6 +4,7 @@ import packageJson from '../../package.json' with { type: 'json' };
 
 import { compile } from './compile.js';
 import { exe } from './exe.js';
+import { tree } from './tree.js';
 
 const shell = new Command('JS+')
 	.version(packageJson.version, '--version, -v', 'print version')
@@ -33,7 +34,7 @@ shell
 	})
 	.alias('e')
 	.description('exe')
-	.argument('[fileNames...]')
+	.argument('<fileNames...>')
 	.action((fileNames: string[]) => {
 		exe(fileNames);
 	});

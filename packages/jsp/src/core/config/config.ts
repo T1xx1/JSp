@@ -6,11 +6,11 @@ import { z } from 'zod';
 
 import { importSync } from '../../tslib/server/importSync.server.js';
 import { print } from '../utils/print.js';
-import type { Config } from './schema.js';
+import type { Config as PartialConfig } from './schema.js';
 
 const configName = 'jsp.config.ts';
 
-export const getConfig = ({ cwd }: { cwd: string }): Config => {
+export const getConfig = ({ cwd }: { cwd: string }): PartialConfig => {
 	const path = join(cwd, configName);
 
 	if (!existsSync(path)) {
@@ -19,17 +19,24 @@ export const getConfig = ({ cwd }: { cwd: string }): Config => {
 
 	return (
 		importSync(path) as {
-			default: Config;
+			default: PartialConfig;
 		}
 	).default;
 };
 
 const defaultConfig = {
 	compiler: {
-		srcDir: './src',
-		outputDir: './dist',
+		srcDir: normalize('./src'),
+		include: ['./**'].map((glob) => {
+			return normalize(glob);
+		}),
+		exclude: [],
+		outputDir: normalize('./dist'),
 	},
-} satisfies Config;
+	dev: {
+		wipeOutputDir: true,
+	},
+} satisfies PartialConfig;
 
 export const configSchema = z
 	.object({
@@ -42,6 +49,24 @@ export const configSchema = z
 					.transform((path) => {
 						return normalize(path);
 					}),
+				include: z
+					.array(z.string())
+					.exactOptional()
+					.default(defaultConfig.compiler.include)
+					.transform((globs) => {
+						return globs.map((glob) => {
+							return normalize(glob);
+						});
+					}),
+				exclude: z
+					.array(z.string())
+					.exactOptional()
+					.default(defaultConfig.compiler.exclude)
+					.transform((globs) => {
+						return globs.map((glob) => {
+							return normalize(glob);
+						});
+					}),
 				outputDir: z
 					.string()
 					.exactOptional()
@@ -52,29 +77,62 @@ export const configSchema = z
 			})
 			.exactOptional()
 			.default(defaultConfig.compiler),
+		dev: z
+			.object({
+				wipeOutputDir: z.boolean().default(defaultConfig.dev.wipeOutputDir),
+			})
+			.exactOptional()
+			.default(defaultConfig.dev),
 	})
 	.exactOptional()
 	.default(defaultConfig)
 	.superRefine((obj, ctx) => {
+		for (const glob of [...obj.compiler.include, ...obj.compiler.exclude]) {
+			if (glob.startsWith(obj.compiler.srcDir)) {
+				ctx.addIssue({
+					code: 'custom',
+					message:
+						'Globs from `compiler.include/exclude` are already resolved in `compiler.srcDir`',
+					path: ['compiler'],
+				});
+
+				break;
+			}
+		}
+
 		if (obj.compiler.outputDir === obj.compiler.srcDir) {
 			ctx.addIssue({
 				code: 'custom',
 				message: '`compiler.outputDir` cannot be `compiler.srcDir`.',
-				path: ['compiler'],
+				path: ['compiler', 'outputDir'],
 			});
 		}
 		if (obj.compiler.outputDir.startsWith(obj.compiler.srcDir)) {
 			ctx.addIssue({
 				code: 'custom',
 				message: '`compiler.outputDir` cannot be a subdirectory of `compiler.srcDir`.',
-				path: ['compiler'],
+				path: ['compiler', 'outputDir'],
+			});
+		}
+		if (obj.compiler.include.includes(obj.compiler.outputDir)) {
+			ctx.addIssue({
+				code: 'custom',
+				message: '`compiler.outputDir` cannot be in `compiler.include`.',
+				path: ['compiler', 'outputDir'],
+			});
+		}
+		if (obj.compiler.exclude.includes(obj.compiler.outputDir)) {
+			ctx.addIssue({
+				code: 'custom',
+				message: '`compiler.outputDir` is already excluded.',
+				path: ['compiler', 'outputDir'],
 			});
 		}
 	});
 
-export type FullConfig = z.infer<typeof configSchema>;
+export type Config = z.infer<typeof configSchema>;
 
-export const checkConfig = ({ config }: { config: Config }): FullConfig => {
+export const checkConfig = ({ config }: { config: PartialConfig }): Config => {
 	const configValidation = configSchema.safeParse(config);
 
 	if (!configValidation.success) {
