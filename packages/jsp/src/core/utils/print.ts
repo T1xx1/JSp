@@ -27,7 +27,7 @@ export const print = ({ message, severity }: { message: string; severity: Severi
 	console.log(styleSeverity({ message, severity }));
 };
 
-export const exitPrint = ({ message, severity }: { message: string; severity: Severity }) => {
+export const printExit = ({ message, severity }: { message: string; severity: Severity }) => {
 	print({ message, severity });
 
 	exit(1);
