@@ -5,6 +5,9 @@
 		"jsp": "./bin/jsp"
 	},
 	"type": "module",
+	"imports": {
+		"#/*": "./src/*"
+	},
 	"exports": {
 		"./config": {
 			"types": "./src/core/config/schema.d.ts",

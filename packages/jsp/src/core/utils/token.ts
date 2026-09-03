@@ -33,10 +33,7 @@ export type TSVoidKeyword = {
 
 /*  */
 
-import type {
-	PipelineExpression,
-	PipelineIdentifier,
-} from '../../plugins/pipelineoperator/_index.js';
+import type { PipelineExpression, PipelineIdentifier } from '#/plugins/pipelineoperator/_index.js';
 
 export type JSpPipelineExpression = PipelineExpression & {
 	type: 'JSpPipelineExpression';

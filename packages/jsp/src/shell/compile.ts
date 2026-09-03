@@ -1,9 +1,9 @@
 import { cwd } from 'node:process';
 
-import { checkConfig, getConfig } from '../core/config/config.js';
-import { checkJsType } from '../core/preflight.js';
-import { getPackageJson } from '../core/utils/packageJson.js';
-import { compiler } from '../compiler/compiler.js';
+import { checkConfig, getConfig } from '#/core/config/config.js';
+import { checkJsType } from '#/core/preflight.js';
+import { getPackageJson } from '#/core/utils/packageJson.js';
+import { compiler } from '#/compiler/compiler.js';
 
 export const compile = (fileNames: string[]): void => {
 	const CWD = cwd();

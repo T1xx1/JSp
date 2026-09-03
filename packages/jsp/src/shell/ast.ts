@@ -4,14 +4,14 @@ import { cwd } from 'node:process';
 
 import chalk from 'chalk';
 
-import { checkConfig, getConfig } from '../core/config/config.js';
-import { parse } from '../core/parser.js';
-import { checkJsType } from '../core/preflight.js';
-import { colors } from '../core/utils/color.js';
-import { getPackageJson } from '../core/utils/packageJson.js';
-import { printExit } from '../core/utils/print.js';
-import { assert } from '../tslib/std/assert.js';
-import type { AnyNode } from '../core/utils/token.js';
+import { checkConfig, getConfig } from '#/core/config/config.js';
+import { parse } from '#/core/parser.js';
+import { checkJsType } from '#/core/preflight.js';
+import { colors } from '#/core/utils/color.js';
+import { getPackageJson } from '#/core/utils/packageJson.js';
+import { printExit } from '#/core/utils/print.js';
+import type { AnyNode } from '#/core/utils/token.js';
+import { assert } from '#/tslib/std/assert.js';
 
 export const ast = (fileName: string): void => {
 	const CWD = cwd();

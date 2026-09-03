@@ -1,6 +1,6 @@
 import { TokenType, tokTypes, type Expression, type SourceLocation } from 'acorn';
 
-import { createPlugin } from '../../core/plugin.js';
+import { createPlugin } from '#/core/plugin.js';
 
 export type PipelineExpression = {
 	type: 'PipelineExpression';
