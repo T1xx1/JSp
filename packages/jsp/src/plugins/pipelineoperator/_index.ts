@@ -1,6 +1,21 @@
-import { TokenType, tokTypes } from 'acorn';
+import { TokenType, tokTypes, type Expression, type SourceLocation } from 'acorn';
 
 import { createPlugin } from '../../core/plugin.js';
+
+export type PipelineExpression = {
+	type: 'PipelineExpression';
+	start: number;
+	end: number;
+	loc: SourceLocation;
+	left: Expression;
+	right: Expression;
+};
+export type PipelineIdentifier = {
+	type: 'PipelineIdentifier';
+	start: number;
+	end: number;
+	loc: SourceLocation;
+};
 
 const pipelineOperatorTokenType = new TokenType('|>', {
 	beforeExpr: true,

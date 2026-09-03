@@ -4,7 +4,7 @@ import packageJson from '../../package.json' with { type: 'json' };
 
 import { compile } from './compile.js';
 import { exe } from './exe.js';
-import { tree } from './tree.js';
+import { ast } from './ast.js';
 
 const shell = new Command('JS+')
 	.version(packageJson.version, '--version, -v', 'print version')
@@ -38,5 +38,19 @@ shell
 	.action((fileNames: string[]) => {
 		exe(fileNames);
 	});
+
+/*  */
+
+shell
+	.command('ast', {
+		hidden: true,
+	})
+	.description('tree')
+	.argument('<fileName>')
+	.action((fileName: string) => {
+		ast(fileName);
+	});
+
+/*  */
 
 shell.parse();
