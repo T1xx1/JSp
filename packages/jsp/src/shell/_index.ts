@@ -34,8 +34,12 @@ shell
 	})
 	.alias('e')
 	.description('exe')
-	.argument('<fileNames...>')
+	.argument('[fileNames...]')
 	.action((fileNames: string[]) => {
+		if (fileNames.length === 0) {
+			shell.help();
+		}
+
 		exe(fileNames);
 	});
 
