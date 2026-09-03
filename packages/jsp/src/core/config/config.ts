@@ -10,7 +10,7 @@ import type { Config as PartialConfig } from './schema.js';
 
 const configName = 'jsp.config.ts';
 
-export const getConfig = ({ cwd }: { cwd: string }): PartialConfig => {
+export const getConfig = (cwd: string): PartialConfig => {
 	const path = join(cwd, configName);
 
 	if (!existsSync(path)) {

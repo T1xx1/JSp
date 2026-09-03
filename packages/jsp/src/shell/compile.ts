@@ -7,11 +7,11 @@ import { compiler } from '../compiler/compiler.js';
 
 export const compile = (fileNames: string[]): void => {
 	const CWD = cwd();
-	const packageJson = getPackageJson({ cwd: CWD });
+	const packageJson = getPackageJson(CWD);
 
-	checkJsType({ packageJson });
+	checkJsType(packageJson);
 
-	const partialConfig = getConfig({ cwd: CWD });
+	const partialConfig = getConfig(CWD);
 
 	if (fileNames.length > 0) {
 		if (!('compiler' in partialConfig)) {

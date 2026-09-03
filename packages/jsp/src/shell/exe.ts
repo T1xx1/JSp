@@ -6,12 +6,12 @@ import { getPackageJson } from '../core/utils/packageJson.js';
 
 export const exe = (fileNames: string[]): void => {
 	const CWD = cwd();
-	const packageJson = getPackageJson({ cwd: CWD });
+	const packageJson = getPackageJson(CWD);
 
-	checkJsType({ packageJson });
+	checkJsType(packageJson);
 
 	const config = checkConfig({
-		config: getConfig({ cwd: CWD }),
+		config: getConfig(CWD),
 	});
 
 	console.log(config, fileNames);

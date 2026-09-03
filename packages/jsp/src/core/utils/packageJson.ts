@@ -5,7 +5,7 @@ export type PackageJson = {
 	type?: 'commonjs' | 'module';
 };
 
-export const getPackageJson = ({ cwd }: { cwd: string }): PackageJson => {
+export const getPackageJson = (cwd: string): PackageJson => {
 	const path = join(cwd, 'package.json');
 
 	if (!existsSync(path)) {
