@@ -2,7 +2,7 @@ import { exit } from 'node:process';
 
 import chalk from 'chalk';
 
-import { assert } from '#/tslib/std/assert.js';
+import { assert } from '../../tslib/std/assert.js';
 
 type Severity = 'info' | 'warn' | 'error';
 

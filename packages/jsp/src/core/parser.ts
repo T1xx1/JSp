@@ -1,9 +1,8 @@
 import { tsPlugin } from '@sveltejs/acorn-typescript';
 import { Parser, type Options } from 'acorn';
 
-import { plugins } from '#/plugins/_index.js';
-
 import type { File } from './utils/fs.js';
+import { plugins } from '../plugins/_index.js';
 
 const parser = Parser.extend(
 	tsPlugin(),

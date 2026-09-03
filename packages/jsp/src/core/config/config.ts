@@ -4,8 +4,7 @@ import { exit } from 'node:process';
 
 import { z } from 'zod';
 
-import { importSync } from '#/tslib/server/importSync.server.js';
-
+import { importSync } from '../../tslib/server/importSync.server.js';
 import { print } from '../utils/print.js';
 import type { Config as PartialConfig } from './schema.js';
 
