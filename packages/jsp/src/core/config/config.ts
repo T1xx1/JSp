@@ -79,7 +79,7 @@ export const configSchema = z
 			.default(defaultConfig.compiler),
 		dev: z
 			.object({
-				wipeOutputDir: z.boolean().default(defaultConfig.dev.wipeOutputDir),
+				wipeOutputDir: z.boolean().exactOptional().default(defaultConfig.dev.wipeOutputDir),
 			})
 			.exactOptional()
 			.default(defaultConfig.dev),
