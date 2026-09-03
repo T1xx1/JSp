@@ -1,1 +1,1 @@
-export const assert = <T>(arg: T): void => {};
+export const assert = <T>(_arg: T): void => {};

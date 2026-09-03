@@ -1,4 +1,4 @@
-import { Parser } from 'acorn';
+import type { Parser } from 'acorn';
 
 export type Plugin = {
 	parser: (acornParser: typeof Parser) => typeof Parser;
