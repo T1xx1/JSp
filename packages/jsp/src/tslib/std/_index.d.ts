@@ -1,4 +1,4 @@
-import type { Loosen } from '../std/loosen.ts';
+import type { Loosen } from './loosen.ts';
 
 declare global {
 	interface Array<T> {

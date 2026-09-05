@@ -11,16 +11,16 @@
 			"import": "./src/core/config/schema.js"
 		},
 		"./tslib/browser": {
-			"import": "./dist/tslib/browser/_index.browser.ts"
+			"import": "./dist/tslib/browser/_index.browser.js"
+		},
+		"./tslib/browser/d": {
+			"types": "./src/tslib/browser/_index.browser.d.ts"
 		},
 		"./tslib/server": {
 			"import": "./dist/tslib/server/_index.server.js"
 		},
-		"./tslib/d/browser": {
-			"types": "./src/tslib/d/browser.d.ts"
-		},
-		"./tslib/d/server": {
-			"types": "./src/tslib/d/server.d.ts"
+		"./tslib/server/d": {
+			"types": "./src/tslib/server/_index.server.d.ts"
 		}
 	},
 	"scripts": {

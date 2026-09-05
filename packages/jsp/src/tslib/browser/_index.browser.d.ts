@@ -1,4 +1,4 @@
-import './std.d.ts';
+import '../std/_index.d.ts';
 
 import type { Loose } from '../std/loosen.ts';
 
