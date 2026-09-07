@@ -33,7 +33,7 @@ export type Config = {
 
 		/**
 		 * Emit source AST.
-		 * 
+		 *
 		 * @default false
 		 */
 		emitSourceAst?: boolean;
