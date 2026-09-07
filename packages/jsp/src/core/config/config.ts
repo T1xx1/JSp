@@ -32,6 +32,7 @@ const defaultConfig = {
 		}),
 		exclude: [],
 		outputDir: normalize('./dist'),
+		emitSourceAst: false,
 	},
 	dev: {
 		wipeOutputDir: true,
@@ -74,6 +75,7 @@ export const configSchema = z
 					.transform((path) => {
 						return normalize(path);
 					}),
+				emitSourceAst: z.boolean().exactOptional().default(defaultConfig.compiler.emitSourceAst),
 			})
 			.exactOptional()
 			.default(defaultConfig.compiler),

@@ -30,6 +30,13 @@ export type Config = {
 		 * @default './dist'
 		 */
 		outputDir?: string;
+
+		/**
+		 * Emit source AST.
+		 * 
+		 * @default false
+		 */
+		emitSourceAst?: boolean;
 	};
 	dev?: {
 		/**

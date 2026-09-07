@@ -1,4 +1,4 @@
-import { readFileSync, rmSync } from 'node:fs';
+import { readFileSync, rmSync, writeFileSync } from 'node:fs';
 
 import chalk from 'chalk';
 
@@ -6,7 +6,7 @@ import jspPackageJson from '../../package.json' with { type: 'json' };
 
 import type { Config } from '../core/config/config.js';
 import { parse } from '../core/parser.js';
-import { getSourceFileNames } from '../core/utils/fs.js';
+import { changeExt, emitInOutputDir, getSourceFileNames } from '../core/utils/fs.js';
 import type { PackageJson } from '../core/utils/packageJson.js';
 
 export const compiler = ({
@@ -41,6 +41,17 @@ export const compiler = ({
 			},
 		});
 
-		console.log(ast);
+		if (config.compiler.emitSourceAst) {
+			emitInOutputDir({
+				file: {
+					name: changeExt({
+						fileName,
+						newExt: 'ast.json',
+					}),
+					content: JSON.stringify(ast, null, '\t'),
+				},
+				config,
+			});
+		}
 	}
 };
