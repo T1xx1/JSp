@@ -1,87 +1,112 @@
-import { TokenType, tokTypes, type Expression, type SourceLocation } from 'acorn';
+import { TokenType, tokTypes as tt } from 'acorn';
+import type { BaseNodeWithoutComments } from 'estree';
 
 import { createPlugin } from '../../core/plugin.js';
 
-export type PipelineExpression = {
-	type: 'PipelineExpression';
-	start: number;
-	end: number;
-	loc: SourceLocation;
-	left: Expression;
-	right: Expression;
-};
-export type PipelineIdentifier = {
-	type: 'PipelineIdentifier';
-	start: number;
-	end: number;
-	loc: SourceLocation;
-};
+/**
+ * '|'
+ */
+const PIPE_CHAR = 124;
+/**
+ * '>'
+ */
+const GT_CHAR = 62;
 
-const pipelineOperatorTokenType = new TokenType('|>', {
+export const pipelineTokenType = new TokenType('|>', {
 	beforeExpr: true,
+	binop: 0,
 });
 
+export type PipelineExpression = BaseNodeWithoutComments & {
+	type: 'JSpPipelineExpression';
+};
+export type PipelineIdentifier = BaseNodeWithoutComments & {
+	type: 'JSpPipelineIdentifier';
+	name: '%';
+};
+
+/**
+ * @see https://github.com/tc39/proposal-pipeline-operator
+ */
 export const pipelineOperator = createPlugin({
-	parser: (acornParser) => {
-		return class extends acornParser {
-			_pipelineDepth = 0;
+	parser: (Parser) => {
+		return class extends Parser {
+			pipelinePlaceholderScopes: {
+				used: boolean;
+			}[] = [];
+
+			constructor(...args) {
+				super(...args);
+			}
 
 			readToken_pipe_amp(code) {
-				if (code === 124 && this.input.charCodeAt(this.pos + 1) === 62) {
-					return this.finishOp(pipelineOperatorTokenType, 2);
+				if (code === PIPE_CHAR && this.input.charCodeAt(this.pos + 1) === GT_CHAR) {
+					return this.finishOp(pipelineTokenType, 2);
 				}
 
 				return super.readToken_pipe_amp(code);
 			}
 
-			parseMaybeConditional(noIn, forInit) {
-				const startPos = this.start;
-				const startLoc = this.startLoc;
+			parseExprOp(left, leftStartPos, leftStartLoc, minPrec, ...rest) {
+				if (this.type === pipelineTokenType && pipelineTokenType.binop > minPrec) {
+					const node = this.startNodeAt(leftStartPos, leftStartLoc);
 
-				let expr = super.parseMaybeConditional(noIn, forInit);
+					node.left = left;
+					node.operator = '|>';
 
-				while (this.type === pipelineOperatorTokenType) {
-					expr = this.parsePipelineExpression(expr, startPos, startLoc, noIn, forInit);
+					this.next();
+
+					this.pipelinePlaceholderScopes.push({
+						used: false,
+					});
+
+					const bodyStartPos = this.start;
+					const bodyStartLoc = this.startLoc;
+
+					let body = this.parseMaybeUnary(null, false, false, ...rest);
+
+					body = this.parseExprOp(
+						body,
+						bodyStartPos,
+						bodyStartLoc,
+						pipelineTokenType.binop,
+						...rest,
+					);
+
+					this.pipelinePlaceholderScopes.pop();
+
+					node.right = body;
+
+					const pipelineExpr = this.finishNode(node, 'JSpPipelineExpression');
+
+					return this.parseExprOp(pipelineExpr, leftStartPos, leftStartLoc, minPrec, ...rest);
 				}
 
-				return expr;
+				return super.parseExprOp(left, leftStartPos, leftStartLoc, minPrec, ...rest);
 			}
 
-			parsePipelineExpression(left, startPos, startLoc, noIn, forInit) {
-				const node = this.startNodeAt(startPos, startLoc);
+			parseExprAtom(...args) {
+				const scopes = this.pipelinePlaceholderScopes;
 
-				node.left = left;
+				if (this.type === tt.modulo && scopes.length > 0) {
+					const scope = scopes[scopes.length - 1];
 
-				this.expect(pipelineOperatorTokenType);
-
-				this._pipelineDepth++;
-
-				try {
-					node.right = super.parseMaybeConditional(noIn, forInit);
-				} finally {
-					this._pipelineDepth--;
-				}
-
-				return this.finishNode(node, 'JSpPipelineExpression');
-			}
-
-			parseExprAtom(refDestructuringErrors, forInit) {
-				if (this.type === tokTypes.modulo) {
-					if (!this._pipelineDepth) {
-						this.raise(
-							this.start,
-							"Unexpected token '%': the pipeline placeholder can only be used inside the right-hand side of a pipeline chain",
-						);
+					if (scope.used) {
+						this.raise(this.start, 'Pipeline identifier `%` can only consumed once');
 					}
+
+					scope.used = true;
 
 					const node = this.startNode();
 
 					this.next();
 
+					node.name = '%';
+
 					return this.finishNode(node, 'JSpPipelineIdentifier');
 				}
 
-				return super.parseExprAtom(refDestructuringErrors, forInit);
+				return super.parseExprAtom(...args);
 			}
 		};
 	},
