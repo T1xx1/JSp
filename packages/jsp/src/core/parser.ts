@@ -1,21 +1,24 @@
 import { tsPlugin } from '@sveltejs/acorn-typescript';
+import { TSESTree } from '@typescript-eslint/types';
 import { Parser, type Options } from 'acorn';
 
-import type { File } from './utils/fs.js';
 import { plugins } from '../plugins/_index.js';
 
-const parser = Parser.extend(
+const P = Parser.extend(
 	tsPlugin(),
 	...plugins.map((plugin) => {
 		return plugin.parser;
 	}),
 );
+
 const parserOptions: Options = {
-	ecmaVersion: 'latest',
+	locations: true,
+	/*  */
 	sourceType: 'module',
+	ecmaVersion: 'latest',
 	allowImportExportEverywhere: true,
 };
 
-export const parse = ({ file }: { file: File }) => {
-	return parser.parse(file.content, parserOptions);
+export const parse = (fileContent: string): TSESTree.Program => {
+	return P.parse(fileContent, parserOptions);
 };

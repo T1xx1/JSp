@@ -34,12 +34,7 @@ export const compiler = ({
 
 		const fileContent = readFileSync(fileName, 'utf8');
 
-		const ast = parse({
-			file: {
-				name: fileName,
-				content: fileContent,
-			},
-		});
+		const ast = parse(fileContent);
 
 		if (config.compiler.emitSourceAst) {
 			emitInOutputDir({

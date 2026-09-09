@@ -34,12 +34,7 @@ export const ast = (fileName: string): void => {
 
 	const fileContent = readFileSync(fileName, 'utf8');
 
-	const program = parse({
-		file: {
-			name: fileName,
-			content: fileContent,
-		},
-	});
+	const program = parse(fileContent);
 
 	/* @ts-expect-error */
 	program.ext = fileName.split('.').at(-1);
