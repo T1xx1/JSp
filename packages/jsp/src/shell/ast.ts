@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { cwd } from 'node:process';
 
+import { TSESTree } from '@typescript-eslint/types';
 import chalk from 'chalk';
 
 import { checkConfig, getConfig } from '../core/config/config.js';
@@ -10,7 +11,6 @@ import { checkJsType } from '../core/preflight.js';
 import { colors } from '../core/utils/color.js';
 import { getPackageJson } from '../core/utils/packageJson.js';
 import { printExit } from '../core/utils/print.js';
-import type { AnyNode } from '../core/utils/node.js';
 import { assert } from '../tslib/std/assert.js';
 
 export const ast = (fileName: string): void => {
@@ -84,7 +84,7 @@ const literal = (identifier: string): string => {
 	}
 };
 
-const printAst = ({ node, prefix = '' }: { node: AnyNode; prefix?: string }): void => {
+const printAst = ({ node, prefix = '' }: { node: TSESTree.Node; prefix?: string }): void => {
 	switch (node.type) {
 		/* JS */
 		case 'Program': {
@@ -1324,6 +1324,7 @@ const printAst = ({ node, prefix = '' }: { node: AnyNode; prefix?: string }): vo
 		}
 
 		/* JS+ */
+		/* @ts-expect-error */
 		case 'JSpPipelineExpression': {
 			console.log(`${prefix}${chalk.hex(colors.jsp)(node.type)}`);
 
@@ -1339,6 +1340,7 @@ const printAst = ({ node, prefix = '' }: { node: AnyNode; prefix?: string }): vo
 
 			break;
 		}
+		/* @ts-expect-error */
 		case 'JSpPipelineIdentifier': {
 			console.log(`${prefix}${chalk.hex(colors.jsp)(node.type)} (%)`);
 
