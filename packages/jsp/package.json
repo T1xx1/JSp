@@ -25,7 +25,8 @@
 	},
 	"scripts": {
 		"dev": "tsc -w",
-		"build": "tsc"
+		"build": "tsc",
+		"test": "vitest"
 	},
 	"dependencies": {
 		"@sveltejs/acorn-typescript": "^1.0.13",
@@ -36,7 +37,8 @@
 	},
 	"devDependencies": {
 		"@types/node": "24.13.3",
-		"@typescript-eslint/types": "^8.69.0"
+		"@typescript-eslint/types": "^8.69.0",
+		"vitest": "^5.0.0"
 	},
 	"peerDependencies": {
 		"typescript": "6.0.3"
