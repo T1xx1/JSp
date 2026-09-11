@@ -1,5 +1,5 @@
+import type { TSESTree } from '@typescript-eslint/types';
 import { TokenType, tokTypes as tt } from 'acorn';
-import type { BaseNodeWithoutComments } from 'estree';
 
 import { createPlugin } from '../../core/plugin.js';
 
@@ -17,10 +17,10 @@ export const pipelineTokenType = new TokenType('|>', {
 	binop: 0,
 });
 
-export type PipelineExpression = BaseNodeWithoutComments & {
+export type PipelineExpression = TSESTree.BaseNode & {
 	type: 'JSpPipelineExpression';
 };
-export type PipelineIdentifier = BaseNodeWithoutComments & {
+export type PipelineIdentifier = TSESTree.BaseNode & {
 	type: 'JSpPipelineIdentifier';
 	name: '%';
 };
