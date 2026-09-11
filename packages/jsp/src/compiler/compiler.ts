@@ -47,6 +47,7 @@ export const compiler = ({
 
 		const fileContent = readFileSync(fileName, 'utf8');
 
+		/* parser */
 		const ast = parse(fileContent);
 
 		if (config.compiler.emitSourceAst) {
@@ -61,5 +62,9 @@ export const compiler = ({
 				config,
 			});
 		}
+
+		/* transformer */
+
+		console.log(ast.body[0]);
 	}
 };

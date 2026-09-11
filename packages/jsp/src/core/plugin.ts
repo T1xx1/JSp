@@ -1,9 +1,18 @@
 import { Parser as P } from 'acorn';
 
-export type Plugin = {
-	parser: (Parser: typeof P) => typeof P;
+export type PartialPlugin = {
+	parser?: (Parser: typeof P) => typeof P;
 };
 
-export const createPlugin = (plugin: Plugin) => {
-	return plugin;
+export type Plugin = Required<PartialPlugin>;
+
+/*  */
+
+export const createPlugin = (plugin: PartialPlugin): Plugin => {
+	return {
+		parser: (Parser) => {
+			return Parser;
+		},
+		...plugin,
+	};
 };
