@@ -30,8 +30,6 @@ export const compiler = ({
 	const fileNames = getSourceFileNames(config);
 
 	for (const fileName of fileNames) {
-		console.log(fileName);
-
 		const fileContent = readFileSync(fileName, 'utf8');
 
 		const ast = parse(fileContent);
