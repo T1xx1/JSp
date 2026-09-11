@@ -1,15 +1,14 @@
 import { cwd } from 'node:process';
 
 import { checkConfig, getConfig } from '../core/config/config.js';
-import { checkJsType } from '../core/preflight.js';
-import { getPackageJson } from '../core/utils/packageJson.js';
+import { checkPackageJsonJsType, getPackageJson } from '../core/utils/packageJson.js';
 import { compiler } from '../compiler/compiler.js';
 
 export const compile = (fileNames: string[]): void => {
 	const CWD = cwd();
 	const packageJson = getPackageJson(CWD);
 
-	checkJsType(packageJson);
+	checkPackageJsonJsType(packageJson);
 
 	const partialConfig = getConfig(CWD);
 

@@ -7,17 +7,23 @@ import chalk from 'chalk';
 
 import { checkConfig, getConfig } from '../core/config/config.js';
 import { parse } from '../core/parser.js';
-import { checkJsType } from '../core/preflight.js';
 import { colors } from '../core/utils/color.js';
-import { getPackageJson } from '../core/utils/packageJson.js';
+import { checkPackageJsonJsType, getPackageJson } from '../core/utils/packageJson.js';
 import { printExit } from '../core/utils/print.js';
 import { assert } from '../tslib/std/assert.js';
+import { getExt } from '../core/utils/fs.js';
+import { checkExt, checkJsType } from '../core/utils/module.js';
 
 export const ast = (fileName: string): void => {
 	const CWD = cwd();
 	const packageJson = getPackageJson(CWD);
 
-	checkJsType(packageJson);
+	checkPackageJsonJsType(packageJson);
+
+	const fileExt = getExt(fileName);
+
+	checkExt(fileExt);
+	checkJsType(fileExt);
 
 	const config = checkConfig({
 		config: getConfig(CWD),

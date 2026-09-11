@@ -15,6 +15,9 @@ const shell = new Command('JS+')
 			.action(() => {
 				console.log(packageJson.version);
 			}),
+		{
+			hidden: true,
+		},
 	)
 	.helpOption('--help, -h', 'print help')
 	.helpCommand('help [command]', 'print help');
@@ -34,13 +37,15 @@ shell
 	})
 	.alias('e')
 	.description('exe')
-	.argument('[fileNames...]')
-	.action((fileNames: string[]) => {
-		if (fileNames.length === 0) {
+	.argument('[fileName]')
+	.action((fileName?: string) => {
+		if (!fileName) {
 			shell.help();
+
+			return;
 		}
 
-		exe(fileNames);
+		exe(fileName);
 	});
 
 /*  */

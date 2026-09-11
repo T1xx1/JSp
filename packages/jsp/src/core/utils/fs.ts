@@ -16,9 +16,11 @@ export const getSourceFileNames = (config: Config): string[] => {
 		{
 			exclude: ['node_modules'],
 		},
-	).filter((fileName) => {
-		return fileName.endsWith('.jsp');
-	});
+	);
+};
+
+export const getExt = (fileName: string): string => {
+	return parse(fileName).ext;
 };
 
 /*  */
